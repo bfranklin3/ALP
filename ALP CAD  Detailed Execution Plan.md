@@ -8,14 +8,13 @@
 2. [SPIKE-16B] Create the "Areas" (Room) Inventory Panel [COMPLETED]
    - Description: Build a brand-new inventory list for drawn areas (lawns, patios, beds) since no stock list exists.
    - Status: `RoomTable` and `RoomTablePanel` implemented and integrated as a tab in `HomePane`.
-3. [SPIKE-13] Implement Basic Level Protection (Locking)
+3. [SPIKE-13] Implement Basic Level Protection (Locking) [COMPLETED]
    - Description: Add a "Locked" property to levels to prevent accidental modification of reference surveys or existing building footprints.
-   - Files:
-     - `com.eteks.sweethome3d.model.Level` (add `locked` boolean)
-     - `com.eteks.sweethome3d.swing.LevelPanel` (add checkbox)
-     - `com.eteks.sweethome3d.viewcontroller.PlanController` (check lock state before allowing edits)
+   - Status: 
+     - Added `locked` boolean property and Logic to `Level` model.
+     - Added "Locked" checkbox to `LevelPanel` properties dialog and summary table.
+     - Updated `PlanController` and `LevelController` to enforce the lock across all tools (move, resize, delete, rotate, properties).
    - Touchpoints: Model, View, Controller.
-   - Order: Step 3 (Requires the inventory lists from steps 1-2 to be useful).
 
 ------
 
