@@ -1,0 +1,25 @@
+# Project: Custom CAD (which will be called ALP CAD) based on Sweet Home 3D
+
+## Context
+- This is a large Java codebase (Sweet Home 3D) that I am refactoring and extending into my own custom CAD application.
+- I already have a complete implementation roadmap and approximately 18 markdown documents that contain feasibility studies, architecture findings, required features, and design decisions.
+- These documents live in the project (usually under /docs, /planning, or similar folders). Always locate and consult them before making significant decisions.
+
+## Coding Standards
+- Strictly follow the existing Sweet Home 3D architecture, coding style, naming conventions, and package structure.
+- Prefer minimal, targeted changes over large rewrites.
+- Respect the MVC pattern, existing model classes, controllers, and 3D rendering approach.
+- Keep backward compatibility in mind unless the roadmap explicitly says otherwise.
+- When adding new features, integrate them cleanly into the existing plugin/extension points where possible.
+
+## Workflow Rules
+1. Before writing any code, confirm which part of the roadmap you are executing and reference the relevant markdown documents.
+2. For multi-file changes, first list the exact files you plan to modify and why.
+3. Make changes in small, reviewable steps. After each logical group of changes, summarize what was done and wait for approval before continuing.
+4. When build, Ant, or runtime changes are needed, provide the exact terminal commands for macOS.
+5. Prefer Gemini 2.5 Flash-Lite for most work. Only escalate to a stronger model when the task is architecturally complex.
+
+## Important Constraints
+- Cost-conscious: Keep context efficient. Do not re-read the entire codebase unnecessarily.
+- Always check the existing implementation roadmap and markdown docs before proposing new approaches.
+- Help with compiling, running, and debugging the Java/Ant project when asked.

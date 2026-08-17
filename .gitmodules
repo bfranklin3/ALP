@@ -1,0 +1,3 @@
+[submodule "source/SweetHome3D-7.5-src"]
+	path = source/SweetHome3D-7.5-src
+	url = https://github.com/bfranklin3/ALP-Core.git

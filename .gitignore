@@ -1,0 +1,4 @@
+*.zip
+.DS_Store
+source/SweetHome3D-7.5-src/build/
+source/SweetHome3D-7.5-src/install/
