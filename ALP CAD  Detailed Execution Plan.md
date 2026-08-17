@@ -22,21 +22,23 @@
 
 *Goal: Adapt the rendering engine to support believable outdoor area fills and site-plan underlays.*
 
-1. [SPIKE-05] Area Fill Opacity Control
+1. [SPIKE-05] Area Fill Opacity Control [COMPLETED]
    - Description: Allow "Room" objects to be semi-transparent so users can see the survey underlay beneath a planting bed or patio fill.
-   - Files:
-     - `com.eteks.sweethome3d.model.Room` (add `floorOpacity` property)
-     - `com.eteks.sweethome3d.swing.RoomPanel` (add slider/input)
-     - `com.eteks.sweethome3d.swing.PlanComponent` (update `paintRooms` to use `AlphaComposite`)
-   - Touchpoints: Model, View, 2D Rendering.
-   - Order: Step 4.
-2. [SPIKE-06] Polygon Corner Smoothing Prototype
+   - Status:
+     - Added `floorOpacity` property to `Room` model (default 75%, matching prior hardcoded behavior).
+     - Added opacity spinner to `RoomPanel` Floor section in the Modify rooms dialog.
+     - Updated `PlanComponent` to render fills using per-room opacity.
+     - Persisted `floorOpacity` in home file XML import/export.
+   - Touchpoints: Model, View, Controller, 2D Rendering.
+2. [SPIKE-06] Polygon Corner Smoothing Prototype [COMPLETED]
    - Description: Provide an option to "smooth" the sharp corners of a drawn Room to create organic-looking planting beds or lawns.
-   - Files:
-     - `com.eteks.sweethome3d.model.Room`
-     - `com.eteks.sweethome3d.swing.PlanComponent` (use `GeneralPath` or Catmull-Rom splines for rendering)
-   - Touchpoints: 2D Rendering.
-   - Order: Step 5.
+   - Status:
+     - Added `smoothed` boolean property to `Room` model.
+     - Added "Smooth corners" checkbox to `RoomPanel` Floor section.
+     - Added `ShapeTools.getRoomShape()` reusing curved polyline rendering for plan view fills and outlines.
+     - Persisted `smoothed` in home file XML import/export.
+     - Follow-up (kept): per-vertex sharp corners on a smoothed room. Option-click a vertex handle to toggle; sharp handles draw as squares, smooth as rounds. Stored as `sharp` on XML `<point>` elements.
+   - Touchpoints: Model, View, Controller, 2D Rendering.
 
 ------
 
@@ -73,6 +75,12 @@
 I recommend we start with Milestone Block A. It addresses the most critical "CAD-like" workflow needs (layers and inventory) that were identified as gaps during your initial spikes.
 
 Would you like to begin by implementing SPIKE-16B (the Areas Inventory Panel)? It is the most significant structural addition to the UI in this block.
+
+
+
+Room line thickness
+
+ Let's move on to Milestone Block C (SPIKE-17: Width-Based Wrapped Text) 
 
 
 
