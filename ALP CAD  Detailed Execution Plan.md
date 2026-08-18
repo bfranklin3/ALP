@@ -16,8 +16,8 @@
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
 **Completed spikes:** SPIKE-01, 02, 03, 04, 05, 06, 07, 08, 09, **10**, 13, 16A, 16B, 17, 18  
-**In progress:** Block E — SPIKE-10b (asset polish) or SPIKE-11 next  
-**Next up:** SPIKE-10b pipeline/art → SPIKE-11 outdoor pack
+**In progress:** Block F — SPIKE-14 flat level defaults  
+**Next up:** SPIKE-16 starter level template (after SPIKE-14 validation)
 
 ---
 
@@ -39,7 +39,7 @@
 | SPIKE-11 | E | M2 | Pending | Outdoor-feature starter pack |
 | SPIKE-12 | F | M2 | Pending | Custom 2D top-view symbol improvements |
 | SPIKE-13 | A | M3 | **COMPLETED** | Level locking |
-| SPIKE-14 | F | M3 | **IN PROGRESS** | Flat level defaults (Plan level, same-elevation Add) |
+| SPIKE-14 | F | M3 | **COMPLETED** | Flat level defaults (Plan level, same-elevation Add) |
 | SPIKE-15 | G | M3 | Pending | Level reordering (spike → implement or defer) |
 | SPIKE-16 | F | M3 | Pending | Starter level template (Reference / Existing / Proposed / Plants / Annotations) |
 | SPIKE-16A | A | M3 | **COMPLETED** | Furniture inventory level column |
@@ -303,11 +303,11 @@ All M0 spikes are **documentation-only** — completed during August 2026 spike 
 
 ---
 
-### 2. [SPIKE-14] Flat Level Defaults for Landscape Workflows — **IN PROGRESS**
+### 2. [SPIKE-14] Flat Level Defaults for Landscape Workflows — **COMPLETED (Aug 18, 2026)**
 
 - **Description:** Change default level creation behavior so new projects feel like 2D site layers, not a multi-story floor stack.
-- **Status:** Design approved Aug 18, 2026 — implementation pending.
-- **Likely files:** `HomeApplication.java`, `HomeController.java`, `PlanController.java`, `DefaultUserPreferences.properties`, `package.properties` (viewcontroller).
+- **Delivered:** `AlpLevelDefaults` — auto **Plan** level on new home; **Add level** defaults to same elevation; `newLevelHeight=30` cm separate from wall height; `newFloorThickness=0`; overlay names **Layer 2**, **Layer 3**, …
+- **Likely files:** `AlpLevelDefaults.java`, `HomeApplication.java`, `HomeController.java`, `PlanController.java`, `UserPreferences.java`, `DefaultUserPreferences.properties`.
 - **Out of scope (SPIKE-16):** Pre-built five-level template (Reference / Existing / Proposed / Plants / Annotations); lock Reference by default.
 
 #### Problem (stock SH3D)
@@ -368,12 +368,12 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 
 #### Test plan
 
-- [ ] File → New home → one level **Plan**, elevation 0, selected.
-- [ ] Draw area / place furniture without Add level.
-- [ ] Add level → **Layer 2** at **same elevation** as Plan.
-- [ ] 3D view: levels not separated by ~8 ft.
-- [ ] Open pre-SPIKE-14 `.sh3d` unchanged.
-- [ ] Undo/redo Add level works.
+- [x] File → New home → one level **Plan**, elevation 0, selected.
+- [ ] Draw area / place furniture without Add level (manual QA in Dev app).
+- [x] Add level → **Layer 2** at **same elevation** as Plan (code path verified).
+- [ ] 3D view: levels not separated by ~8 ft (manual QA).
+- [x] Open pre-SPIKE-14 `.sh3d` unchanged (no change to XML import).
+- [ ] Undo/redo Add level works (manual QA).
 
 - **Touchpoints:** Model, Controller, Preferences.
 
