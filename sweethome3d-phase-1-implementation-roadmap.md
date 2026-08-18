@@ -293,7 +293,7 @@ UI cleanup should package proven product behaviors, not guess at them too early.
 - lighter workflow around the most common tasks
 - reduced friction in property editing
 - clearer plan setup path
-- clearer mode / category guidance
+- clearer mode / category guidance 
 
 ### First engineering spikes
 
