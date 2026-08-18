@@ -11,13 +11,13 @@
 | Metric | Status |
 |--------|--------|
 | **Blocks complete** | A, B, C, D (4 of 8) |
-| **Spikes complete** | 13 of 25 tracked items |
-| **Next block** | **Block E** — Library Foundation (M2) — **IN PROGRESS** |
+| **Spikes complete** | 17 of 25 tracked items |
+| **Next block** | **Block F** — Levels & Site Plan (M3) — **IN PROGRESS** |
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
-**Completed spikes:** SPIKE-01, 02, 03, 04, 05, 06, 07, 08, 09, **10**, 13, 16A, 16B, 17, 18  
-**In progress:** Block F — SPIKE-14 flat level defaults  
-**Next up:** SPIKE-16 starter level template (after SPIKE-14 validation)
+**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, **14**, 16A, 16B, 17, 18  
+**In progress:** Block F — SPIKE-16 starter level template  
+**Next up:** SPIKE-16 validation, then SPIKE-15 (level reorder) or SPIKE-11 (outdoor pack)
 
 ---
 
