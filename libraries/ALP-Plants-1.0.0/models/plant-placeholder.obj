@@ -1,0 +1,6 @@
+# Minimal flat placeholder for ALP plant catalog entries (3D view)
+v -0.5 -0.5 0
+v  0.5 -0.5 0
+v  0.5  0.5 0
+v -0.5  0.5 0
+f 1 2 3 4

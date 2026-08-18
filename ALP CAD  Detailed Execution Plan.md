@@ -12,12 +12,12 @@
 |--------|--------|
 | **Blocks complete** | A, B, C, D (4 of 8) |
 | **Spikes complete** | 13 of 25 tracked items |
-| **Next block** | **Block E** — Library Foundation (M2) |
+| **Next block** | **Block E** — Library Foundation (M2) — **IN PROGRESS** |
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
-**Completed spikes:** SPIKE-01, 02, 03, 04, 05, 06, 07, 08, 13, 16A, 16B, 17, 18  
-**In progress:** —  
-**Next up:** SPIKE-09 (Phase 1 library schema)
+**Completed spikes:** SPIKE-01, 02, 03, 04, 05, 06, 07, 08, 09, **10**, 13, 16A, 16B, 17, 18  
+**In progress:** Block E — SPIKE-10b (asset polish) or SPIKE-11 next  
+**Next up:** SPIKE-10b pipeline/art → SPIKE-11 outdoor pack
 
 ---
 
@@ -33,12 +33,13 @@
 | SPIKE-06 | B | M1 | **COMPLETED** | Polygon corner smoothing + per-vertex sharp corners |
 | SPIKE-07 | D | M1 | **COMPLETED** | Soften “room” → “area / room” on key UI surfaces |
 | SPIKE-08 | D | M1 | **COMPLETED** | Feet + inches in background calibration |
-| SPIKE-09 | E | M2 | Pending | Phase 1 library schema |
-| SPIKE-10 | E | M2 | Pending | Plant starter pack |
+| SPIKE-09 | E | M2 | **COMPLETED** | Phase 1 library schema → [alp-phase-1-library-schema.md](alp-phase-1-library-schema.md) |
+| SPIKE-10 | E | M2 | **COMPLETED** | Plant starter pack (Option A; ISO-8859-1 fix; validated) |
+| SPIKE-10b | E | M2 | **COMPLETED** | Plant asset pipeline v1.0.2 (trim, alpha, planIconLine `\:`) |
 | SPIKE-11 | E | M2 | Pending | Outdoor-feature starter pack |
 | SPIKE-12 | F | M2 | Pending | Custom 2D top-view symbol improvements |
 | SPIKE-13 | A | M3 | **COMPLETED** | Level locking |
-| SPIKE-14 | F | M3 | Pending | Flat level defaults for landscape workflows |
+| SPIKE-14 | F | M3 | **IN PROGRESS** | Flat level defaults (Plan level, same-elevation Add) |
 | SPIKE-15 | G | M3 | Pending | Level reordering (spike → implement or defer) |
 | SPIKE-16 | F | M3 | Pending | Starter level template (Reference / Existing / Proposed / Plants / Annotations) |
 | SPIKE-16A | A | M3 | **COMPLETED** | Furniture inventory level column |
@@ -218,48 +219,46 @@ All M0 spikes are **documentation-only** — completed during August 2026 spike 
 *Goal: Replace generic stock libraries with a credible Phase 1 plant and outdoor content set.*  
 *Depends on: Block D complete*  
 *Milestone: M2 (part 1)*  
-**Status: PENDING**
+**Status: IN PROGRESS**
 
 ### Exit criteria
 
-- Documented library schema for Phase 1.
+- Documented library schema for Phase 1. ✓
 - At least one installable custom plant library and one outdoor-feature library load in the dev app.
 - Sample plan using custom content looks clearly better than stock-only.
 
 ---
 
-### 1. [SPIKE-09] Define Phase 1 Library Schema — Pending
+### 1. [SPIKE-09] Define Phase 1 Library Schema — **COMPLETED**
 
-- **Description:** Specify naming, categories, metadata, and preview expectations for ALP CAD libraries.
-- **Deliverable:** Short schema doc (can live in `/docs` or project root) covering:
-  - Category tree (Plants, Trees, Hardscape, Doors/Windows, Site furniture, …)
-  - Required SH3D furniture metadata fields
-  - Naming convention (e.g. `PLT-Oak-24` / human-readable title)
-  - 2D top-view vs 3D model expectations
-  - Library file layout (`.sh3f`, `.sh3t`, bundle structure)
-- **Steps:**
-  1. Review stock library format in `lib/` and existing import paths.
-  2. Draft schema aligned with [sweethome3d-phase-1-implementation-roadmap.md](sweethome3d-phase-1-implementation-roadmap.md) M2 deliverables.
-  3. Review against MVP feature list; mark Phase 1 vs defer.
-- **Touchpoints:** Content / documentation (minimal code).
+- **Deliverable:** [alp-phase-1-library-schema.md](alp-phase-1-library-schema.md) — category tree, ID/naming rules, required SH3D metadata, plan vs 3D expectations, `.sh3f` layout, validation checklist, SPIKE-10/11 starter menus.
+- **Touchpoints:** Documentation only.
 
 ---
 
-### 2. [SPIKE-10] Build Plant Starter Pack — Pending
+### 2. [SPIKE-10] Build Plant Starter Pack — **COMPLETED (Option A)** ✓ validated in Dev app
 
-- **Description:** Create a first "good enough" plant library (trees, shrubs, groundcover symbols) for site plans.
-- **Depends on:** SPIKE-09 schema.
-- **Steps:**
-  1. Select 8–15 representative plant symbols (2D top-view priority).
-  2. Author or adapt `.sh3f` entries per schema.
-  3. Bundle as importable library; add to dev app `resources` or documented import path.
-  4. Validate placement, rotation, level assignment, and plan rendering.
-- **Test plan:** Place each symbol on a test plan; verify catalog browse, drag-drop, and inventory list.
-- **Touchpoints:** Content; optional catalog path configuration.
+- **Approach:** **Option A** — `planIcon` = presentation composite (watercolor from source sheet **right** column); line-art PNGs in `plan-icons-line/` for SPIKE-12b / SPIKE-28. Lightweight 3D placeholder OBJ.
+- **Source art:** `libraries/ALP-Plants-1.0.0/source/plant-symbol-sheet.png` (992×557 px; 30 symbols; line + color halves).
+- **Build:** `./scripts/build-alp-plants-library.sh` → `ALP-Plants-1.0.0.sh3f` (12 pieces, category **`ALP Plants`**).
+- **Validated:** Import, catalog folder, Presentation + Top view plan icons (Aug 18, 2026).
+- **Critical discovery — catalog properties encoding:** SH3D reads `PluginFurnitureCatalog.properties` as **ISO-8859-1** via `PropertyResourceBundle`. UTF-8/em-dash/`›` in the first pack caused **Libraries yes / catalog empty** until the build script emitted ASCII-only properties. Documented in [alp-phase-1-library-schema.md](alp-phase-1-library-schema.md).
+- **Asset quality — follow-up [SPIKE-10b](#3-spike-10b-plant-symbol-asset-pipeline-polish):** grid crop misalignment, stock watermark on source sheet, opaque white PNG backgrounds, footprint vs symbol aspect (e.g. Liriope strip). Pipeline proof OK; art pass deferred.
+- **Draft mode:** catalog-icon-in-box until [SPIKE-12b](#spike-12b-draft-mode--line-art-planicon-block-f-prerequisite).
+- **Settings (Mac):** Sweet Home 3D → **Settings…** → **Furniture icons in plan: Top view**; place in **Presentation mode**.
 
 ---
 
-### 3. [SPIKE-11] Build Outdoor-Feature Starter Pack — Pending
+### 3. [SPIKE-10b] Plant symbol asset pipeline polish — **COMPLETED (v1.0.2)**
+
+- **Delivered:** `scripts/split-plant-symbol-sheet.py` — grid crop, ink trim, white/watermark→alpha, square pad, centered transparent PNGs; `build-alp-plants-library.sh`; paired `planIcon#N` + `planIconLine#N\:CONTENT` (escaped colon — required for SH3D CONTENT load).
+- **Footprint fixes:** Liriope → square 5 ft patch; boxwood hedge → 30×3 ft (depth × width) to match vertical hedge symbol.
+- **Remaining:** Source sheet still carries stock watermark — replace with licensed art when ready (not blocking pipeline).
+- **Docs:** [alp-phase-1-library-schema.md](alp-phase-1-library-schema.md) — **Draft vs Presentation plan icons** section.
+
+---
+
+### 4. [SPIKE-11] Build Outdoor-Feature Starter Pack — **Next**
 
 - **Description:** Create hardscape / site furniture symbols (patios, seating, planters, basic site amenities).
 - **Depends on:** SPIKE-09 schema.
@@ -289,29 +288,94 @@ All M0 spikes are **documentation-only** — completed during August 2026 spike 
 
 ### 1. [SPIKE-12] Custom 2D Top-View Asset Improvements — Pending
 
-- **Description:** Validate whether placed objects can use improved 2D plan symbols without deep renderer changes.
-- **Likely files:** Furniture model icon paths, `PlanComponent` furniture painting, catalog metadata for top-view images.
+- **Description:** Validate and extend 2D plan symbol rendering for ALP plant/outdoor content.
+- **Prerequisite spike:** **[SPIKE-12b](Backlog / Ideas#spike-12b-draft-mode--line-art-planicon-block-f-prerequisite)** — Draft mode uses line-art `planIcon` (documented in Backlog).
+- **Stretch goal:** **[SPIKE-28](Backlog / Ideas#spike-28-layered-plant-plan-symbols--line--watercolor-fill--fill-color-option-c)** — separate line + watercolor fill layers + user fill color.
+- **Likely files:** `PlanComponent.java`, `DefaultFurnitureCatalog.java`, `FurniturePanel.java`.
 - **Steps:**
-  1. Identify how SH3D resolves top-view vs model icon in plan view (`FURNITURE_VIEWED_FROM_TOP` preference, piece metadata).
-  2. Prototype 3–5 custom top-view PNG/SVG assets on existing furniture entries.
-  3. Document limits (doors/windows, scaled icons, rotation).
-  4. Decide: content-only fix vs small code tweak for ALP defaults.
-- **Test plan:** Compare stock vs custom top-view symbols at multiple zoom levels and in draft mode.
+  1. Implement SPIKE-12b (Draft → planIcon line art).
+  2. Complete [SPIKE-10b](#3-spike-10b-plant-symbol-asset-pipeline-polish) art pipeline (crop, alpha, watermark, sizing).
+  3. Validate SPIKE-10 `.sh3f` in Draft and Presentation at multiple zoom levels.
+  4. Decide default **Top view** preference for ALP installs (Settings on Mac).
+  5. Prototype SPIKE-28 two-layer paint if fill-color UX is prioritized.
+- **Test plan:** Compare stock vs ALP symbols in Draft vs Presentation; confirm background/area draft behavior unchanged.
 - **Touchpoints:** 2D Rendering, Content.
 
 ---
 
-### 2. [SPIKE-14] Flat Level Defaults for Landscape Workflows — Pending
+### 2. [SPIKE-14] Flat Level Defaults for Landscape Workflows — **IN PROGRESS**
 
 - **Description:** Change default level creation behavior so new projects feel like 2D site layers, not a multi-story floor stack.
-- **Likely files:** `Home.java` (default level), `LevelController` / `HomeController.newHome`, `LevelPanel`, default elevation and naming.
-- **Steps:**
-  1. Document current new-home level defaults (name, elevation, height, viewability).
-  2. Propose landscape defaults (e.g. single "Plan" level at elevation 0, smaller level height, flatter naming).
-  3. Implement defaults for **new** homes only; preserve backward compatibility for opened files.
-  4. Optionally adjust "Add level" default elevation increment.
-- **Test plan:** File → New home; confirm defaults match spec; open an older home file unchanged.
-- **Touchpoints:** Model, Controller.
+- **Status:** Design approved Aug 18, 2026 — implementation pending.
+- **Likely files:** `HomeApplication.java`, `HomeController.java`, `PlanController.java`, `DefaultUserPreferences.properties`, `package.properties` (viewcontroller).
+- **Out of scope (SPIKE-16):** Pre-built five-level template (Reference / Existing / Proposed / Plants / Annotations); lock Reference by default.
+
+#### Problem (stock SH3D)
+
+| Behavior | Stock default |
+|----------|---------------|
+| New `Home()` | **0 levels** — user must **Add level** first |
+| First **Add level** | **"Level 0"** at elevation 0; height = `newWallHeight` (~250 cm / 8 ft) |
+| Next **Add level** | Stacks vertically by `newWallHeight + newFloorThickness` (~262 cm per floor) |
+| Level names | `"Level %d"` |
+
+Landscape work wants **flat overlays at one grade**, not a multi-story stack.
+
+#### Approved design (Aug 18, 2026)
+
+**A. Auto-create first level on File → New home**
+
+| Property | Stock | ALP |
+|----------|-------|-----|
+| Level count | 0 | **1** |
+| Name | — | **`Plan`** |
+| Elevation | — | **0** |
+| Height | 250 cm | **30 cm** (~1 ft; 2D-first, minimal 3D extent) |
+| Floor thickness | 12 cm | **0 cm** (ALP default preference) |
+| Selected | null | **`Plan`** |
+
+**B. Default Add level → same elevation (overlay layer)**
+
+- **Add level** behaves like stock **Add level at same elevation** (new `elevationIndex`, not +262 cm Z stack).
+- Stock vertical stacking remains available later if needed (e.g. building on site); not removed in v1.
+
+**C. Separate level height from wall height**
+
+- **`newHomeWallHeight`** stays ~250 cm for **walls**.
+- **`newLevelHeight`** = **30 cm** for level creation (new preference or ALP constant via `UserPreferences`).
+- **`newFloorThickness`** ALP default = **0 cm**.
+
+**D. Naming**
+
+| Context | Name |
+|---------|------|
+| First level (new home) | **Plan** |
+| Additional levels | **Layer 2**, **Layer 3**, … (`layerName=Layer %d`) |
+
+#### User journeys
+
+1. **Blank site:** File → New home → **Plan** ready; draw areas / place plants immediately.
+2. **Multi-layer (manual):** Add level → **Layer 2** at same elevation; toggle visibility / lock per SPIKE-13.
+3. **SPIKE-16 later:** New from template → five named levels in one step.
+
+#### Implementation steps
+
+1. `HomeApplication.createHome()` / `HomeController.newHome()` — call helper to add default **Plan** level when levels empty.
+2. `PlanController.addLevel()` — default `sameElevation=true`.
+3. `PlanController.createLevel()` / naming — use **Plan** / **Layer N** strings; level height from `newLevelHeight`.
+4. `DefaultUserPreferences.properties` — `newFloorThickness=0`, `newLevelHeight=30`.
+5. **Do not change** XML import of existing homes.
+
+#### Test plan
+
+- [ ] File → New home → one level **Plan**, elevation 0, selected.
+- [ ] Draw area / place furniture without Add level.
+- [ ] Add level → **Layer 2** at **same elevation** as Plan.
+- [ ] 3D view: levels not separated by ~8 ft.
+- [ ] Open pre-SPIKE-14 `.sh3d` unchanged.
+- [ ] Undo/redo Add level works.
+
+- **Touchpoints:** Model, Controller, Preferences.
 
 ---
 
@@ -449,6 +513,8 @@ All M0 spikes are **documentation-only** — completed during August 2026 spike 
 |-------|--------|---------|
 | SPIKE-26 | Idea | Ephemeral two-point **Measure** tool (+ optional Alt-drag overlay) |
 | SPIKE-27 | Idea | **Plan assembly** grouping — walls + doors/windows + furniture (phased) |
+| SPIKE-28 | Idea | **Layered plant plan symbols** — line + watercolor fill + user fill color (Option C) |
+| SPIKE-12b | Idea | **Draft mode uses line-art `planIcon`** — **COMPLETED** (planIconLine CONTENT) |
 
 ### [SPIKE-26] Measure tool (ephemeral two-point ruler)
 
@@ -544,13 +610,50 @@ All M0 spikes are **documentation-only** — completed during August 2026 spike 
 - **Depends on:** None for Phase 1; Phase 2 builds on Phase 1 geometry rules.
 - **Promotion:** Pull into post-MVP tranche or new milestone block when prioritized.
 
+### [SPIKE-12b] Draft mode → line-art planIcon — **COMPLETED (Aug 2026)**
+
+- **Engine:** `PlanComponent` — in Draft + **Top view**, paint `planIconLine` CONTENT property when set, else `planIcon`; top-view icon cache keys on resolved content and clears when Draft toggles.
+- **Catalog:** `planIconLine#N\:CONTENT=/plan-icons-line/plant-NN.png` — **colon must be escaped** (`\:`) in `.properties` or SH3D stores a string and Draft falls back to color (validated v1.0.2).
+- **Presentation:** unchanged — color `planIcon#N`.
+- **Test:** Import ALP Plants v1.0.2; re-drag piece; ⌘⇧D Draft (line art) vs Presentation (color).
+- **Docs:** [alp-phase-1-library-schema.md](alp-phase-1-library-schema.md), [Building ALP CAD  Libraries.md](Building%20ALP%20CAD%20%20Libraries.md).
+
+### [SPIKE-28] Layered plant plan symbols — line + watercolor fill + fill color (Option C)
+
+- **Context (Aug 2026):** Source artwork is a single sprite sheet (`assets/various-green-trees-bushes-shrubs-top-view-*.png`, copied to `libraries/ALP-Plants-1.0.0/source/plant-symbol-sheet.png`). Each symbol exists as **paired halves**: black hand-drawn outline (left) + soft green watercolor wash that **bleeds past** the outline (right). We deferred this in favor of **Option A** (one composite `planIcon` for Presentation) because stock SH3D tints the whole icon and Draft skips `planIcon`. **Option C** is the target end state for landscape color coding (deciduous vs evergreen vs seasonal) without losing black linework.
+- **Vision:** Each plant has two visual layers on plan:
+  - **Line layer:** Black hand-drawn outline (Draft mode and on top in Presentation) — left column of source sheet.
+  - **Fill layer:** Soft watercolor-like green wash that **intentionally bleeds past** the black outline (right column) — not a tight “paint bucket” fill inside the linework.
+- **User goal:** In **Presentation mode**, show line + wash; let the user **pick fill color** (e.g. deciduous green, evergreen, autumn) while **black lines stay unchanged**. Draft mode shows **line layer only**.
+- **Why not today:** `PieceOfFurniturePlanIcon` draws one PNG; `piece.setColor()` **tints the entire icon** from luminance (lines and fill together). Draft mode **skips** `planIcon` entirely (see SPIKE-12b). No separate fill vs stroke assets in SH3D catalog schema.
+- **Proposed rendering (Presentation):**
+  1. Scale to piece width × depth (same as today).
+  2. Draw **fill layer** PNG with user **fill color** multiplied into alpha — **no clip** to outline (bleed allowed).
+  3. Draw **line layer** PNG on top (always black / full opacity).
+  4. Draft: step 3 only (line asset from `planIconLine` or `planIcon` if line-only).
+- **Proposed data model:**
+  - Catalog: `planIcon#N` (line art, required); `planIconFill#N` (wash layer, optional — if absent, Presentation = line only).
+  - Placed piece: new property **`fillColor`** (Integer RGB) for wash tint; document **`color`** vs **`fillColor`** to avoid clash with stock luminance tint.
+  - Persist in home XML alongside existing furniture attributes.
+- **Alternatives considered (Aug 2026 decision):**
+  - *Option A (SPIKE-10 — shipped):* One composite PNG per plant as `planIcon` — Presentation OK, Draft wrong until SPIKE-12b.
+  - *Option B:* Two PNGs, engine change = SPIKE-12b only — Presentation uses composite, Draft uses line PNG; no user fill color.
+  - *Option C (this spike):* Two layers + independent fill color — matches artwork and landscape color coding; **pick up after SPIKE-12b**.
+- **Likely files:** `PlanComponent.java` (`PieceOfFurniturePlanIcon`, `paintPieceOfFurnitureTop`); `HomePieceOfFurniture` / `CatalogPieceOfFurniture`; `HomeXMLHandler` / exporter; `FurniturePanel` or modifier UI for fill color; `DefaultFurnitureCatalog.PropertyKey` extension for `planIconFill`; `.sh3f` authoring docs.
+- **Test plan:** Place plant → set fill color → lines stay black, wash changes hue; bleed visible outside outline; Draft hides wash; save/reopen; export/print in Draft monochrome.
+- **Effort:** ~3–5 days engine + UI; content pipeline adds paired PNGs per symbol (split script already produces both halves).
+- **Depends on:** SPIKE-10 asset pipeline; **SPIKE-12b required** for correct Draft behavior.
+- **Promotion:** Block F extension or post-M2 tranche; update [alp-phase-1-library-schema.md](alp-phase-1-library-schema.md) when promoted.
+
 ---
 
 ## Build & Tooling Requirements
 
 - **Ant task:** `ant -f build.xml buildModernDesktop jarExecutableModernDesktop`
 - **Modern compatibility:** Maintain the `PlanComponent.java` shim (no `JApplet` dependency) for current JDK builds.
-- **Dev validation:** Copy `install/SweetHome3D-7.5-modern.jar` to `install/Sweet Home 3D Dev.app/Contents/app/SweetHome3D.jar` after each spike that needs manual testing.
+- **Plant library build:** `./scripts/build-alp-plants-library.sh` — splits symbol sheet, writes **ASCII / ISO-8859-1** `PluginFurnitureCatalog.properties` (required for SH3D catalog load).
+- **Dev app refresh (macOS):** `./scripts/update-dev-app.sh` — builds the modern JAR, copies it into `install/Sweet Home 3D Dev.app`, clears quarantine, ad-hoc re-signs the bundle, and updates **Date Modified** (required after each JAR swap or macOS may report the app as damaged).
+- **Manual fallback:** Copy `install/SweetHome3D-7.5-modern.jar` to `install/Sweet Home 3D Dev.app/Contents/app/SweetHome3D.jar`, then run `xattr -cr` and `codesign --force --deep --sign -` on the `.app`.
 - **Submodule:** Commit code changes in `source/SweetHome3D-7.5-src` first, then update parent repo pointer.
 
 ---
@@ -568,7 +671,7 @@ M0 (complete) → A → B → C → D → E → F → G → H
 | B | 05, 06 | Area visuals |
 | C | 17, 18 | Text & draft output |
 | **D** | **07, 08** | **Area UX & calibration** |
-| E | 09, 10, 11 | Libraries |
+| E | 09, 10, 10b, 11 | Libraries |
 | F | 12, 14, 16 | Symbols & project setup |
 | G | 15, 20, 19 | Layer polish & deliverables |
 | H | 21, 22, 23 | MVP packaging |
