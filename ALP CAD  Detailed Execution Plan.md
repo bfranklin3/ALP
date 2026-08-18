@@ -46,21 +46,22 @@
 
 *Goal: Improve the plan's ability to communicate design intent via text and presentation styles.*
 
-1. [SPIKE-17] Width-Based Wrapped Text
+1. [SPIKE-17] Width-Based Wrapped Text [COMPLETED]
    - Description: Replace simple single-line text with wrapping labels for long planting notes or site descriptions.
-   - Files:
-     - `com.eteks.sweethome3d.model.HomeText` (add `width` property)
-     - `com.eteks.sweethome3d.swing.LabelPanel` (add width UI)
-     - `com.eteks.sweethome3d.swing.PlanComponent` (update `paintText` to use `TextLayout` or `AttributedString`)
-   - Touchpoints: Model, View, 2D Rendering.
-   - Order: Step 6.
-2. [SPIKE-18] One-Click Draft (Monochrome) Mode
+   - Status:
+     - Added `width` property to `Label` model (`null` = no wrap, legacy behavior).
+     - Added "Wrap width" spinner to `LabelPanel` in the Modify text dialog.
+     - Updated `PlanComponent` to wrap label text with `LineBreakMeasurer` when width is set.
+     - Persisted `width` in home file XML import/export.
+   - Touchpoints: Model, View, Controller, 2D Rendering.
+2. [SPIKE-18] One-Click Draft (Monochrome) Mode [COMPLETED]
    - Description: A global toggle to switch the plan from "Presentation Color" to "B&W Construction/Draft" style.
-   - Files:
-     - `com.eteks.sweethome3d.model.Home` (add `draftMode` toggle)
-     - `com.eteks.sweethome3d.swing.PlanComponent` (conditional logic to ignore textures/colors when painting)
+   - Status:
+     - Added `draftMode` property to `Home` model (persisted in home file XML).
+     - Updated `PlanComponent` to render plan in black and white when draft mode is enabled.
+     - Added Plan menu, context menu, and toolbar toggle (Draft mode / Presentation mode).
+     - Fixed action enablement in `HomeController`; Mac shortcut is `⌘⇧D` (avoids Dock `⌘⌥D` conflict).
    - Touchpoints: Model, View, 2D Rendering.
-   - Order: Step 7 (Final polish for output).
 
 ------
 
@@ -77,10 +78,6 @@ I recommend we start with Milestone Block A. It addresses the most critical "CAD
 Would you like to begin by implementing SPIKE-16B (the Areas Inventory Panel)? It is the most significant structural addition to the UI in this block.
 
 
-
-Room line thickness
-
- Let's move on to Milestone Block C (SPIKE-17: Width-Based Wrapped Text) 
 
 
 
