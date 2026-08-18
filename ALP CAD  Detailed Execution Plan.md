@@ -11,11 +11,11 @@
 | Metric | Status |
 |--------|--------|
 | **Blocks complete** | A, B, C, D (4 of 8) |
-| **Spikes complete** | 17 of 25 tracked items |
+| **Spikes complete** | 18 of 26 tracked items |
 | **Next block** | **Block F** — Levels & Site Plan (M3) — **IN PROGRESS** |
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
-**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, **14**, 16A, 16B, 17, 18  
+**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, **14**, **14b**, 16A, 16B, 17, 18  
 **In progress:** Block F — SPIKE-16 starter level template  
 **Next up:** SPIKE-16 validation, then SPIKE-15 (level reorder) or SPIKE-11 (outdoor pack)
 
@@ -40,6 +40,7 @@
 | SPIKE-12 | F | M2 | Pending | Custom 2D top-view symbol improvements |
 | SPIKE-13 | A | M3 | **COMPLETED** | Level locking |
 | SPIKE-14 | F | M3 | **COMPLETED** | Flat level defaults (Plan level, same-elevation Add) |
+| SPIKE-14b | F | M3 | **COMPLETED** | Add layer toolbar button + ALP strings |
 | SPIKE-15 | G | M3 | Pending | Level reordering (spike → implement or defer) |
 | SPIKE-16 | F | M3 | Pending | Starter level template (Reference / Existing / Proposed / Plants / Annotations) |
 | SPIKE-16A | A | M3 | **COMPLETED** | Furniture inventory level column |
@@ -376,6 +377,25 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 - [ ] Undo/redo Add level works (manual QA).
 
 - **Touchpoints:** Model, Controller, Preferences.
+
+---
+
+### 2b. [SPIKE-14b] Add Layer Toolbar Button — **COMPLETED (Aug 18, 2026)**
+
+- **Description:** Surface **Add layer** on the plan toolbar and align English strings with SPIKE-14 layer naming (Plan / Layer 2+).
+- **Context:** Stock SH3D wires `ADD_LEVEL` to menu, context menu, and the **+** tab on the level strip — but not the main toolbar. Post–SPIKE-14 QA: users wanted a faster path to add overlay layers.
+- **Delivered:**
+  - Plan toolbar button → `ADD_LEVEL` (same-elevation overlay per SPIKE-14).
+  - English strings: **Add layer** (menu, toolbar tooltip, undo label).
+  - Level tab **+** tooltip updated to **Add layer** (was stock **Add level**).
+- **Likely files:** `HomePane.java` (`createToolBar`), `swing/package.properties`, `viewcontroller/package.properties` (`undoAddLevel`).
+- **Out of scope:** Hide or relabel **Add level at same elevation** menu item (redundant with SPIKE-14; defer to SPIKE-22).
+- **Test plan:**
+  - [ ] Toolbar **Add layer** button visible after zoom controls; creates **Layer 2** at same elevation.
+  - [ ] Plan → Levels menu shows **Add layer**; shortcut ⌘⌥N unchanged.
+  - [ ] Level tab **+** tooltip reads **Add layer**.
+  - [ ] Undo label reads **Add layer**.
+- **Touchpoints:** View (toolbar strings only).
 
 ---
 
