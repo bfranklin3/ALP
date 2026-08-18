@@ -441,6 +441,111 @@ All M0 spikes are **documentation-only** — completed during August 2026 spike 
 
 ---
 
+## Backlog / Ideas
+
+*Items below are **not** part of the Phase 1 block sequence (A–H). They are candidate spikes to pick up after current milestones, or when a workflow gap outweighs the next scheduled spike. IDs start at **SPIKE-26** to avoid renumbering the master index.*
+
+| Spike | Status | Summary |
+|-------|--------|---------|
+| SPIKE-26 | Idea | Ephemeral two-point **Measure** tool (+ optional Alt-drag overlay) |
+| SPIKE-27 | Idea | **Plan assembly** grouping — walls + doors/windows + furniture (phased) |
+
+### [SPIKE-26] Measure tool (ephemeral two-point ruler)
+
+- **Problem:** There is no dedicated measuring tape. **Create dimensions** always leaves a persistent `DimensionLine` on the plan. Edge **Rulers** (Preferences) are viewport scale ticks, not point-to-point. Edit tooltips only show distance while dragging geometry.
+- **Goal:** Quick “how far is it?” checks on site plans without annotating the drawing.
+- **Scope (spike v1):**
+  - **Primary — new Plan mode:** Dedicated **Measure** tool with toolbar button placed **next to Create dimensions** (Plan toolbar / menu).
+  - **Secondary — modifier overlay:** While in **Select** or **Pan**, hold **Alt** and drag to show the same ephemeral distance readout (power-user shortcut; document in tip text).
+  - **Ephemeral only:** No `DimensionLine` (or other model object) added to the home file. Esc clears the current measurement; tool stays active for repeated use.
+  - **Two-point only:** First click = start, move = live dashed line + length label, second click = final reading (then ready for next measure).
+  - **Snap scope:** **Anywhere on the plan** — free point placement; no requirement to snap to wall/area/furniture edges (magnetism toggle may still apply to grid/cursor alignment if useful, but not edge-only like dimension hover).
+  - **Units:** Display in user’s length preference (including ft/in when applicable).
+- **Out of scope for spike v1:** Convert-to-dimension, chain/multi-segment measure, area/angle measure, 3D measure.
+- **Likely files:**
+  - `PlanController.java` — new `Mode.MEASUREMENT` + state(s) (reuse feedback patterns from `DimensionLineCreationState` / `setToolTipFeedback`)
+  - `PlanView.java` — ephemeral line + label paint (may reuse `setDimensionLinesFeedback` or parallel feedback API)
+  - `HomePane.java` / `HomeController.java` — action, toolbar button, shortcut, mode wiring
+  - `package.properties` — menu labels, tooltips, shortcut hints (include Alt-drag note)
+- **UX sketch:**
+  1. User activates **Measure** (toolbar or shortcut).
+  2. Click start point → live preview to cursor → click end point → show final distance.
+  3. Esc clears; further clicks start a new measurement.
+  4. In Select/Pan: Alt+drag shows the same preview without switching tools.
+- **Test plan:** Measure across open plan space, across a background image, and between arbitrary points; confirm nothing persists in saved `.sh3d`; confirm Alt-drag in Select matches dedicated tool readout; verify imperial and metric display.
+- **Touchpoints:** View, Controller (no model/XML changes if ephemeral).
+- **Effort (estimate):** ~1–2 days for spike v1.
+- **Depends on:** None (can ship independently of Block E–H).
+- **Promotion:** Pull into a numbered block or post-MVP tranche when prioritized.
+
+### [SPIKE-27] Plan assembly grouping (walls + openings + furniture)
+
+- **Problem:** **Group / Ungroup** exists for furniture only (`HomeFurnitureGroup`). Walls live in `home.getWalls()`; doors and windows are `HomeDoorOrWindow` in `home.getFurniture()` and attach to walls **geometrically** (`isBoundToWall()`), not by a stored wall ID. There is no way to group a building shell (walls + doors + windows + other objects) for one-click re-selection and move-as-unit workflows. Shift-click multi-select and marquee select walls work, but doors/windows often **fail to marquee-select** with walls because wall polygons are thick while opening footprints are thin along the wall axis.
+- **Goal:** Select and move a coherent assembly (e.g. a facade or outbuilding) as one unit; ungroup when no longer needed.
+- **Feasibility:** **Yes, but non-trivial.** Mixed wall + furniture **move already works** when all members are selected (`PlanController.moveItems()`). The gaps are **easy selection** (especially openings on walls) and **persistent grouping**. Extending `HomeFurnitureGroup` to hold walls is **not viable** — different storage, move rules (wall endpoint graph), and serialization paths.
+
+**What exists today**
+
+| Capability | Behavior | Gap |
+|---|---|---|
+| Furniture Group / Ungroup | `FurnitureController.groupSelectedFurniture()`; group is a `HomePieceOfFurniture` | Walls not eligible |
+| Shift + click | Multi-select walls, furniture, etc. | Manual; no persistence |
+| Marquee select | All visible `Selectable` items whose shape intersects rectangle | Doors/windows often missed when boxing wall segments |
+| Mixed move | `moveItems()` translates walls + furniture together when multiple items selected | Requires getting all members selected first |
+| Door ↔ wall binding | Geometric snap on move; no parent/child ID | Openings don't follow wall unless explicitly in selection |
+
+**Options (smallest → largest scope)**
+
+| Option | Description | Pros | Cons | Est. effort |
+|---|---|---|---|---|
+| **A — Select openings with walls** | Command or marquee rule: given selected wall(s), add bound `HomeDoorOrWindow` on those walls (reuse wall-binding / overlap logic) | Fast win; fixes marquee pain | No persistent group | ~1–2 days |
+| **B — `PlanAssembly` model** *(recommended for real Group/Ungroup)* | New object holding member IDs (wall IDs + furniture IDs); select/move/ungroup via assembly; persist in `.sh3d` XML | Matches Group/Ungroup UX; supports arbitrary mixed content | New model + selection/move/delete/copy/undo/XML | ~1–2 weeks |
+| **C — Wall-only group** | Group walls like furniture groups; move walls as a set | Simpler than B | Doors/windows excluded unless A is layered on top | ~3–5 days |
+| **D — Temporary selection set** | In-memory named sets; no file persistence | Quick prototype | Lost on close; weak for saved projects | ~1–2 days |
+
+**Recommended phased approach**
+
+1. **Phase 1 (selection spike) — Option A**
+   - Menu action: **Include wall openings** (add doors/windows geometrically on selected walls).
+   - Marquee enhancement: when rectangle selects wall(s), auto-include bound openings on those walls.
+   - Validates geometry before committing to full assembly model.
+2. **Phase 2 (grouping feature) — Option B**
+   - New `PlanAssembly` (name TBD): reference list of wall + furniture member IDs.
+   - **Group** enabled when selection has ≥2 movable members across walls and/or furniture (Plan menu, near furniture Group).
+   - **Ungroup** removes assembly record; objects remain in place.
+   - Select assembly → all members selected (or click proxy / bounding box → expand to members).
+   - Move assembly → existing `moveItems()` on members.
+   - Persist new XML element (backward compatible if absent).
+
+**Design decisions to resolve before Phase 2**
+
+1. **Group contents:** Walls + bound openings only, or any mix (areas, labels, loose plants)?
+2. **Edit mode:** After grouping, can individual wall endpoints still be resized, or assembly is move-only until ungrouped?
+3. **Joined walls:** If a grouped wall shares a corner with a wall outside the group, keep current SH3D joint behavior (neighbor endpoint moves only if neighbor is in selection)?
+4. **Copy/paste:** Must duplicate as a unit in v1?
+5. **3D view:** Plan-only grouping acceptable for spike, or must 3D treat assembly as one object?
+
+**Out of scope for initial spikes:** Rotating a mixed assembly as a unit; nested assemblies; grouping rooms/polylines/dimension lines (unless explicitly expanded later).
+
+- **Likely files (Phase 1):**
+  - `PlanController.java` — marquee selection expansion; `getSelectableItemsIntersectingRectangle` / wall–opening association
+  - `HomeController.java` — enable new selection helper action
+  - `PlanController.java` / `HomeDoorOrWindow.java` — bound-to-wall geometry queries
+  - `package.properties` — action labels and tips
+- **Likely files (Phase 2):**
+  - New `PlanAssembly.java` (model)
+  - `Home.java` — assembly list, selection helpers
+  - `HomeXMLHandler.java` / writer — persistence
+  - `PlanController.java`, `HomeController.java`, `FurnitureController.java` (or new controller) — group/ungroup, move, delete, copy, undo
+  - `HomePane.java` — Group/Ungroup actions (Plan menu / context menu)
+- **Test plan (Phase 1):** Marquee around wall with doors/windows → openings included; manual **Include wall openings** on partial selection; move mixed selection → openings stay aligned.
+- **Test plan (Phase 2):** Group walls + doors + loose object → single-click re-select → move → ungroup → save/reopen `.sh3d` → copy/paste assembly; wall joints with ungrouped neighbors behave as stock SH3D.
+- **Touchpoints:** Model (Phase 2), Controller, View, I/O (Phase 2).
+- **Depends on:** None for Phase 1; Phase 2 builds on Phase 1 geometry rules.
+- **Promotion:** Pull into post-MVP tranche or new milestone block when prioritized.
+
+---
+
 ## Build & Tooling Requirements
 
 - **Ant task:** `ant -f build.xml buildModernDesktop jarExecutableModernDesktop`
