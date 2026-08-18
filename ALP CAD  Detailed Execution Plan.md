@@ -11,13 +11,13 @@
 | Metric | Status |
 |--------|--------|
 | **Blocks complete** | A, B, C (3 of 8) |
-| **Spikes complete** | 11 of 25 tracked items |
-| **Next block** | **Block D** — Landscape UX & Underlay (M1 finish) |
+| **Spikes complete** | 12 of 25 tracked items |
+| **Next block** | **Block D** — Landscape UX & Underlay (SPIKE-08) |
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
-**Completed spikes:** SPIKE-01, 02, 03, 04, 05, 06, 13, 16A, 16B, 17, 18  
-**In progress:** —  
-**Next up:** SPIKE-07, SPIKE-08
+**Completed spikes:** SPIKE-01, 02, 03, 04, 05, 06, 07, 13, 16A, 16B, 17, 18  
+**In progress:** SPIKE-08  
+**Next up:** SPIKE-08
 
 ---
 
@@ -31,8 +31,8 @@
 | SPIKE-04 | M0 | Foundation | **COMPLETED** | UI / inspector touchpoints identified |
 | SPIKE-05 | B | M1 | **COMPLETED** | Area fill opacity control |
 | SPIKE-06 | B | M1 | **COMPLETED** | Polygon corner smoothing + per-vertex sharp corners |
-| SPIKE-07 | D | M1 | Pending | Soften “room” → “area” on key UI surfaces |
-| SPIKE-08 | D | M1 | Pending | Feet + inches in background calibration |
+| SPIKE-07 | D | M1 | **COMPLETED** | Soften “room” → “area / room” on key UI surfaces |
+| SPIKE-08 | D | M1 | **In progress** | Feet + inches in background calibration |
 | SPIKE-09 | E | M2 | Pending | Phase 1 library schema |
 | SPIKE-10 | E | M2 | Pending | Plant starter pack |
 | SPIKE-11 | E | M2 | Pending | Outdoor-feature starter pack |
@@ -177,9 +177,12 @@ All M0 spikes are **documentation-only** — completed during August 2026 spike 
 
 ---
 
-### 1. [SPIKE-07] Soften "Room" Terminology on Key UI Surfaces — Pending
+### 1. [SPIKE-07] Soften "Room" Terminology on Key UI Surfaces — **COMPLETED**
 
-- **Description:** Rename user-facing "room" strings to "area" (or "area / room" where ambiguity helps) on high-traffic surfaces only — **not** a full codebase or model rename.
+- **Description:** Rename user-facing "room" strings to "area" or "area / room" on high-traffic surfaces only — **not** a full codebase or model rename.
+- **Status:**
+  - Updated English strings in `swing/package.properties` for Plan menu/toolbar, context menu, Modify dialog, tips, preferences label, and select-object feedback.
+  - Left unchanged: Java/XML identifiers, undo presentation names, non-English locale files, stock icon paths.
 - **Scope:**
   - **In:** Menus, toolbar tooltips, mode names, Modify dialog titles, Areas inventory tab labels, creation tips, context menu items.
   - **Out:** Java class names (`Room`, `RoomPanel`), XML element names, internal undo strings, full localization pass for all 20+ languages.
