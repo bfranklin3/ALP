@@ -11,13 +11,13 @@
 | Metric | Status |
 |--------|--------|
 | **Blocks complete** | A, B, C, D (4 of 8) |
-| **Spikes complete** | 19 of 27 tracked items |
+| **Spikes complete** | 19 of 29 tracked items |
 | **Next block** | **Block F** — Levels & Site Plan (M3) — **IN PROGRESS** |
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
 **Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **16**, 16A, 16B, 17, 18  
-**In progress:** Block F — wrap-up / Block G prep  
-**Next up:** SPIKE-15 (level reorder) or SPIKE-11 (outdoor pack)
+**In progress:** Block G — **SPIKE-15** layer UX (15a, 15b)  
+**Next up:** SPIKE-15a tab reorder, then SPIKE-15b Manage layers (or SPIKE-11 outdoor pack)
 
 ---
 
@@ -41,7 +41,9 @@
 | SPIKE-13 | A | M3 | **COMPLETED** | Level locking |
 | SPIKE-14 | F | M3 | **COMPLETED** | Flat level defaults (Plan level, same-elevation Add) |
 | SPIKE-14b | F | M3 | **COMPLETED** | Add layer toolbar button + ALP strings |
-| SPIKE-15 | G | M3 | Pending | Level reordering (spike → implement or defer) |
+| SPIKE-15 | G | M3 | **IN PROGRESS** | Layer reorder UX (stock capability documented; surface it better) |
+| SPIKE-15a | G | M3 | Pending | Tab context menu — Move layer up / down |
+| SPIKE-15b | G | M3 | Pending | Manage layers dialog |
 | SPIKE-16 | F | M3 | **COMPLETED** | Starter level template (Reference / Existing / Proposed / Plants / Annotations) |
 | SPIKE-16A | A | M3 | **COMPLETED** | Furniture inventory level column |
 | SPIKE-16B | A | M3 | **COMPLETED** | Areas (room) inventory panel |
@@ -407,6 +409,7 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
   - **File → New site plan…** (`⌘⇧S`) — programmatic five-level template via `AlpLevelDefaults.addStarterSitePlanLevels()`.
   - **File → New** unchanged — single **Plan** level (SPIKE-14 blank-site path).
   - All template levels at elevation **0**; **Reference** locked; **Proposed** selected for drawing.
+  - **Default draw/tab order** — levels created in order Reference → Existing → Proposed → Plants → Annotations; `Home.addLevel()` assigns `elevationIndex` 0…4 at the same elevation, so **Reference is bottom of stack (underlay)** and **Annotations on top** without extra code (same intent as Option D).
   - Level names localized in `AlpLevelDefaults.properties`.
 - **Likely files:** `AlpLevelDefaults.java`, `HomeApplication.createSitePlanHome()`, `HomeController.newSitePlan()`, `HomePane` File menu, `HomeView.ActionType.NEW_SITE_PLAN`.
 - **Out of scope:** Per-level colors (SH3D `Level` has no color field); hide/show defaults beyond all viewable.
@@ -433,23 +436,52 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 
 ### Exit criteria
 
-- Level reorder decision documented (implemented or explicitly deferred).
+- Level reorder decision documented (implemented or explicitly deferred). — **Done:** stock `elevationIndex` reorder documented; **15a/15b** surface it in ALP UX.
 - Print/export presets reduce manual setup for draft and presentation output.
 - Persistent inspector decision documented (small prototype or defer to Block H).
 
 ---
 
-### 1. [SPIKE-15] Level Reordering — Pending (investigation first)
+### 1. [SPIKE-15] Level Reordering — **IN PROGRESS (investigation complete, Aug 18, 2026)**
 
-- **Description:** Determine whether users can reorder levels in the UI for MVP, and implement only if scope is small.
-- **Likely files:** `LevelPanel`, `LevelsTableModel`, `Home` level list ordering, `PlanComponent` level display order.
+- **Original ask:** Determine whether users can reorder levels for MVP, and implement drag-reorder only if scope is small.
+- **Finding — capability already exists (stock SH3D ≥ 5.0):**
+  - Stack order at a given elevation is stored as **`elevationIndex`**, sorted with **`elevation`** in `Home.LEVEL_ELEVATION_COMPARATOR`.
+  - For ALP flat site plans (all layers at elevation 0), **`elevationIndex` = overlay draw order**.
+  - **Modify level** dialog (`LevelPanel`) — green **Move level up/down** arrows adjust `elevationIndex`; summary table updates live; **OK** commits with undo (`LevelController.modifyLevels()`).
+  - **Double-click level tab** opens Modify level (`MultipleLevelsPlanPanel` → `modifySelectedLevel()`).
+  - Level tabs and plan view refresh on `ELEVATION_INDEX` change.
+  - **Manual QA (Aug 18):** Reorder works; friction is discoverability and workflow, not missing engine support.
+- **Default stack order (Option D — no separate spike):** Delivered in **SPIKE-16**. `AlpLevelDefaults.addStarterSitePlanLevels()` adds levels in order Reference → … → Annotations; each `home.addLevel()` at elevation 0 receives `elevationIndex` 0…4 automatically → Reference underlay, Annotations on top in a new site plan.
+- **Out of scope for SPIKE-15:** New reorder model, drag-reorder inside Modify level (optional later), cross-elevation reorder (multi-story; not ALP Phase 1).
+- **Decision:** Do **not** defer reorder. Reframe SPIKE-15 as **UX to surface existing behavior**, via sub-spikes **15a** and **15b** below.
+- **Block G exit (partial):** Level reorder decision documented — **implemented in stock; ALP improves exposure.**
+
+#### 1a. [SPIKE-15a] Tab context menu — Move layer up / down — Pending
+
+- **Description:** Right-click a level tab → **Move layer up** / **Move layer down** without opening Modify level.
+- **Rationale:** Fastest reorder path for SPIKE-16 five-layer workflows; reuses `LevelController.setElevationIndex()` + undo (same as Modify level arrows).
+- **Likely files:** `MultipleLevelsPlanPanel` (tab popup), `PlanController` or `LevelController` (move helper + undo edit), `package.properties` (ALP strings: “layer” not “level”).
 - **Steps:**
-  1. **Spike (≤ half day):** Trace how level order is stored and used in plan/3D/export.
-  2. Document risk (elevation vs display order coupling).
-  3. **Decision gate:** Implement drag-reorder in `LevelPanel` **or** mark **DEFERRED** with rationale in this doc.
-  4. If implementing: persist order, undo support, verify elevation semantics unchanged.
-- **Test plan:** Reorder levels (if implemented); confirm plan view and inventory reflect new order.
-- **Touchpoints:** Model, View, Controller.
+  1. Add popup items on level tabs (not the **+** add tab).
+  2. Enable/disable up/down based on same-elevation neighbors (mirror `LevelPanel.setElevationIndexButtonsEnabled` logic).
+  3. Apply immediately with undo label (e.g. “Move layer up”).
+- **Test plan:** New site plan → right-click **Reference** → Move down disabled at bottom; move **Annotations** up/down; tab order and summary table match; undo/redo.
+- **Touchpoints:** View, Controller.
+
+#### 1b. [SPIKE-15b] Manage layers dialog — Pending
+
+- **Description:** **Plan → Manage layers…** — dedicated dialog to view and reorder all layers (not buried in single-level Modify).
+- **Rationale:** Matches CAD layer-manager mental model; overview of Name, Viewable, Locked; scales beyond five template layers.
+- **Likely files:** New `ManageLayersPanel` (or mode of `LevelPanel`), `PlanController` / `LevelController`, `HomePane` menu action (`MANAGE_LEVELS`), `HomeView.ActionType`.
+- **Steps:**
+  1. Table of all levels (select any row); **Up/Down** buttons (v1); optional drag-reorder v2.
+  2. **Apply** commits order via existing `updateLevelElevationIndex` path; undo support.
+  3. Double-click row → open Modify layer for that level (existing dialog).
+  4. ALP strings: “Manage layers”, “Move layer up/down”.
+- **Depends on:** SPIKE-15 investigation complete; **15a** optional first (can ship independently).
+- **Test plan:** Open Manage layers from menu; reorder Proposed vs Plants; verify tabs, draw order, inventory Level column; double-click opens Modify layer.
+- **Touchpoints:** View, Controller.
 
 ---
 
