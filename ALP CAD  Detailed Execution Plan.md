@@ -11,13 +11,13 @@
 | Metric | Status |
 |--------|--------|
 | **Blocks complete** | A, B, C, D (4 of 8) |
-| **Spikes complete** | 20 of 29 tracked items |
+| **Spikes complete** | 22 of 29 tracked items |
 | **Next block** | **Block F** — Levels & Site Plan (M3) — **IN PROGRESS** |
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
-**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **16**, 16A, 16B, 17, 18  
-**In progress:** Block G — **SPIKE-15b** Manage layers dialog  
-**Next up:** SPIKE-15b, then SPIKE-11 (outdoor pack) or SPIKE-20 (print presets)
+**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b**, **16**, 16A, 16B, 17, 18  
+**In progress:** Block G — wrap-up / next spike selection  
+**Next up:** SPIKE-11 (outdoor pack) or SPIKE-20 (print presets)
 
 ---
 
@@ -41,9 +41,9 @@
 | SPIKE-13 | A | M3 | **COMPLETED** | Level locking |
 | SPIKE-14 | F | M3 | **COMPLETED** | Flat level defaults (Plan level, same-elevation Add) |
 | SPIKE-14b | F | M3 | **COMPLETED** | Add layer toolbar button + ALP strings |
-| SPIKE-15 | G | M3 | **IN PROGRESS** | Layer reorder UX (stock capability documented; surface it better) |
+| SPIKE-15 | G | M3 | **COMPLETED** | Layer reorder UX (tab menu + Manage layers dialog) |
 | SPIKE-15a | G | M3 | **COMPLETED** | Tab context menu — Move layer up / down |
-| SPIKE-15b | G | M3 | Pending | Manage layers dialog |
+| SPIKE-15b | G | M3 | **COMPLETED** | Manage layers dialog + toolbar swap |
 | SPIKE-16 | F | M3 | **COMPLETED** | Starter level template (Reference / Existing / Proposed / Plants / Annotations) |
 | SPIKE-16A | A | M3 | **COMPLETED** | Furniture inventory level column |
 | SPIKE-16B | A | M3 | **COMPLETED** | Areas (room) inventory panel |
@@ -52,7 +52,7 @@
 | SPIKE-19 | G | M4 | Pending | Persistent inspector (spike → prototype or defer) |
 | SPIKE-20 | G | M4 | Pending | MVP print / export presets |
 | SPIKE-21 | H | M5 | Pending | Minimum sidebar / inspector improvements |
-| SPIKE-22 | H | M5 | Pending | Focused workflow UI pass |
+| SPIKE-22 | H | M5 | Pending | Focused workflow UI pass (incl. ESC exits creation tools) |
 | SPIKE-23 | H | M5 | Pending | Phase 1 stock vs. branded scope definition |
 
 ---
@@ -397,7 +397,7 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
   - [ ] Plan → Levels menu shows **Add layer**; shortcut ⌘⌥N unchanged.
   - [ ] Level tab **+** tooltip reads **Add layer**.
   - [ ] Undo label reads **Add layer**.
-- **Touchpoints:** View (toolbar strings only).
+- **Note (SPIKE-15b):** Plan toolbar slot repurposed for **Manage layers**; Add layer remains on tab **+**, Plan → Levels menu, and shortcuts.
 
 ---
 
@@ -442,7 +442,7 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 
 ---
 
-### 1. [SPIKE-15] Level Reordering — **IN PROGRESS (investigation complete, Aug 18, 2026)**
+### 1. [SPIKE-15] Level Reordering — **COMPLETED (Aug 18, 2026)**
 
 - **Original ask:** Determine whether users can reorder levels for MVP, and implement drag-reorder only if scope is small.
 - **Finding — capability already exists (stock SH3D ≥ 5.0):**
@@ -473,18 +473,26 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
   - [ ] Move layer down disabled when neighbor is at different elevation (multi-story home).
 - **Touchpoints:** View, Controller.
 
-#### 1b. [SPIKE-15b] Manage layers dialog — Pending
+#### 1b. [SPIKE-15b] Manage layers dialog — **COMPLETED (Aug 18, 2026)**
 
-- **Description:** **Plan → Manage layers…** — dedicated dialog to view and reorder all layers (not buried in single-level Modify).
+- **Description:** **Plan → Levels → Manage layers…** — modal dialog to view and reorder all layers (not buried in single-level Modify).
 - **Rationale:** Matches CAD layer-manager mental model; overview of Name, Viewable, Locked; scales beyond five template layers.
-- **Likely files:** New `ManageLayersPanel` (or mode of `LevelPanel`), `PlanController` / `LevelController`, `HomePane` menu action (`MANAGE_LEVELS`), `HomeView.ActionType`.
-- **Steps:**
-  1. Table of all levels (select any row); **Up/Down** buttons (v1); optional drag-reorder v2.
-  2. **Apply** commits order via existing `updateLevelElevationIndex` path; undo support.
-  3. Double-click row → open Modify layer for that level (existing dialog).
-  4. ALP strings: “Manage layers”, “Move layer up/down”.
-- **Depends on:** SPIKE-15 investigation complete; **15a** optional first (can ship independently).
-- **Test plan:** Open Manage layers from menu; reorder Proposed vs Plants; verify tabs, draw order, inventory Level column; double-click opens Modify layer.
+- **Delivered:**
+  - **`ManageLayersPanel`** — table (Name | Viewable | Locked), top row = top of draw stack; **▲/▼** live reorder via `LevelController.moveLevelElevationIndex()` (immediate + undo per move).
+  - **Modify layer…** opens existing **Modify level** modal for selected row (no double-click in v1).
+  - **Close** only (not Cancel — use Undo to revert moves).
+  - **Selection sync:** row click → `planController.setSelectedLevel()` → plan tabs follow.
+  - **Toolbar:** **Add layer** button (SPIKE-14b) replaced with **Manage layers**; Add layer remains on tab **+**, Plan → Levels menu, and shortcuts.
+  - **`MANAGE_LAYERS`** action: `PlanController.manageLayers()`, `ViewFactory.createManageLayersView()`, menu + toolbar wiring.
+- **Likely files:** `ManageLayersPanel.java`, `PlanController.java`, `LevelController.java`, `HomePane.java`, `HomeView.java`, `HomeController.java`, `ViewFactory.java`, `SwingViewFactory.java`, `package.properties`.
+- **Out of scope (v1):** Left-column docked layer manager (SPIKE-19/21); double-click row; drag-reorder.
+- **Test plan:**
+  - [ ] **File → New site plan…** → **Plan → Levels → Manage layers…** (or toolbar button after zoom).
+  - [ ] Table shows all five layers; top row = Annotations (top of stack).
+  - [ ] Select **Proposed** → plan tab switches to Proposed.
+  - [ ] Move **Proposed** up/down → tabs and draw order update immediately; undo/redo.
+  - [ ] **Modify layer…** opens Modify level for selected row; Close returns to Manage layers.
+  - [ ] Toolbar shows **Manage layers**, not Add layer; tab **+** still adds layers.
 - **Touchpoints:** View, Controller.
 
 ---
@@ -549,11 +557,16 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 
 - **Description:** One small, workflow-oriented UI improvement batch — not a whole-shell rewrite.
 - **Examples:** Plan setup checklist, simplified catalog categories, hide irrelevant stock menus, default panel layout.
+- **Confirmed friction (Aug 18 QA):** After activating **Create walls**, **Create area/room**, **Create polylines**, **Create dimensions**, or **Add texts**, the only way to exit the tool is clicking **Select** (pointer). **ESC** should return to Select when the tool is idle; when mid-draw, ESC should cancel the current operation first (keep stock SH3D behavior), then a second ESC exits the tool.
+- **ESC exit — implementation notes:**
+  - `PlanComponent` already binds ESC to `PlanController.escape()`; creation idle states (`*CreationState`) currently no-op on escape.
+  - Override `escape()` on idle creation states to `setState(getSelectionState())`; toolbar sync already listens to `PlanController.Property.MODE` in `HomePane`.
+  - QA: all five creation tools; verify plan view has keyboard focus; mid-draw cancel + second ESC to pointer.
 - **Steps:**
-  1. List top 3 friction points from Blocks A–G testing.
+  1. List top 3 friction points from Blocks A–G testing (include ESC exit above).
   2. Pick items achievable in a single focused pass (≤ ~1 week effort).
   3. Implement; rebuild dev app; validate against [sweethome3d-spike-day-2-findings.md](sweethome3d-spike-day-2-findings.md) mixed-plan scenario.
-- **Touchpoints:** View, Controller.
+- **Touchpoints:** View, Controller (`PlanController`, `PlanComponent`).
 
 ---
 
