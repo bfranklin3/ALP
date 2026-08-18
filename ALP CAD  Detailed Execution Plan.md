@@ -11,13 +11,13 @@
 | Metric | Status |
 |--------|--------|
 | **Blocks complete** | A, B, C, D (4 of 8) |
-| **Spikes complete** | 19 of 29 tracked items |
+| **Spikes complete** | 20 of 29 tracked items |
 | **Next block** | **Block F** — Levels & Site Plan (M3) — **IN PROGRESS** |
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
 **Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **16**, 16A, 16B, 17, 18  
-**In progress:** Block G — **SPIKE-15** layer UX (15a, 15b)  
-**Next up:** SPIKE-15a tab reorder, then SPIKE-15b Manage layers (or SPIKE-11 outdoor pack)
+**In progress:** Block G — **SPIKE-15b** Manage layers dialog  
+**Next up:** SPIKE-15b, then SPIKE-11 (outdoor pack) or SPIKE-20 (print presets)
 
 ---
 
@@ -42,7 +42,7 @@
 | SPIKE-14 | F | M3 | **COMPLETED** | Flat level defaults (Plan level, same-elevation Add) |
 | SPIKE-14b | F | M3 | **COMPLETED** | Add layer toolbar button + ALP strings |
 | SPIKE-15 | G | M3 | **IN PROGRESS** | Layer reorder UX (stock capability documented; surface it better) |
-| SPIKE-15a | G | M3 | Pending | Tab context menu — Move layer up / down |
+| SPIKE-15a | G | M3 | **COMPLETED** | Tab context menu — Move layer up / down |
 | SPIKE-15b | G | M3 | Pending | Manage layers dialog |
 | SPIKE-16 | F | M3 | **COMPLETED** | Starter level template (Reference / Existing / Proposed / Plants / Annotations) |
 | SPIKE-16A | A | M3 | **COMPLETED** | Furniture inventory level column |
@@ -457,16 +457,20 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 - **Decision:** Do **not** defer reorder. Reframe SPIKE-15 as **UX to surface existing behavior**, via sub-spikes **15a** and **15b** below.
 - **Block G exit (partial):** Level reorder decision documented — **implemented in stock; ALP improves exposure.**
 
-#### 1a. [SPIKE-15a] Tab context menu — Move layer up / down — Pending
+#### 1a. [SPIKE-15a] Tab context menu — Move layer up / down — **COMPLETED (Aug 18, 2026)**
 
 - **Description:** Right-click a level tab → **Move layer up** / **Move layer down** without opening Modify level.
-- **Rationale:** Fastest reorder path for SPIKE-16 five-layer workflows; reuses `LevelController.setElevationIndex()` + undo (same as Modify level arrows).
-- **Likely files:** `MultipleLevelsPlanPanel` (tab popup), `PlanController` or `LevelController` (move helper + undo edit), `package.properties` (ALP strings: “layer” not “level”).
-- **Steps:**
-  1. Add popup items on level tabs (not the **+** add tab).
-  2. Enable/disable up/down based on same-elevation neighbors (mirror `LevelPanel.setElevationIndexButtonsEnabled` logic).
-  3. Apply immediately with undo label (e.g. “Move layer up”).
-- **Test plan:** New site plan → right-click **Reference** → Move down disabled at bottom; move **Annotations** up/down; tab order and summary table match; undo/redo.
+- **Delivered:**
+  - `LevelController.moveLevelElevationIndex()` — reuses `elevationIndex` swap logic + undo.
+  - `PlanController.moveSelectedLayerUp/Down()` + enable checks in `HomeController.enableLevelActions()`.
+  - Tab popup items via `MultipleLevelsPlanPanel` (same routing as Modify level / Delete level).
+  - ALP strings: **Move layer up/down**; undo labels in `LevelController` properties.
+- **Likely files:** `LevelController.java`, `PlanController.java`, `HomeController.java`, `HomePane.java`, `MultipleLevelsPlanPanel.java`, `HomeView.java`, `package.properties`.
+- **Test plan:**
+  - [ ] New site plan → right-click **Reference** tab → Move layer down disabled at stack bottom.
+  - [ ] Move **Annotations** up/down → tab order updates immediately.
+  - [ ] Undo/redo move.
+  - [ ] Move layer down disabled when neighbor is at different elevation (multi-story home).
 - **Touchpoints:** View, Controller.
 
 #### 1b. [SPIKE-15b] Manage layers dialog — Pending
