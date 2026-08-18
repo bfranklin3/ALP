@@ -11,13 +11,13 @@
 | Metric | Status |
 |--------|--------|
 | **Blocks complete** | A, B, C, D (4 of 8) |
-| **Spikes complete** | 18 of 26 tracked items |
+| **Spikes complete** | 19 of 27 tracked items |
 | **Next block** | **Block F** — Levels & Site Plan (M3) — **IN PROGRESS** |
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
-**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, **14**, **14b**, 16A, 16B, 17, 18  
-**In progress:** Block F — SPIKE-16 starter level template  
-**Next up:** SPIKE-16 validation, then SPIKE-15 (level reorder) or SPIKE-11 (outdoor pack)
+**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **16**, 16A, 16B, 17, 18  
+**In progress:** Block F — wrap-up / Block G prep  
+**Next up:** SPIKE-15 (level reorder) or SPIKE-11 (outdoor pack)
 
 ---
 
@@ -42,7 +42,7 @@
 | SPIKE-14 | F | M3 | **COMPLETED** | Flat level defaults (Plan level, same-elevation Add) |
 | SPIKE-14b | F | M3 | **COMPLETED** | Add layer toolbar button + ALP strings |
 | SPIKE-15 | G | M3 | Pending | Level reordering (spike → implement or defer) |
-| SPIKE-16 | F | M3 | Pending | Starter level template (Reference / Existing / Proposed / Plants / Annotations) |
+| SPIKE-16 | F | M3 | **COMPLETED** | Starter level template (Reference / Existing / Proposed / Plants / Annotations) |
 | SPIKE-16A | A | M3 | **COMPLETED** | Furniture inventory level column |
 | SPIKE-16B | A | M3 | **COMPLETED** | Areas (room) inventory panel |
 | SPIKE-17 | C | M4 | **COMPLETED** | Width-based wrapped text |
@@ -283,7 +283,7 @@ All M0 spikes are **documentation-only** — completed during August 2026 spike 
 
 - Custom 2D top-view assets proven feasible without deep engine surgery.
 - New homes default to flat, landscape-friendly level setup.
-- Optional starter template creates Reference / Existing / Proposed / Plants / Annotations levels.
+- Optional starter template creates Reference / Existing / Proposed / Plants / Annotations levels — **delivered in SPIKE-16**.
 
 ---
 
@@ -399,17 +399,27 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 
 ---
 
-### 3. [SPIKE-16] Starter Level Grouping Template — Pending
+### 3. [SPIKE-16] Starter Level Grouping Template — **COMPLETED (Aug 18, 2026)**
 
-- **Description:** Offer a new-project template (or first-run prompt) with levels: Reference, Existing, Proposed, Plants, Annotations.
-- **Note:** SPIKE-16A and SPIKE-16B (inventory visibility) are already complete.
-- **Likely files:** `HomeController.newHome`, example homes, or a "New from template" action; `Level` creation helpers.
-- **Steps:**
-  1. Define level names, suggested colors/viewability, and optional lock on Reference.
-  2. Implement as named template home or programmatic level creation on new project.
-  3. Wire into File menu (extend `NEW_HOME_FROM_EXAMPLE` pattern) or post-create wizard step — pick smallest UX.
-  4. Document recommended workflow in execution plan / user-facing note.
-- **Test plan:** Create project from template; verify five levels, inventory columns, and lock on Reference if specified.
+- **Description:** Offer a new-project template with levels: Reference, Existing, Proposed, Plants, Annotations.
+- **Note:** SPIKE-16A and SPIKE-16B (inventory visibility) were already complete.
+- **Delivered:**
+  - **File → New site plan…** (`⌘⇧S`) — programmatic five-level template via `AlpLevelDefaults.addStarterSitePlanLevels()`.
+  - **File → New** unchanged — single **Plan** level (SPIKE-14 blank-site path).
+  - All template levels at elevation **0**; **Reference** locked; **Proposed** selected for drawing.
+  - Level names localized in `AlpLevelDefaults.properties`.
+- **Likely files:** `AlpLevelDefaults.java`, `HomeApplication.createSitePlanHome()`, `HomeController.newSitePlan()`, `HomePane` File menu, `HomeView.ActionType.NEW_SITE_PLAN`.
+- **Out of scope:** Per-level colors (SH3D `Level` has no color field); hide/show defaults beyond all viewable.
+- **Recommended workflow:**
+  1. **New site plan** for typical landscape/site work.
+  2. Import survey / aerial on **Reference** (locked underlay); draw as-built on **Existing**; design on **Proposed**; plants on **Plants**; notes/dims on **Annotations**.
+  3. **New** (single Plan) for minimal scratch or non-layered tests.
+- **Test plan:**
+  - [x] File → New site plan → five tabs: Reference | Existing | Proposed | Plants | Annotations.
+  - [x] **Proposed** selected; **Reference** locked (cannot draw; unlock via Levels menu if needed).
+  - [x] All levels same elevation; 3D view flat.
+  - [x] Furniture / Areas inventory **Level** column shows correct names.
+  - [x] File → New still creates single **Plan** level only.
 - **Touchpoints:** Model, Controller, View.
 
 ---
