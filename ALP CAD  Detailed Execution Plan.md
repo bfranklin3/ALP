@@ -1,83 +1,474 @@
-### Milestone Block A: Inventory & Layer Visibility (High Priority)
+# ALP CAD — Detailed Execution Plan
 
-*Goal: Enable users to organize and track architecture and landscape elements across named levels (Existing, Proposed, Plants).*
+**Last updated:** August 18, 2026  
+**Strategy reference:** [sweethome3d-phase-1-implementation-roadmap.md](sweethome3d-phase-1-implementation-roadmap.md)  
+**Source submodule:** `source/SweetHome3D-7.5-src` (ALP-Core)
 
-1. [SPIKE-16A] Finalize Furniture Level Exposure [COMPLETED]
-   - Description: Ensure every placed object (windows, doors, plants) shows its level in the main list.
-   - Status: LEVEL property added to default furniture visible properties in `Home.java`.
-2. [SPIKE-16B] Create the "Areas" (Room) Inventory Panel [COMPLETED]
-   - Description: Build a brand-new inventory list for drawn areas (lawns, patios, beds) since no stock list exists.
-   - Status: `RoomTable` and `RoomTablePanel` implemented and integrated as a tab in `HomePane`.
-3. [SPIKE-13] Implement Basic Level Protection (Locking) [COMPLETED]
-   - Description: Add a "Locked" property to levels to prevent accidental modification of reference surveys or existing building footprints.
-   - Status: 
-     - Added `locked` boolean property and Logic to `Level` model.
-     - Added "Locked" checkbox to `LevelPanel` properties dialog and summary table.
-     - Updated `PlanController` and `LevelController` to enforce the lock across all tools (move, resize, delete, rotate, properties).
-   - Touchpoints: Model, View, Controller.
+---
 
-------
+## Progress Summary
 
-### Milestone Block B: Landscape Visual Representation (M1)
+| Metric | Status |
+|--------|--------|
+| **Blocks complete** | A, B, C (3 of 8) |
+| **Spikes complete** | 11 of 25 tracked items |
+| **Next block** | **Block D** — Landscape UX & Underlay (M1 finish) |
+| **Branch** | `cursor/areas-inventory-and-level-locking` |
 
-*Goal: Adapt the rendering engine to support believable outdoor area fills and site-plan underlays.*
+**Completed spikes:** SPIKE-01, 02, 03, 04, 05, 06, 13, 16A, 16B, 17, 18  
+**In progress:** —  
+**Next up:** SPIKE-07, SPIKE-08
 
-1. [SPIKE-05] Area Fill Opacity Control [COMPLETED]
-   - Description: Allow "Room" objects to be semi-transparent so users can see the survey underlay beneath a planting bed or patio fill.
-   - Status:
-     - Added `floorOpacity` property to `Room` model (default 75%, matching prior hardcoded behavior).
-     - Added opacity spinner to `RoomPanel` Floor section in the Modify rooms dialog.
-     - Updated `PlanComponent` to render fills using per-room opacity.
-     - Persisted `floorOpacity` in home file XML import/export.
-   - Touchpoints: Model, View, Controller, 2D Rendering.
-2. [SPIKE-06] Polygon Corner Smoothing Prototype [COMPLETED]
-   - Description: Provide an option to "smooth" the sharp corners of a drawn Room to create organic-looking planting beds or lawns.
-   - Status:
-     - Added `smoothed` boolean property to `Room` model.
-     - Added "Smooth corners" checkbox to `RoomPanel` Floor section.
-     - Added `ShapeTools.getRoomShape()` reusing curved polyline rendering for plan view fills and outlines.
-     - Persisted `smoothed` in home file XML import/export.
-     - Follow-up (kept): per-vertex sharp corners on a smoothed room. Option-click a vertex handle to toggle; sharp handles draw as squares, smooth as rounds. Stored as `sharp` on XML `<point>` elements.
-   - Touchpoints: Model, View, Controller, 2D Rendering.
+---
 
-------
+## Master Spike Index
 
-### Milestone Block C: Annotation & Output (M4)
+| Spike | Block | Milestone | Status | Summary |
+|-------|-------|-----------|--------|---------|
+| SPIKE-01 | M0 | Foundation | **COMPLETED** | Area / room rendering path documented |
+| SPIKE-02 | M0 | Foundation | **COMPLETED** | Text rendering path documented |
+| SPIKE-03 | M0 | Foundation | **COMPLETED** | Level behavior path documented |
+| SPIKE-04 | M0 | Foundation | **COMPLETED** | UI / inspector touchpoints identified |
+| SPIKE-05 | B | M1 | **COMPLETED** | Area fill opacity control |
+| SPIKE-06 | B | M1 | **COMPLETED** | Polygon corner smoothing + per-vertex sharp corners |
+| SPIKE-07 | D | M1 | Pending | Soften “room” → “area” on key UI surfaces |
+| SPIKE-08 | D | M1 | Pending | Feet + inches in background calibration |
+| SPIKE-09 | E | M2 | Pending | Phase 1 library schema |
+| SPIKE-10 | E | M2 | Pending | Plant starter pack |
+| SPIKE-11 | E | M2 | Pending | Outdoor-feature starter pack |
+| SPIKE-12 | F | M2 | Pending | Custom 2D top-view symbol improvements |
+| SPIKE-13 | A | M3 | **COMPLETED** | Level locking |
+| SPIKE-14 | F | M3 | Pending | Flat level defaults for landscape workflows |
+| SPIKE-15 | G | M3 | Pending | Level reordering (spike → implement or defer) |
+| SPIKE-16 | F | M3 | Pending | Starter level template (Reference / Existing / Proposed / Plants / Annotations) |
+| SPIKE-16A | A | M3 | **COMPLETED** | Furniture inventory level column |
+| SPIKE-16B | A | M3 | **COMPLETED** | Areas (room) inventory panel |
+| SPIKE-17 | C | M4 | **COMPLETED** | Width-based wrapped text |
+| SPIKE-18 | C | M4 | **COMPLETED** | One-click draft / monochrome mode |
+| SPIKE-19 | G | M4 | Pending | Persistent inspector (spike → prototype or defer) |
+| SPIKE-20 | G | M4 | Pending | MVP print / export presets |
+| SPIKE-21 | H | M5 | Pending | Minimum sidebar / inspector improvements |
+| SPIKE-22 | H | M5 | Pending | Focused workflow UI pass |
+| SPIKE-23 | H | M5 | Pending | Phase 1 stock vs. branded scope definition |
 
-*Goal: Improve the plan's ability to communicate design intent via text and presentation styles.*
+---
 
-1. [SPIKE-17] Width-Based Wrapped Text [COMPLETED]
-   - Description: Replace simple single-line text with wrapping labels for long planting notes or site descriptions.
-   - Status:
-     - Added `width` property to `Label` model (`null` = no wrap, legacy behavior).
-     - Added "Wrap width" spinner to `LabelPanel` in the Modify text dialog.
-     - Updated `PlanComponent` to wrap label text with `LineBreakMeasurer` when width is set.
-     - Persisted `width` in home file XML import/export.
-   - Touchpoints: Model, View, Controller, 2D Rendering.
-2. [SPIKE-18] One-Click Draft (Monochrome) Mode [COMPLETED]
-   - Description: A global toggle to switch the plan from "Presentation Color" to "B&W Construction/Draft" style.
-   - Status:
-     - Added `draftMode` property to `Home` model (persisted in home file XML).
-     - Updated `PlanComponent` to render plan in black and white when draft mode is enabled.
-     - Added Plan menu, context menu, and toolbar toggle (Draft mode / Presentation mode).
-     - Fixed action enablement in `HomeController`; Mac shortcut is `⌘⇧D` (avoids Dock `⌘⌥D` conflict).
-   - Touchpoints: Model, View, 2D Rendering.
+## M0: Foundation (Complete)
 
-------
+*Goal: Map the codebase and validate feasibility before feature work.*
 
-### Build & Tooling Requirements
+All M0 spikes are **documentation-only** — completed during August 2026 spike days. No further implementation required unless the source tree shifts significantly.
 
-- Ant Task: Continue using `ant buildModernDesktop`.
-- Modern Compatibility: Maintain the `PlanComponent.java` shim (removing `JApplet` dependency) to ensure the code compiles on the current workspace JDK.
-- Packaging: Use `ant jarExecutableModernDesktop` to produce the `SweetHome3D-7.5-modern.jar` for live validation of each spike.
+| Spike | Status | Documentation |
+|-------|--------|---------------|
+| SPIKE-01 — Area / room rendering path | **COMPLETED** | [sweethome3d-source-map-phase-1.md](sweethome3d-source-map-phase-1.md) §2, §4; [sweethome3d-spike-day-2-findings.md](sweethome3d-spike-day-2-findings.md) |
+| SPIKE-02 — Text rendering path | **COMPLETED** | [sweethome3d-source-map-phase-1.md](sweethome3d-source-map-phase-1.md) §4 (`LabelPanel`, `PlanComponent`); [sweethome3d-spike-day-2-findings.md](sweethome3d-spike-day-2-findings.md) |
+| SPIKE-03 — Level behavior path | **COMPLETED** | [sweethome3d-source-map-phase-1.md](sweethome3d-source-map-phase-1.md) §3; [sweethome3d-spike-day-1-findings.md](sweethome3d-spike-day-1-findings.md) |
+| SPIKE-04 — UI / inspector touchpoints | **COMPLETED** | [sweethome3d-ui-customization-boundary-map.md](sweethome3d-ui-customization-boundary-map.md); [sweethome3d-source-map-phase-1.md](sweethome3d-source-map-phase-1.md) |
 
-### Suggested Execution Path
+**M0 exit criteria met:** We know where Phase 1 changes belong and can rank them by risk.
 
-I recommend we start with Milestone Block A. It addresses the most critical "CAD-like" workflow needs (layers and inventory) that were identified as gaps during your initial spikes.
+---
 
-Would you like to begin by implementing SPIKE-16B (the Areas Inventory Panel)? It is the most significant structural addition to the UI in this block.
+## Milestone Block A: Inventory & Layer Visibility
 
+*Goal: Enable users to organize and track architecture and landscape elements across named levels (Existing, Proposed, Plants).*  
+*Milestone: M3 (partial)*  
+**Status: COMPLETE**
 
+### 1. [SPIKE-16A] Finalize Furniture Level Exposure — **COMPLETED**
 
+- **Description:** Ensure every placed object (windows, doors, plants) shows its level in the main list.
+- **Status:** `LEVEL` property added to default furniture visible properties in `Home.java`.
+- **Touchpoints:** Model, View.
 
+### 2. [SPIKE-16B] Create the "Areas" (Room) Inventory Panel — **COMPLETED**
 
+- **Description:** Build a brand-new inventory list for drawn areas (lawns, patios, beds) since no stock list exists.
+- **Status:** `RoomTable` and `RoomTablePanel` implemented and integrated as a tab in `HomePane`.
+- **Touchpoints:** Model, View, Controller.
+
+### 3. [SPIKE-13] Implement Basic Level Protection (Locking) — **COMPLETED**
+
+- **Description:** Add a "Locked" property to levels to prevent accidental modification of reference surveys or existing building footprints.
+- **Status:**
+  - Added `locked` boolean property and logic to `Level` model.
+  - Added "Locked" checkbox to `LevelPanel` properties dialog and summary table.
+  - Updated `PlanController` and `LevelController` to enforce the lock across all tools (move, resize, delete, rotate, properties).
+- **Touchpoints:** Model, View, Controller.
+
+**Block A exit criteria met:** Users can see level membership for objects and areas, and protect reference content with level locks.
+
+---
+
+## Milestone Block B: Landscape Visual Representation
+
+*Goal: Adapt the rendering engine to support believable outdoor area fills and site-plan underlays.*  
+*Milestone: M1 (partial)*  
+**Status: COMPLETE**
+
+### 1. [SPIKE-05] Area Fill Opacity Control — **COMPLETED**
+
+- **Description:** Allow area objects to be semi-transparent so users can see the survey underlay beneath a planting bed or patio fill.
+- **Status:**
+  - Added `floorOpacity` property to `Room` model (default 75%, matching prior hardcoded behavior).
+  - Added opacity spinner to `RoomPanel` Floor section in the Modify rooms dialog.
+  - Updated `PlanComponent` to render fills using per-room opacity.
+  - Persisted `floorOpacity` in home file XML import/export.
+- **Touchpoints:** Model, View, Controller, 2D Rendering.
+
+### 2. [SPIKE-06] Polygon Corner Smoothing Prototype — **COMPLETED**
+
+- **Description:** Provide an option to smooth sharp corners of a drawn area to create organic-looking planting beds or lawns.
+- **Status:**
+  - Added `smoothed` boolean property to `Room` model.
+  - Added "Smooth corners" checkbox to `RoomPanel` Floor section.
+  - Added `ShapeTools.getRoomShape()` reusing curved polyline rendering for plan view fills and outlines.
+  - Persisted `smoothed` in home file XML import/export.
+  - Follow-up (kept): per-vertex sharp corners on a smoothed room. Option-click a vertex handle to toggle; sharp handles draw as squares, smooth as rounds. Stored as `sharp` on XML `<point>` elements.
+- **Touchpoints:** Model, View, Controller, 2D Rendering.
+
+**Block B exit criteria met:** Outdoor areas have opacity and smoothing controls proven in code. M1 terminology and calibration items remain for Block D.
+
+---
+
+## Milestone Block C: Annotation & Output
+
+*Goal: Improve the plan's ability to communicate design intent via text and presentation styles.*  
+*Milestone: M4 (partial)*  
+**Status: COMPLETE**
+
+### 1. [SPIKE-17] Width-Based Wrapped Text — **COMPLETED**
+
+- **Description:** Replace simple single-line text with wrapping labels for long planting notes or site descriptions.
+- **Status:**
+  - Added `width` property to `Label` model (`null` = no wrap, legacy behavior).
+  - Added "Wrap width" spinner to `LabelPanel` in the Modify text dialog.
+  - Updated `PlanComponent` to wrap label text with `LineBreakMeasurer` when width is set.
+  - Persisted `width` in home file XML import/export.
+- **Touchpoints:** Model, View, Controller, 2D Rendering.
+
+### 2. [SPIKE-18] One-Click Draft (Monochrome) Mode — **COMPLETED**
+
+- **Description:** A global toggle to switch the plan from "Presentation Color" to "B&W Construction/Draft" style.
+- **Status:**
+  - Added `draftMode` property to `Home` model (persisted in home file XML).
+  - Updated `PlanComponent` to render plan in black and white when draft mode is enabled.
+  - Added Plan menu, context menu, and toolbar toggle (Draft mode / Presentation mode).
+  - Fixed action enablement in `HomeController`; Mac shortcut is `⌘⇧D` (avoids Dock `⌘⌥D` conflict).
+- **Touchpoints:** Model, View, 2D Rendering.
+
+**Block C exit criteria met:** Wrapped annotations and one-click draft output are working. Print presets and inspector work remain for Block G.
+
+---
+
+## Milestone Block D: Landscape UX & Underlay
+
+*Goal: Finish the Landscape Planning Baseline (M1) so outdoor work no longer feels borrowed from indoor semantics.*  
+*Depends on: Block C complete*  
+*Milestone: M1 (completion)*  
+**Status: PENDING — NEXT**
+
+### Exit criteria
+
+- High-traffic UI reads "area" (or equivalent) instead of "room" where it matters most.
+- Background-image calibration accepts feet as well as inches when the project uses imperial units.
+- Outdoor area workflow feels intentional in live testing (see [sweethome3d-spike-day-2-findings.md](sweethome3d-spike-day-2-findings.md)).
+
+---
+
+### 1. [SPIKE-07] Soften "Room" Terminology on Key UI Surfaces — Pending
+
+- **Description:** Rename user-facing "room" strings to "area" (or "area / room" where ambiguity helps) on high-traffic surfaces only — **not** a full codebase or model rename.
+- **Scope:**
+  - **In:** Menus, toolbar tooltips, mode names, Modify dialog titles, Areas inventory tab labels, creation tips, context menu items.
+  - **Out:** Java class names (`Room`, `RoomPanel`), XML element names, internal undo strings, full localization pass for all 20+ languages.
+- **Likely files:**
+  - `src/com/eteks/sweethome3d/swing/package.properties` (primary — `HomePane.CREATE_ROOMS`, `MODIFY_ROOM`, `RoomPanel.*`, tooltips)
+  - `RoomTablePanel` / tab title strings if separate from `package.properties`
+  - Optional: toolbar icon tooltips only (keep stock icons)
+- **Steps:**
+  1. Inventory all user-visible "room" strings in `package.properties` (English only for Phase 1).
+  2. Classify each as **change**, **keep** (e.g. help text referencing SH3D concepts), or **defer**.
+  3. Apply targeted string updates; prefer "Create areas", "Modify areas...", "Area" in selection feedback.
+  4. Rebuild dev JAR; walk Plan menu, toolbar, right-click, Modify dialog, Areas tab.
+  5. Confirm saved home files still open (no model/XML changes).
+- **Test plan:** Create and modify an area; verify no broken mnemonics or missing labels; check Areas inventory tab title.
+- **Touchpoints:** View (localization only).
+
+---
+
+### 2. [SPIKE-08] Feet + Inches in Background Image Calibration — Pending
+
+- **Description:** Allow known-distance calibration input in feet (and inches) for imperial workflows, not inches alone.
+- **Context:** [sweethome3d-spike-day-1-findings.md](sweethome3d-spike-day-1-findings.md) — calibration works; inches-only entry is awkward for site plans.
+- **Likely files:**
+  - `BackgroundImageWizardStepsPanel.java` (scale distance input UI)
+  - `BackgroundImageWizardController.java` / related controller logic
+  - `package.properties` (`BackgroundImageWizardStepsPanel.scaleDistanceLabel.*`)
+  - Unit conversion via existing `UserPreferences` / `LengthUnit` utilities
+- **Steps:**
+  1. Trace how `scaleDistance` is entered, parsed, and stored (always in cm internally).
+  2. When unit is `INCHES` or feet-inches composite, expose a feet+inches input OR a unit toggle on the calibration step (pick simplest UX that matches existing spinners).
+  3. Convert to internal cm before saving to `BackgroundImage`.
+  4. Update label text to reflect available entry format.
+  5. Rebuild; calibrate a sample underlay using feet.
+- **Test plan:** Import background image → calibrate with a known distance in feet → place a dimension or area and confirm scale is correct.
+- **Touchpoints:** View, Controller.
+
+---
+
+## Milestone Block E: Library Foundation
+
+*Goal: Replace generic stock libraries with a credible Phase 1 plant and outdoor content set.*  
+*Depends on: Block D complete*  
+*Milestone: M2 (part 1)*  
+**Status: PENDING**
+
+### Exit criteria
+
+- Documented library schema for Phase 1.
+- At least one installable custom plant library and one outdoor-feature library load in the dev app.
+- Sample plan using custom content looks clearly better than stock-only.
+
+---
+
+### 1. [SPIKE-09] Define Phase 1 Library Schema — Pending
+
+- **Description:** Specify naming, categories, metadata, and preview expectations for ALP CAD libraries.
+- **Deliverable:** Short schema doc (can live in `/docs` or project root) covering:
+  - Category tree (Plants, Trees, Hardscape, Doors/Windows, Site furniture, …)
+  - Required SH3D furniture metadata fields
+  - Naming convention (e.g. `PLT-Oak-24` / human-readable title)
+  - 2D top-view vs 3D model expectations
+  - Library file layout (`.sh3f`, `.sh3t`, bundle structure)
+- **Steps:**
+  1. Review stock library format in `lib/` and existing import paths.
+  2. Draft schema aligned with [sweethome3d-phase-1-implementation-roadmap.md](sweethome3d-phase-1-implementation-roadmap.md) M2 deliverables.
+  3. Review against MVP feature list; mark Phase 1 vs defer.
+- **Touchpoints:** Content / documentation (minimal code).
+
+---
+
+### 2. [SPIKE-10] Build Plant Starter Pack — Pending
+
+- **Description:** Create a first "good enough" plant library (trees, shrubs, groundcover symbols) for site plans.
+- **Depends on:** SPIKE-09 schema.
+- **Steps:**
+  1. Select 8–15 representative plant symbols (2D top-view priority).
+  2. Author or adapt `.sh3f` entries per schema.
+  3. Bundle as importable library; add to dev app `resources` or documented import path.
+  4. Validate placement, rotation, level assignment, and plan rendering.
+- **Test plan:** Place each symbol on a test plan; verify catalog browse, drag-drop, and inventory list.
+- **Touchpoints:** Content; optional catalog path configuration.
+
+---
+
+### 3. [SPIKE-11] Build Outdoor-Feature Starter Pack — Pending
+
+- **Description:** Create hardscape / site furniture symbols (patios, seating, planters, basic site amenities).
+- **Depends on:** SPIKE-09 schema.
+- **Steps:**
+  1. Select 8–15 outdoor feature symbols complementary to plant pack.
+  2. Author library per schema; avoid overlap with stock furniture where custom look matters.
+  3. Bundle and validate same as SPIKE-10.
+- **Test plan:** Mixed building + landscape sample plan using plant + outdoor packs.
+- **Touchpoints:** Content.
+
+---
+
+## Milestone Block F: Symbols & Project Setup
+
+*Goal: Improve plan symbol quality and give new projects sensible landscape-oriented defaults.*  
+*Depends on: Block E complete*  
+*Milestones: M2 (completion) + M3 (start)*  
+**Status: PENDING**
+
+### Exit criteria
+
+- Custom 2D top-view assets proven feasible without deep engine surgery.
+- New homes default to flat, landscape-friendly level setup.
+- Optional starter template creates Reference / Existing / Proposed / Plants / Annotations levels.
+
+---
+
+### 1. [SPIKE-12] Custom 2D Top-View Asset Improvements — Pending
+
+- **Description:** Validate whether placed objects can use improved 2D plan symbols without deep renderer changes.
+- **Likely files:** Furniture model icon paths, `PlanComponent` furniture painting, catalog metadata for top-view images.
+- **Steps:**
+  1. Identify how SH3D resolves top-view vs model icon in plan view (`FURNITURE_VIEWED_FROM_TOP` preference, piece metadata).
+  2. Prototype 3–5 custom top-view PNG/SVG assets on existing furniture entries.
+  3. Document limits (doors/windows, scaled icons, rotation).
+  4. Decide: content-only fix vs small code tweak for ALP defaults.
+- **Test plan:** Compare stock vs custom top-view symbols at multiple zoom levels and in draft mode.
+- **Touchpoints:** 2D Rendering, Content.
+
+---
+
+### 2. [SPIKE-14] Flat Level Defaults for Landscape Workflows — Pending
+
+- **Description:** Change default level creation behavior so new projects feel like 2D site layers, not a multi-story floor stack.
+- **Likely files:** `Home.java` (default level), `LevelController` / `HomeController.newHome`, `LevelPanel`, default elevation and naming.
+- **Steps:**
+  1. Document current new-home level defaults (name, elevation, height, viewability).
+  2. Propose landscape defaults (e.g. single "Plan" level at elevation 0, smaller level height, flatter naming).
+  3. Implement defaults for **new** homes only; preserve backward compatibility for opened files.
+  4. Optionally adjust "Add level" default elevation increment.
+- **Test plan:** File → New home; confirm defaults match spec; open an older home file unchanged.
+- **Touchpoints:** Model, Controller.
+
+---
+
+### 3. [SPIKE-16] Starter Level Grouping Template — Pending
+
+- **Description:** Offer a new-project template (or first-run prompt) with levels: Reference, Existing, Proposed, Plants, Annotations.
+- **Note:** SPIKE-16A and SPIKE-16B (inventory visibility) are already complete.
+- **Likely files:** `HomeController.newHome`, example homes, or a "New from template" action; `Level` creation helpers.
+- **Steps:**
+  1. Define level names, suggested colors/viewability, and optional lock on Reference.
+  2. Implement as named template home or programmatic level creation on new project.
+  3. Wire into File menu (extend `NEW_HOME_FROM_EXAMPLE` pattern) or post-create wizard step — pick smallest UX.
+  4. Document recommended workflow in execution plan / user-facing note.
+- **Test plan:** Create project from template; verify five levels, inventory columns, and lock on Reference if specified.
+- **Touchpoints:** Model, Controller, View.
+
+---
+
+## Milestone Block G: Workflow Polish & Deliverables
+
+*Goal: Close remaining layer and output gaps with intentional workflows.*  
+*Depends on: Block F complete*  
+*Milestones: M3 (completion) + M4 (completion)*  
+**Status: PENDING**
+
+### Exit criteria
+
+- Level reorder decision documented (implemented or explicitly deferred).
+- Print/export presets reduce manual setup for draft and presentation output.
+- Persistent inspector decision documented (small prototype or defer to Block H).
+
+---
+
+### 1. [SPIKE-15] Level Reordering — Pending (investigation first)
+
+- **Description:** Determine whether users can reorder levels in the UI for MVP, and implement only if scope is small.
+- **Likely files:** `LevelPanel`, `LevelsTableModel`, `Home` level list ordering, `PlanComponent` level display order.
+- **Steps:**
+  1. **Spike (≤ half day):** Trace how level order is stored and used in plan/3D/export.
+  2. Document risk (elevation vs display order coupling).
+  3. **Decision gate:** Implement drag-reorder in `LevelPanel` **or** mark **DEFERRED** with rationale in this doc.
+  4. If implementing: persist order, undo support, verify elevation semantics unchanged.
+- **Test plan:** Reorder levels (if implemented); confirm plan view and inventory reflect new order.
+- **Touchpoints:** Model, View, Controller.
+
+---
+
+### 2. [SPIKE-20] MVP Print / Export Presets — Pending
+
+- **Description:** Define and implement preset print/PDF/SVG export settings for draft vs presentation output.
+- **Likely files:** Print / PDF / SVG export dialogs, `Home.print` metadata, page setup, draft mode integration.
+- **Steps:**
+  1. Document current print and PDF flows; list properties users tweak repeatedly (scale, margins, fill, draft mode).
+  2. Define two presets: **Draft** (B&W-friendly, minimal fills) and **Presentation** (color, area fills visible).
+  3. Implement as menu actions or remembered last-used preset pair — avoid large dialog redesign.
+  4. Validate PDF and print preview from dev app.
+- **Test plan:** Export same plan with both presets; compare output to manual baseline.
+- **Touchpoints:** View, Controller, export pipeline.
+
+---
+
+### 3. [SPIKE-19] Persistent Inspector Feasibility — Pending (investigation first)
+
+- **Description:** Validate whether a docked side inspector for text/object properties is worth adding in Phase 1.
+- **Context:** Overlaps SPIKE-21; run **after** SPIKE-20 so output workflow is stable first.
+- **Likely files:** `HomePane` layout, property panels (`LabelPanel`, `FurniturePanel`, `RoomPanel`), [sweethome3d-ui-customization-boundary-map.md](sweethome3d-ui-customization-boundary-map.md).
+- **Steps:**
+  1. **Spike:** List current property-edit entry points (double-click, modal dialogs, table inline edit).
+  2. Estimate effort for a read-only + quick-edit inspector vs full modal replacement.
+  3. **Decision gate:** Small prototype (one object type) **or** defer to Block H / Phase 2 with written rationale.
+  4. If prototyping: start with `Label` or `Room` selection → single docked panel.
+- **Test plan:** Select object; edit property without modal if prototype built; otherwise document recommendation.
+- **Touchpoints:** View, Controller (scope TBD after spike).
+
+---
+
+## Milestone Block H: MVP Packaging
+
+*Goal: Package proven behaviors into a simpler, intentionally branded product shell.*  
+*Depends on: Block G complete (especially SPIKE-19 decision)*  
+*Milestone: M5*  
+**Status: PENDING**
+
+### Exit criteria
+
+- Sidebar/inspector changes identified and at least one implemented.
+- One focused workflow UI pass shipped (not a full rewrite).
+- Written Phase 1 scope: what stays stock SH3D vs ALP-branded.
+
+---
+
+### 1. [SPIKE-21] Minimum Sidebar / Inspector Improvements — Pending
+
+- **Description:** Identify and implement the smallest sidebar changes with the largest clarity gain.
+- **Depends on:** SPIKE-19 decision (build on prototype or implement alternative from spike recommendations).
+- **Steps:**
+  1. Review spike-19 output; prioritize 1–2 improvements (e.g. selection summary, pinned properties, tab order).
+  2. Implement highest-value item only.
+  3. User test: common tasks (edit area, edit text, change level visibility) with fewer clicks.
+- **Touchpoints:** View.
+
+---
+
+### 2. [SPIKE-22] Focused Workflow UI Pass — Pending
+
+- **Description:** One small, workflow-oriented UI improvement batch — not a whole-shell rewrite.
+- **Examples:** Plan setup checklist, simplified catalog categories, hide irrelevant stock menus, default panel layout.
+- **Steps:**
+  1. List top 3 friction points from Blocks A–G testing.
+  2. Pick items achievable in a single focused pass (≤ ~1 week effort).
+  3. Implement; rebuild dev app; validate against [sweethome3d-spike-day-2-findings.md](sweethome3d-spike-day-2-findings.md) mixed-plan scenario.
+- **Touchpoints:** View, Controller.
+
+---
+
+### 3. [SPIKE-23] Phase 1 Scope — Stock vs. Branded — Pending
+
+- **Description:** Document what remains stock Sweet Home 3D vs lightly ALP-branded/reorganized for Phase 1 MVP.
+- **Deliverable:** Checklist covering menus, libraries, defaults, naming, splash/about, help, deferred features.
+- **Steps:**
+  1. Audit current ALP delta vs stock SH3D 7.5.
+  2. Mark each surface: **keep stock**, **ALP customized**, **hidden**, **Phase 2**.
+  3. Align with branding assets and install bundle naming (`Sweet Home 3D Dev.app` → future ALP CAD.app).
+- **Touchpoints:** Documentation; optional minor branding code.
+
+**Block H exit criteria met → Phase 1 MVP packaging ready for demo/release candidate.**
+
+---
+
+## Build & Tooling Requirements
+
+- **Ant task:** `ant -f build.xml buildModernDesktop jarExecutableModernDesktop`
+- **Modern compatibility:** Maintain the `PlanComponent.java` shim (no `JApplet` dependency) for current JDK builds.
+- **Dev validation:** Copy `install/SweetHome3D-7.5-modern.jar` to `install/Sweet Home 3D Dev.app/Contents/app/SweetHome3D.jar` after each spike that needs manual testing.
+- **Submodule:** Commit code changes in `source/SweetHome3D-7.5-src` first, then update parent repo pointer.
+
+---
+
+## Execution Order Summary
+
+```
+M0 (complete) → A → B → C → D → E → F → G → H
+                     ↑ done    ↑ next
+```
+
+| Block | Spikes | Theme |
+|-------|--------|-------|
+| A | 13, 16A, 16B | Inventory & locking |
+| B | 05, 06 | Area visuals |
+| C | 17, 18 | Text & draft output |
+| **D** | **07, 08** | **Area UX & calibration** |
+| E | 09, 10, 11 | Libraries |
+| F | 12, 14, 16 | Symbols & project setup |
+| G | 15, 20, 19 | Layer polish & deliverables |
+| H | 21, 22, 23 | MVP packaging |
