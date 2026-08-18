@@ -10,14 +10,14 @@
 
 | Metric | Status |
 |--------|--------|
-| **Blocks complete** | A, B, C (3 of 8) |
-| **Spikes complete** | 12 of 25 tracked items |
-| **Next block** | **Block D** — Landscape UX & Underlay (SPIKE-08) |
+| **Blocks complete** | A, B, C, D (4 of 8) |
+| **Spikes complete** | 13 of 25 tracked items |
+| **Next block** | **Block E** — Library Foundation (M2) |
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
-**Completed spikes:** SPIKE-01, 02, 03, 04, 05, 06, 07, 13, 16A, 16B, 17, 18  
-**In progress:** SPIKE-08  
-**Next up:** SPIKE-08
+**Completed spikes:** SPIKE-01, 02, 03, 04, 05, 06, 07, 08, 13, 16A, 16B, 17, 18  
+**In progress:** —  
+**Next up:** SPIKE-09 (Phase 1 library schema)
 
 ---
 
@@ -32,7 +32,7 @@
 | SPIKE-05 | B | M1 | **COMPLETED** | Area fill opacity control |
 | SPIKE-06 | B | M1 | **COMPLETED** | Polygon corner smoothing + per-vertex sharp corners |
 | SPIKE-07 | D | M1 | **COMPLETED** | Soften “room” → “area / room” on key UI surfaces |
-| SPIKE-08 | D | M1 | **In progress** | Feet + inches in background calibration |
+| SPIKE-08 | D | M1 | **COMPLETED** | Feet + inches in background calibration |
 | SPIKE-09 | E | M2 | Pending | Phase 1 library schema |
 | SPIKE-10 | E | M2 | Pending | Plant starter pack |
 | SPIKE-11 | E | M2 | Pending | Outdoor-feature starter pack |
@@ -167,7 +167,7 @@ All M0 spikes are **documentation-only** — completed during August 2026 spike 
 *Goal: Finish the Landscape Planning Baseline (M1) so outdoor work no longer feels borrowed from indoor semantics.*  
 *Depends on: Block C complete*  
 *Milestone: M1 (completion)*  
-**Status: PENDING — NEXT**
+**Status: COMPLETE**
 
 ### Exit criteria
 
@@ -201,23 +201,15 @@ All M0 spikes are **documentation-only** — completed during August 2026 spike 
 
 ---
 
-### 2. [SPIKE-08] Feet + Inches in Background Image Calibration — Pending
+### 2. [SPIKE-08] Feet + Inches in Background Image Calibration — **COMPLETED**
 
 - **Description:** Allow known-distance calibration input in feet (and inches) for imperial workflows, not inches alone.
-- **Context:** [sweethome3d-spike-day-1-findings.md](sweethome3d-spike-day-1-findings.md) — calibration works; inches-only entry is awkward for site plans.
-- **Likely files:**
-  - `BackgroundImageWizardStepsPanel.java` (scale distance input UI)
-  - `BackgroundImageWizardController.java` / related controller logic
-  - `package.properties` (`BackgroundImageWizardStepsPanel.scaleDistanceLabel.*`)
-  - Unit conversion via existing `UserPreferences` / `LengthUnit` utilities
-- **Steps:**
-  1. Trace how `scaleDistance` is entered, parsed, and stored (always in cm internally).
-  2. When unit is `INCHES` or feet-inches composite, expose a feet+inches input OR a unit toggle on the calibration step (pick simplest UX that matches existing spinners).
-  3. Convert to internal cm before saving to `BackgroundImage`.
-  4. Update label text to reflect available entry format.
-  5. Rebuild; calibrate a sample underlay using feet.
-- **Test plan:** Import background image → calibrate with a known distance in feet → place a dimension or area and confirm scale is correct.
-- **Touchpoints:** View, Controller.
+- **Status:**
+  - Added `NullableSpinnerCalibrationLengthModel` using foot/inch format for inch-based preferences during calibration.
+  - Imperial calibration step shows ft/in label and help text with `25'` and `25' 6"` examples.
+- **Touchpoints:** View (`BackgroundImageWizardStepsPanel`, `NullableSpinner`, `package.properties`).
+
+**Block D exit criteria met:** Area terminology updated; imperial calibration accepts feet and inches. M1 Landscape Planning Baseline is complete.
 
 ---
 
