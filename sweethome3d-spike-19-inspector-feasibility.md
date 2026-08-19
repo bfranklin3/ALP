@@ -1,7 +1,7 @@
 # SPIKE-19 — Right-Side Inspector Feasibility
 
 **Date:** August 19, 2026  
-**Status:** In progress (entry-point inventory complete; layout/embed/recommendation pending)  
+**Status:** In progress (steps 1–2 complete; embed/recommendation pending)  
 **Branch:** `cursor/areas-inventory-and-level-locking`  
 **Related:** [ALP CAD Detailed Execution Plan.md](ALP%20CAD%20%20Detailed%20Execution%20Plan.md) § SPIKE-19; [sweethome3d-ui-customization-boundary-map.md](sweethome3d-ui-customization-boundary-map.md)
 
@@ -134,17 +134,20 @@ Creating walls, rooms, labels, etc. uses **controller modes** + optional creatio
 
 ---
 
-## Layout note (step 2 — preliminary)
+## Layout note (step 2 — **validated Aug 19, 2026**)
 
-**Current:** `HomePane.createMainPane()` = horizontal split `[ catalogFurniturePane | planView3DPane ]`.
+**Implemented:** `HomePane.createPlanInspectorPane()` — nested horizontal split:
 
-**Proposed:** nested split `[ catalogFurniturePane | [ planView3DPane | inspectorPane ] ]`.
+`[ catalogFurniturePane | [ planView3DPane | inspectorPane ] ]`
 
-- Reuse `configureSplitPane()` + home visual properties for divider persistence (new property e.g. `InspectorPaneDividerLocation`).
-- RTL locale: mirror component order like existing main pane.
-- **Risk:** low–medium — pattern already used twice (main + plan/3D vertical).
+- **Visual property:** `com.eteks.sweethome3d.SweetHome3D.InspectorPaneDividerLocation` (persisted per home via `configureSplitPane`).
+- **Default:** ~22% width to inspector (`dividerLocation` 0.78, resize weight 0.85 LTR / 0.15 RTL).
+- **Placeholder:** `createInspectorPane()` — empty-state label until step 3 embed.
+- **RTL:** component swap listener mirrors existing main-pane pattern.
+- **One-touch expand:** stock split-pane collapse hides inspector column (same as catalog/plan dividers).
+- **Open existing home fix (Aug 19, 2026):** homes saved with a collapsed plan/inspector divider (or before first layout) could open with zero-width plan pane. `restorePlanInspectorDividerLocation()` applies default 78% plan proportion when no saved divider or saved value leaves plan &lt; 320px; rewrites bad saved property on open.
 
-*Confirm in step 2 with a minimal empty `JPanel` placeholder.*
+*Step 3:* replace placeholder with selection-bound panel content.
 
 ---
 
@@ -190,7 +193,7 @@ Existing property views are **`JPanel` subclasses** with `displayView()` wrappin
 ## Next steps
 
 1. ~~Entry-point inventory~~ ✓  
-2. Layout spike — empty right pane in dev app  
+2. ~~Layout spike — empty right pane in dev app~~ ✓ (Aug 19, 2026)  
 3. Embed spike — `RoomPanel` or slim wrapper with one live field  
 4. Final recommendation + optional prototype PR  
 5. SPIKE-21 polish list from prototype learnings  
