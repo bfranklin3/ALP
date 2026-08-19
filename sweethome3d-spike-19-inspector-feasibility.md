@@ -51,7 +51,7 @@ Every path that edits object/home properties in the dev app today. Grouped by su
 | **Room / Area** | Double-click; Plan → Modify area; plan popup | `RoomPanel` | `RoomController` | Name, level, fill color/texture, opacity, floor/ceiling visible, area text, sharp corners | **P0 — prototype** |
 | **Label** | Double-click; Plan → Modify label; plan popup | `LabelPanel` | `LabelController` | Text, font, size, style, color, outline, elevation, width wrap (SPIKE-17) | **P0 — fallback prototype** |
 | **Wall** | Double-click; Plan → Modify wall | `WallPanel` | `WallController` | Thickness, height, color, texture, arc, patterns | P1 |
-| **Polyline** | Double-click; Plan → Modify polyline | `PolylinePanel` | `PolylineController` | Thickness, color, joins, elevation | P1 |
+| **Polyline** | Double-click; Plan → Modify polyline | `PolylinePanel` | `PolylineController` | Thickness, color, joins, elevation | **P2 — docked inspector** (subset: thickness, dash, color, closed path); full panel via Open full editor |
 | **Dimension line** | Double-click; Plan → Modify dimension | `DimensionLinePanel` | `DimensionLineController` | Size, offset, style, elevation | P1 |
 | **Furniture** (on plan) | Double-click; routes to home furniture | `HomeFurniturePanel` | `HomeFurnitureController` | Name, size, angle, level, color, texture, price, … + nested dialogs | P2 (large panel) |
 | **Compass** | Double-click; Plan → Modify compass | `CompassPanel` | `CompassController` | North direction, size | P3 |
@@ -240,10 +240,13 @@ Execute in order; each item should reduce double-click modals for site-plan work
 | **P1.5** | Area **outline** thickness + dash + color | **Done Aug 19** — property lines/setbacks on Base Reference layer | `Room`, `SelectionInspectorPane`, `PlanComponent` |
 | **P2** | Area **level** display (read-only or change if low effort) | Useful context; level edit is less frequent than fill/name | `Room` / `Level` model |
 | **P2** | **Label inspector** (text + font size/style subset) | Second-highest modal path per inventory | `LabelController`, slim panel |
+| **P2** | **Polyline docked inspector** (thickness, dash, color, closed path) | **Done Aug 19** — live edit + undo in `SelectionInspectorPane` | `SelectionInspectorPane`, `PolylineController` |
 | **P3** | Inspector **divider default** (~300px right column) | Coordinate with SPIKE-22 layout defaults | `HomePane` divider proportions |
 | **P3** | **Keyboard / focus** polish (mnemonics, tab order) | Quality pass after fields stabilize | `SelectionInspectorPane` |
 
-**SPIKE-21 success metric:** Edit a typical Proposed-layer area (name, fill, opacity, label visibility) **without opening a modal**; undo each change; double-click still available for advanced fields.
+**SPIKE-21 success metric:** Edit a typical Proposed-layer area (name, fill, opacity, label visibility) **without opening a modal**; undo each change; double-click still available for advanced fields. **P2 extension:** same pattern for polylines (thickness, dash, color, closed path) and labels (subset).
+
+**Polyline docked inspector — explicit out of scope (P2):** polyline **name**, lines **inventory** tab, arrows/join/elevation in dock (defer to **Open full editor…** / `PolylinePanel`).
 
 ---
 
@@ -259,5 +262,5 @@ Execute in order; each item should reduce double-click modals for site-plan work
 4. ~~Decision gate — GO, effort table, SPIKE-21 handoff~~ ✓ (Aug 19, 2026)  
 5. ~~**SPIKE-21 P0** — area fill, opacity, area-label visible~~ ✓ (Aug 19, 2026)  
 6. ~~**SPIKE-21 P1** — summary header, open full editor, design tokens, smooth corners~~ ✓ (Aug 19, 2026)  
-7. **SPIKE-21 P2+** — handoff table remainder  
+7. **SPIKE-21 P2+** — handoff table remainder (level, label, **polyline docked inspector**)  
 8. SPIKE-22 — catalog L&F + 3D collapse on New site plan (parallel OK)  
