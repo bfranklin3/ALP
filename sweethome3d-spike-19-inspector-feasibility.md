@@ -141,7 +141,7 @@ Creating walls, rooms, labels, etc. uses **controller modes** + optional creatio
 `[ catalogFurniturePane | [ planView3DPane | inspectorPane ] ]`
 
 - **Visual property:** `com.eteks.sweethome3d.SweetHome3D.InspectorPaneDividerLocation` (persisted per home via `configureSplitPane`).
-- **Default:** ~22% width to inspector (`dividerLocation` 0.78, resize weight 0.85 LTR / 0.15 RTL).
+- **Default:** ~300px inspector width on new homes (`DEFAULT_PLAN_INSPECTOR_INSPECTOR_WIDTH`, min 200px); plan min 320px. Resize weight 0.85 favors plan on widen.
 - **Placeholder:** replaced in step 3 by `SelectionInspectorPane` (see embed note below).
 - **RTL:** component swap listener mirrors existing main-pane pattern.
 - **One-touch expand:** stock split-pane collapse hides inspector column (same as catalog/plan dividers).
@@ -244,8 +244,8 @@ Execute in order; each item should reduce double-click modals for site-plan work
 | **P2c** | Area **level** display (read-only) | **Done Aug 19** — dedicated layer row in area inspector | `SelectionInspectorPane`, `Room` / `Level` |
 | **P3** | **Wall docked inspector** (thickness, height, **pattern in plan**) | **Done Aug 19** — 2D fill via `Wall.pattern`; left/right/top colors are 3D-only | `WallController`, `SelectionInspectorPane`, `PlanComponent` |
 | **P3** | **Furniture docked inspector** (name, size, angle, color subset) | **Done Aug 19** — plan-selected objects without full modal | `HomeFurnitureController`, `SelectionInspectorPane` |
-| **P4** | Inspector **divider default** (~300px right column) | Coordinate with SPIKE-22 layout defaults | `HomePane` divider proportions |
-| **P4** | **Keyboard / focus** polish (mnemonics, tab order) | Quality pass after fields stabilize | `SelectionInspectorPane` |
+| **P4** | Inspector **divider default** (~300px right column) | **In progress** — pixel default + invalid saved location fix | `HomePane` divider proportions |
+| **P4** | **Keyboard / focus** polish (mnemonics, tab order) | **In progress** — `configureInspectorFieldLabel`, hidden cards disabled | `SelectionInspectorPane` |
 
 **SPIKE-21 success metric:** Edit a typical Proposed-layer area (name, fill, opacity, label visibility) **without opening a modal**; undo each change; double-click still available for advanced fields. **P2 extension:** same pattern for polylines (thickness, dash, color, closed path) and labels (subset).
 
@@ -271,5 +271,5 @@ Execute in order; each item should reduce double-click modals for site-plan work
 4. ~~Decision gate — GO, effort table, SPIKE-21 handoff~~ ✓ (Aug 19, 2026)  
 5. ~~**SPIKE-21 P0** — area fill, opacity, area-label visible~~ ✓ (Aug 19, 2026)  
 6. ~~**SPIKE-21 P1** — summary header, open full editor, design tokens, smooth corners~~ ✓ (Aug 19, 2026)  
-7. **SPIKE-21 P2+** — ~~Label~~ ✓ → ~~Dimension~~ ✓ → ~~area level~~ ✓ → ~~wall/furniture~~ ✓ (wall: pattern in plan, not 3D side color) → P4 polish  
+7. **SPIKE-21 P2+** — ~~Label~~ ✓ → ~~Dimension~~ ✓ → ~~area level~~ ✓ → ~~wall/furniture~~ ✓ → **P4 polish** (in progress)  
 8. SPIKE-22 — catalog L&F + 3D collapse on New site plan (parallel OK)  

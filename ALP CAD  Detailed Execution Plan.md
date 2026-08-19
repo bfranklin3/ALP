@@ -16,8 +16,8 @@
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
 **Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b**, **16**, 16A, 16B, 17, 18, **19**, **20**, **22** (Esc exit); **SPIKE-21 P0–P2c, P3 wall/furniture** (docked inspectors through wall + furniture)
-**In progress:** SPIKE-21 P3 QA / P4 polish
-**Next up:** SPIKE-21 P4 divider default + keyboard polish; SPIKE-15c; SPIKE-22
+**In progress:** SPIKE-21 P4 QA
+**Next up:** SPIKE-15c; SPIKE-22
 
 ---
 
@@ -613,7 +613,8 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 - **P2b delivered (Aug 19, 2026):** **Dimension docked inspector** — offset, length font size, color; live edit + undo; **Open full editor…** → `DimensionLinePanel`.
 - **P2c delivered (Aug 19, 2026):** Area **level display** (read-only layer row in name/area section; summary subtitle unchanged).
 - **P3 delivered (Aug 19, 2026):** **Wall docked inspector** — thickness, height, **pattern in plan** (2D hatch fill); left/right/top side colors are **3D-only** in stock SH3D — use **Open full editor…** for 3D materials. **Furniture docked inspector** — name, size, angle, color; live edit + undo.
-- **P4 (planned):** Inspector divider default (~300px), keyboard/focus polish.
+- **P4 (in progress):** Inspector **~300px default width** (pixel-based divider on new homes); **keyboard/focus polish** — label mnemonics, tab order skips hidden CardLayout panels via `setEnabled`.
+- **P4 (planned):** Remaining keyboard QA if needed after user test.
 - **Locked decisions (Aug 19, 2026):**
   - Build only on **SPIKE-19 right column** (selection-mode inspector); do not scope left library or workflow rail here.
   - **Live edit + undo** remains the interaction model (consistent with SPIKE-19).
