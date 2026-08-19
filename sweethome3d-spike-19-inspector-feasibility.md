@@ -244,8 +244,8 @@ Execute in order; each item should reduce double-click modals for site-plan work
 | **P2c** | Area **level** display (read-only) | **Done Aug 19** — dedicated layer row in area inspector | `SelectionInspectorPane`, `Room` / `Level` |
 | **P3** | **Wall docked inspector** (thickness, height, **pattern in plan**) | **Done Aug 19** — 2D fill via `Wall.pattern`; left/right/top colors are 3D-only | `WallController`, `SelectionInspectorPane`, `PlanComponent` |
 | **P3** | **Furniture docked inspector** (name, size, angle, color subset) | **Done Aug 19** — plan-selected objects without full modal | `HomeFurnitureController`, `SelectionInspectorPane` |
-| **P4** | Inspector **divider default** (~300px right column) | **In progress** — pixel default + invalid saved location fix | `HomePane` divider proportions |
-| **P4** | **Keyboard / focus** polish (mnemonics, tab order) | **In progress** — `configureInspectorFieldLabel`, hidden cards disabled | `SelectionInspectorPane` |
+| **P4** | Inspector **divider default** (~300px right column) | **Done Aug 19** — pixel default + invalid saved location fix | `HomePane` divider proportions |
+| **P4** | **Keyboard / focus** polish (mnemonics, tab order) | **Done Aug 19** — recursive disable of hidden cards; label mnemonics | `SelectionInspectorPane` |
 
 **SPIKE-21 success metric:** Edit a typical Proposed-layer area (name, fill, opacity, label visibility) **without opening a modal**; undo each change; double-click still available for advanced fields. **P2 extension:** same pattern for polylines (thickness, dash, color, closed path) and labels (subset).
 
@@ -271,5 +271,6 @@ Execute in order; each item should reduce double-click modals for site-plan work
 4. ~~Decision gate — GO, effort table, SPIKE-21 handoff~~ ✓ (Aug 19, 2026)  
 5. ~~**SPIKE-21 P0** — area fill, opacity, area-label visible~~ ✓ (Aug 19, 2026)  
 6. ~~**SPIKE-21 P1** — summary header, open full editor, design tokens, smooth corners~~ ✓ (Aug 19, 2026)  
-7. **SPIKE-21 P2+** — ~~Label~~ ✓ → ~~Dimension~~ ✓ → ~~area level~~ ✓ → ~~wall/furniture~~ ✓ → **P4 polish** (in progress)  
-8. SPIKE-22 — catalog L&F + 3D collapse on New site plan (parallel OK)  
+7. ~~**SPIKE-21 P2+** — ~~Label~~ ✓ → ~~Dimension~~ ✓ → ~~area level~~ ✓ → ~~wall/furniture~~ ✓ → ~~P4 polish~~ ✓ (Aug 19, 2026)
+8. ~~SPIKE-22~~ — catalog L&F + 3D collapse on New site plan ✓ (Aug 19, 2026)
+9. **SPIKE-23** — Phase 1 stock vs. branded scope  

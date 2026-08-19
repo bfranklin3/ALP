@@ -51,7 +51,7 @@
 | SPIKE-18 | C | M4 | **COMPLETED** | One-click draft / monochrome mode |
 | SPIKE-19 | G | M4 | **COMPLETED** | Right-side inspector feasibility — **GO**; prototype in dev app |
 | SPIKE-20 | G | M4 | **COMPLETED** | MVP print / export presets (File menu actions) |
-| SPIKE-21 | H | M5 | **In progress (P0–P1.5 done)** | Minimum right inspector improvements (post–SPIKE-19 GO) |
+| SPIKE-21 | H | M5 | **COMPLETED** | Minimum right inspector improvements (post–SPIKE-19 GO) |
 | SPIKE-22 | H | M5 | **COMPLETED** | Focused workflow UI pass (Esc exit, site plan 3D collapse, catalog L&F) |
 | SPIKE-23 | H | M5 | Pending | Phase 1 stock vs. branded scope definition |
 
@@ -595,13 +595,13 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 
 ### Exit criteria
 
-- Right-side inspector changes identified and at least one implemented. — **Partial:** SPIKE-19 GO + area name in dock; SPIKE-21 expands pinned fields.
+- Right-side inspector changes identified and at least one implemented. — **Done:** SPIKE-19 GO + SPIKE-21 docked inspectors (area, polyline, label, dimension, wall, furniture).
 - One focused workflow UI pass shipped (not a full rewrite) — includes catalog look-and-feel toward mockup on **left**.
 - Written Phase 1 scope: what stays stock SH3D vs ALP-branded.
 
 ---
 
-### 1. [SPIKE-21] Minimum Right Inspector Improvements — **In progress (P0–P1.5 done Aug 19, 2026)**
+### 1. [SPIKE-21] Minimum Right Inspector Improvements — **COMPLETED (Aug 19, 2026)**
 
 - **Description:** After SPIKE-19, implement the **smallest right-column** changes with the largest clarity gain — not left sidebar/inventory rework.
 - **Depends on:** SPIKE-19 decision — **GO** (Aug 19, 2026). Build on `SelectionInspectorPane` prototype; see spike doc **SPIKE-21 handoff** table.
@@ -613,8 +613,15 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 - **P2b delivered (Aug 19, 2026):** **Dimension docked inspector** — offset, length font size, color; live edit + undo; **Open full editor…** → `DimensionLinePanel`.
 - **P2c delivered (Aug 19, 2026):** Area **level display** (read-only layer row in name/area section; summary subtitle unchanged).
 - **P3 delivered (Aug 19, 2026):** **Wall docked inspector** — thickness, height, **pattern in plan** (2D hatch fill); left/right/top side colors are **3D-only** in stock SH3D — use **Open full editor…** for 3D materials. **Furniture docked inspector** — name, size, angle, color; live edit + undo.
-- **P4 (in progress):** Inspector **~300px default width** (pixel-based divider on new homes); **keyboard/focus polish** — label mnemonics, tab order skips hidden CardLayout panels via `setEnabled`.
-- **P4 (planned):** Remaining keyboard QA if needed after user test.
+- **P4 delivered (Aug 19, 2026):** Inspector **~300px default width** (pixel-based divider on new homes; invalid saved divider fix); **keyboard/focus polish** — label mnemonics wired via `configureInspectorFieldLabel`, tab order skips hidden CardLayout panels via recursive `setEnabled` on inactive cards (refresh runs after enable so per-field disabled states stay correct).
+- **Manual QA checklist (P4):**
+  - [ ] **New site plan:** right inspector column opens at ~300px; plan view remains usable.
+  - [ ] **Open old home** (saved before inspector column): divider auto-corrects if plan or inspector was collapsed.
+  - [ ] **Tab order:** with area selected, Tab cycles only area inspector fields (not hidden polyline/label/wall/furniture cards).
+  - [ ] **Selection switch:** select area → polyline → label → dimension → wall → furniture; Tab stays in active card each time.
+  - [ ] **Empty / mixed selection:** empty-state label is not focusable; no stray focus in hidden cards.
+  - [ ] **Mnemonics (Windows/Linux):** Alt+letter activates labeled fields in each inspector type; Mac skips mnemonics (stock SH3D behavior).
+  - [ ] **Resize divider:** drag inspector wider/narrower; location persists on save/reopen.
 - **Locked decisions (Aug 19, 2026):**
   - Build only on **SPIKE-19 right column** (selection-mode inspector); do not scope left library or workflow rail here.
   - **Live edit + undo** remains the interaction model (consistent with SPIKE-19).
