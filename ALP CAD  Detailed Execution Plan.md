@@ -575,7 +575,7 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 - **Steps:**
   1. ~~**Inventory:** List all property-edit entry points~~ ✓ — see spike doc.
   2. ~~**Layout spike:** Right column via nested `JSplitPane`~~ ✓ — placeholder inspector in dev app (Aug 19, 2026).
-  3. **Embed spike:** Can existing `*Panel` views run **docked** (non-modal) with live selection sync and undo?
+  3. ~~**Embed spike:** Can existing `*Panel` views run **docked** (non-modal) with live selection sync and undo?~~ ✓ — `SelectionInspectorPane` + live area name (Aug 19, 2026).
   4. **Effort estimate:** Read-only inspector vs quick-edit vs full modal replacement per object type.
   5. **Decision gate:** Small prototype (**Area/Room** on right, Label fallback) **or** defer to Block H / Phase 2 with written rationale.
 - **Prototype success criteria (if go):** Select object → edit at least one high-value field on right → plan updates → undo works → no modal for that field.

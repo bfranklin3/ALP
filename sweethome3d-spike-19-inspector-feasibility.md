@@ -1,7 +1,7 @@
 # SPIKE-19 — Right-Side Inspector Feasibility
 
 **Date:** August 19, 2026  
-**Status:** In progress (steps 1–2 complete; embed/recommendation pending)  
+**Status:** In progress (steps 1–3 complete; recommendation pending)  
 **Branch:** `cursor/areas-inventory-and-level-locking`  
 **Related:** [ALP CAD Detailed Execution Plan.md](ALP%20CAD%20%20Detailed%20Execution%20Plan.md) § SPIKE-19; [sweethome3d-ui-customization-boundary-map.md](sweethome3d-ui-customization-boundary-map.md)
 
@@ -142,16 +142,31 @@ Creating walls, rooms, labels, etc. uses **controller modes** + optional creatio
 
 - **Visual property:** `com.eteks.sweethome3d.SweetHome3D.InspectorPaneDividerLocation` (persisted per home via `configureSplitPane`).
 - **Default:** ~22% width to inspector (`dividerLocation` 0.78, resize weight 0.85 LTR / 0.15 RTL).
-- **Placeholder:** `createInspectorPane()` — empty-state label until step 3 embed.
+- **Placeholder:** replaced in step 3 by `SelectionInspectorPane` (see embed note below).
 - **RTL:** component swap listener mirrors existing main-pane pattern.
 - **One-touch expand:** stock split-pane collapse hides inspector column (same as catalog/plan dividers).
 - **Open existing home fix (Aug 19, 2026):** homes saved with a collapsed plan/inspector divider (or before first layout) could open with zero-width plan pane. `restorePlanInspectorDividerLocation()` applies default 78% plan proportion when no saved divider or saved value leaves plan &lt; 320px; rewrites bad saved property on open.
 
-*Step 3:* replace placeholder with selection-bound panel content.
+*Step 3 complete — see embed note below.*
 
 ---
 
-## Embed note (step 3 — preliminary)
+## Embed note (step 3 — **validated Aug 19, 2026**)
+
+**Implemented:** `SelectionInspectorPane` docked in `HomePane.createInspectorPane()`.
+
+- **Selection sync:** listens to `home` selection; shows room inspector when selection is exclusively `Room` items on unlocked layers.
+- **Empty states:** no selection, mixed selection, locked layer — each with a distinct message.
+- **Prototype field:** area **name** via slim panel reusing `RoomPanel` strings and `AutoCompleteTextField`.
+- **Controller reuse:** persistent `RoomController` via `HomeController.createRoomController()`; `refreshProperties()` reloads from selection.
+- **Live edit + undo:** name commits on **Enter** or **focus lost** → `RoomController.modifyRooms()` (same undo path as modal OK).
+- **Not embedded:** full `RoomPanel` (floor/ceiling/texture tabs remain modal-only for now).
+
+**Finding:** Option 2 (slim wrapper + controller APIs) works without refactoring `RoomPanel` away from OK/Cancel. Full parity can grow field-by-field in SPIKE-21.
+
+---
+
+## Embed note (pre-step-3 analysis)
 
 Existing property views are **`JPanel` subclasses** with `displayView()` wrapping **`JOptionPane`**. Prototype options:
 
@@ -161,7 +176,7 @@ Existing property views are **`JPanel` subclasses** with `displayView()` wrappin
 
 `LabelPanel` / `RoomPanel` both commit via `controller.modifyLabels()` / `modifyRooms()` on OK — **live edit requires property change listeners** posting undo per controller pattern (see `PageSetupController`, SPIKE-20 output preset edits).
 
-*Validate in step 3 against Area prototype.*
+*Validated in step 3 — slim wrapper approach confirmed.*
 
 ---
 
@@ -180,13 +195,13 @@ Existing property views are **`JPanel` subclasses** with `displayView()` wrappin
 
 ## Recommendation (step 5 — pending)
 
-**Preliminary (pending layout/embed validation):** **GO** on Phase 1 prototype — **Area/Room** selection inspector on the right with 4–6 pinned fields, live edit + undo, shared ALP section header styling. Keep **“Open full editor…”** → existing `RoomPanel` modal for edge fields. **Label** fallback if `RoomPanel` embed blocked at step 3.
+**Preliminary (post step 3):** **GO** on Phase 1 prototype — expand **Area/Room** inspector with 3–5 more pinned fields (fill, opacity, level, area-visible), live edit + undo, shared ALP section header styling. Keep **“Open full editor…”** → existing `RoomPanel` modal for edge fields. **Label** inspector can follow the same slim-wrapper pattern.
 
 **Tool-mode inspector:** defer Phase 2.
 
-**Defer entirely if:** embed requires rewriting most of `RoomPanel` with no controller reuse — then spike doc records rationale and SPIKE-21 pursues smaller wins (3D collapse, catalog L&F only).
+**Defer entirely if:** N/A — embed validated at step 3.
 
-*Final recommendation updated after steps 2–3.*
+*Final recommendation updated after step 4 effort review.*
 
 ---
 
@@ -194,6 +209,6 @@ Existing property views are **`JPanel` subclasses** with `displayView()` wrappin
 
 1. ~~Entry-point inventory~~ ✓  
 2. ~~Layout spike — empty right pane in dev app~~ ✓ (Aug 19, 2026)  
-3. Embed spike — `RoomPanel` or slim wrapper with one live field  
+3. ~~Embed spike — slim room wrapper with live name field~~ ✓ (Aug 19, 2026)  
 4. Final recommendation + optional prototype PR  
 5. SPIKE-21 polish list from prototype learnings  
