@@ -17,7 +17,7 @@
 
 **Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b**, **16**, 16A, 16B, 17, 18  
 **In progress:** Block G — wrap-up / next spike selection  
-**Next up:** SPIKE-11 (outdoor pack) or SPIKE-20 (print presets)
+**Next up:** SPIKE-20 (print/export presets)
 
 ---
 
@@ -52,7 +52,7 @@
 | SPIKE-19 | G | M4 | Pending | Persistent inspector (spike → prototype or defer) |
 | SPIKE-20 | G | M4 | Pending | MVP print / export presets |
 | SPIKE-21 | H | M5 | Pending | Minimum sidebar / inspector improvements |
-| SPIKE-22 | H | M5 | Pending | Focused workflow UI pass (incl. ESC exits creation tools) |
+| SPIKE-22 | H | M5 | **IN PROGRESS** | Focused workflow UI pass (ESC exit tools **done**) |
 | SPIKE-23 | H | M5 | Pending | Phase 1 stock vs. branded scope definition |
 
 ---
@@ -553,20 +553,17 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 
 ---
 
-### 2. [SPIKE-22] Focused Workflow UI Pass — Pending
+### 2. [SPIKE-22] Focused Workflow UI Pass — **IN PROGRESS**
 
 - **Description:** One small, workflow-oriented UI improvement batch — not a whole-shell rewrite.
 - **Examples:** Plan setup checklist, simplified catalog categories, hide irrelevant stock menus, default panel layout.
-- **Confirmed friction (Aug 18 QA):** After activating **Create walls**, **Create area/room**, **Create polylines**, **Create dimensions**, or **Add texts**, the only way to exit the tool is clicking **Select** (pointer). **ESC** should return to Select when the tool is idle; when mid-draw, ESC should cancel the current operation first (keep stock SH3D behavior), then a second ESC exits the tool.
-- **ESC exit — implementation notes:**
-  - `PlanComponent` already binds ESC to `PlanController.escape()`; creation idle states (`*CreationState`) currently no-op on escape.
-  - Override `escape()` on idle creation states to `setState(getSelectionState())`; toolbar sync already listens to `PlanController.Property.MODE` in `HomePane`.
-  - QA: all five creation tools; verify plan view has keyboard focus; mid-draw cancel + second ESC to pointer.
-- **Steps:**
-  1. List top 3 friction points from Blocks A–G testing (include ESC exit above).
-  2. Pick items achievable in a single focused pass (≤ ~1 week effort).
-  3. Implement; rebuild dev app; validate against [sweethome3d-spike-day-2-findings.md](sweethome3d-spike-day-2-findings.md) mixed-plan scenario.
-- **Touchpoints:** View, Controller (`PlanController`, `PlanComponent`).
+- **Delivered (Aug 18, 2026) — ESC exits creation tools:**
+  - `AbstractModeChangeState.escape()` returns to **Select** when a creation tool is idle; mid-draw keeps stock cancel-then-exit (two-step Esc).
+  - Pan mode unchanged. Toolbar toggles sync via existing `MODE` listener.
+  - Creation toolbar tooltips note “Press Esc to return to Select”.
+  - **Manual QA:** passed all five tools.
+- **Remaining (deferred within SPIKE-22):** checklist, catalog/menu cleanup, default panel layout.
+- **Touchpoints:** View, Controller (`PlanController`, `PlanComponent`), `package.properties`.
 
 ---
 
