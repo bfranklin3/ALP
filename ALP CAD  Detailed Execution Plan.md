@@ -15,9 +15,9 @@
 | **Next block** | **Block F** — Levels & Site Plan (M3) — **IN PROGRESS** |
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
-**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b**, **16**, 16A, 16B, 17, 18, **19**, **20**, **22** (Esc exit); **SPIKE-21 P0–P1.5** (area inspector + outline styling)  
-**In progress:** SPIKE-21 P2 (level display, label inspector, polyline docked inspector)  
-**Next up:** SPIKE-21 P2; SPIKE-15c (tab drag-reorder — spec ready); SPIKE-22 catalog L&F + 3D collapse
+**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b**, **16**, 16A, 16B, 17, 18, **19**, **20**, **22** (Esc exit); **SPIKE-21 P0–P1.5, P2 polyline** (area + polyline docked inspectors)  
+**In progress:** SPIKE-21 P2 — **Label docked inspector** (next)  
+**Next up:** SPIKE-21 P2b–P3 (dimension, area level, wall/furniture subsets); SPIKE-15c; SPIKE-22
 
 ---
 
@@ -582,7 +582,7 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
   3. ~~**Embed spike:** Docked panel with live selection sync and undo~~ ✓ — area name (Aug 19, 2026).
   4. ~~**Effort estimate + decision gate~~ ✓ — refined table + SPIKE-21 handoff (Aug 19, 2026).
 - **Prototype success criteria:** Met — select area → edit name on right → plan updates → undo works → no modal for that field.
-- **Next:** SPIKE-21 P2 — level display, label inspector, **polyline docked inspector**; then divider defaults + keyboard polish.
+- **Next:** SPIKE-21 P2 **Label** → P2b Dimension → P2c area level → P3 wall/furniture; then divider defaults + keyboard polish.
 
 ---
 
@@ -608,11 +608,14 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 - **P0 delivered (Aug 19, 2026):** Live area **name**, **fill color**, **floor opacity**, **display area size** in docked inspector; undo via `RoomController.modifyRooms()`; name commits on Enter or selection change when edited; color/opacity/area-visible do not overwrite name.
 - **P1 delivered (Aug 19, 2026):** **Selection summary header** (type, count, layer); **Open full editor…** (modal escape hatch); **AlpInspectorStyles** design tokens (padding, empty state, summary typography); **Smooth corners** toggle in floor section.
 - **P1.5 delivered (Aug 19, 2026):** Per-area **outline thickness**, **dash style**, and **outline color** in docked inspector; XML persistence; plan rendering via `ShapeTools.getStroke()`.
-- **P2 (planned):**
-  - Area **level** display (read-only or low-effort edit).
-  - **Label inspector** (text + font size/style subset).
 - **P2 delivered (Aug 19, 2026):** **Polyline docked inspector** — thickness, dash style, color, closed path; live edit + undo; **Open full editor…** → `PolylinePanel`.
-- **Remaining (P3+):** Inspector divider default (~300px), keyboard/focus polish.
+- **P2 (in progress):** **Label docked inspector** — text, font size, bold/italic, color; live edit + undo; **Open full editor…** → `LabelPanel` (alignment, width wrap, elevation, 3D).
+- **P2b (planned):** **Dimension docked inspector** — offset, length font size, color; subset of `DimensionLinePanel`; full editor for endpoints/elevation/pitch.
+- **P2c (planned):** Area **level display** (read-only layer name in area inspector summary or dedicated row).
+- **P3 (planned — consistency):**
+  - **Wall docked inspector** — thickness, height, color subset; full editor for texture/arc/patterns.
+  - **Furniture docked inspector** (plan selection) — name, size, angle, color subset; full editor for texture/price/advanced.
+- **P4 (planned):** Inspector divider default (~300px), keyboard/focus polish.
 - **Locked decisions (Aug 19, 2026):**
   - Build only on **SPIKE-19 right column** (selection-mode inspector); do not scope left library or workflow rail here.
   - **Live edit + undo** remains the interaction model (consistent with SPIKE-19).

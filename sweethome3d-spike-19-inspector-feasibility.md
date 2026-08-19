@@ -238,15 +238,22 @@ Execute in order; each item should reduce double-click modals for site-plan work
 | **P1** | ALP **design tokens** on inspector (section headers, padding, empty state) | **Done Aug 19** — shared `AlpInspectorStyles`; styled empty states | `SelectionInspectorPane`, `AlpInspectorStyles` |
 | **P1** | Area **Smooth corners** toggle | **Done Aug 19** — live edit in floor section | `RoomController.Property.SMOOTHED` |
 | **P1.5** | Area **outline** thickness + dash + color | **Done Aug 19** — property lines/setbacks on Base Reference layer | `Room`, `SelectionInspectorPane`, `PlanComponent` |
-| **P2** | Area **level** display (read-only or change if low effort) | Useful context; level edit is less frequent than fill/name | `Room` / `Level` model |
-| **P2** | **Label inspector** (text + font size/style subset) | Second-highest modal path per inventory | `LabelController`, slim panel |
 | **P2** | **Polyline docked inspector** (thickness, dash, color, closed path) | **Done Aug 19** — live edit + undo in `SelectionInspectorPane` | `SelectionInspectorPane`, `PolylineController` |
-| **P3** | Inspector **divider default** (~300px right column) | Coordinate with SPIKE-22 layout defaults | `HomePane` divider proportions |
-| **P3** | **Keyboard / focus** polish (mnemonics, tab order) | Quality pass after fields stabilize | `SelectionInspectorPane` |
+| **P2** | **Label docked inspector** (text, font size, bold/italic, color) | Second-highest modal path; **in progress** | `LabelController`, `SelectionInspectorPane` |
+| **P2b** | **Dimension docked inspector** (offset, length font size, color) | Completes annotation set with label + polyline | `DimensionLineController`, `SelectionInspectorPane` |
+| **P2c** | Area **level** display (read-only) | Context in area inspector without level-edit modal | `SelectionInspectorPane`, `Room` / `Level` |
+| **P3** | **Wall docked inspector** (thickness, height, color subset) | Plan-tool parity; landscape uses walls less often | `WallController`, `SelectionInspectorPane` |
+| **P3** | **Furniture docked inspector** (name, size, angle, color subset) | Plan-selected plants/site objects without full modal | `HomeFurnitureController`, `SelectionInspectorPane` |
+| **P4** | Inspector **divider default** (~300px right column) | Coordinate with SPIKE-22 layout defaults | `HomePane` divider proportions |
+| **P4** | **Keyboard / focus** polish (mnemonics, tab order) | Quality pass after fields stabilize | `SelectionInspectorPane` |
 
 **SPIKE-21 success metric:** Edit a typical Proposed-layer area (name, fill, opacity, label visibility) **without opening a modal**; undo each change; double-click still available for advanced fields. **P2 extension:** same pattern for polylines (thickness, dash, color, closed path) and labels (subset).
 
 **Polyline docked inspector — explicit out of scope (P2):** polyline **name**, lines **inventory** tab, arrows/join/elevation in dock (defer to **Open full editor…** / `PolylinePanel`).
+
+**Label docked inspector — explicit out of scope (P2):** alignment, width wrap, font family, elevation, 3D pitch (defer to **Open full editor…** / `LabelPanel`).
+
+**Dimension / wall / furniture docked inspectors — defer advanced fields** to each type’s full modal panel; dock carries high-frequency subset only.
 
 ---
 
@@ -262,5 +269,5 @@ Execute in order; each item should reduce double-click modals for site-plan work
 4. ~~Decision gate — GO, effort table, SPIKE-21 handoff~~ ✓ (Aug 19, 2026)  
 5. ~~**SPIKE-21 P0** — area fill, opacity, area-label visible~~ ✓ (Aug 19, 2026)  
 6. ~~**SPIKE-21 P1** — summary header, open full editor, design tokens, smooth corners~~ ✓ (Aug 19, 2026)  
-7. **SPIKE-21 P2+** — handoff table remainder (level, label, **polyline docked inspector**)  
+7. **SPIKE-21 P2+** — Label (in progress) → Dimension → area level → wall/furniture → polish  
 8. SPIKE-22 — catalog L&F + 3D collapse on New site plan (parallel OK)  
