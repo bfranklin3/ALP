@@ -15,9 +15,9 @@
 | **Next block** | **Block F** — Levels & Site Plan (M3) — **IN PROGRESS** |
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
-**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b**, **16**, 16A, 16B, 17, 18, **19**, **20**, **22** (Esc exit); **SPIKE-21 P0–P1.5, P2 polyline + label** (area + polyline + label docked inspectors)  
-**In progress:** SPIKE-21 P2c — **Area level read-only display**  
-**Next up:** SPIKE-21 P3 wall/furniture; SPIKE-15c; SPIKE-22
+**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b**, **16**, 16A, 16B, 17, 18, **19**, **20**, **22** (Esc exit); **SPIKE-21 P0–P2c, P3 wall/furniture** (docked inspectors through wall + furniture)
+**In progress:** SPIKE-21 P3 QA / P4 polish
+**Next up:** SPIKE-21 P4 divider default + keyboard polish; SPIKE-15c; SPIKE-22
 
 ---
 
@@ -611,10 +611,8 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 - **P2 delivered (Aug 19, 2026):** **Polyline docked inspector** — thickness, dash style, color, closed path; live edit + undo; **Open full editor…** → `PolylinePanel`.
 - **P2 delivered (Aug 19, 2026):** **Label docked inspector** — text, font size, bold/italic, color; live edit + undo; **Open full editor…** → `LabelPanel`.
 - **P2b delivered (Aug 19, 2026):** **Dimension docked inspector** — offset, length font size, color; live edit + undo; **Open full editor…** → `DimensionLinePanel`.
-- **P2c (in progress):** Area **level display** (read-only layer row in name/area section; summary subtitle unchanged).
-- **P3 (planned — consistency):**
-  - **Wall docked inspector** — thickness, height, color subset; full editor for texture/arc/patterns.
-  - **Furniture docked inspector** (plan selection) — name, size, angle, color subset; full editor for texture/price/advanced.
+- **P2c delivered (Aug 19, 2026):** Area **level display** (read-only layer row in name/area section; summary subtitle unchanged).
+- **P3 delivered (Aug 19, 2026):** **Wall docked inspector** — thickness, height, **pattern in plan** (2D hatch fill); left/right/top side colors are **3D-only** in stock SH3D — use **Open full editor…** for 3D materials. **Furniture docked inspector** — name, size, angle, color; live edit + undo.
 - **P4 (planned):** Inspector divider default (~300px), keyboard/focus polish.
 - **Locked decisions (Aug 19, 2026):**
   - Build only on **SPIKE-19 right column** (selection-mode inspector); do not scope left library or workflow rail here.

@@ -241,9 +241,9 @@ Execute in order; each item should reduce double-click modals for site-plan work
 | **P2** | **Polyline docked inspector** (thickness, dash, color, closed path) | **Done Aug 19** — live edit + undo in `SelectionInspectorPane` | `SelectionInspectorPane`, `PolylineController` |
 | **P2** | **Label docked inspector** (text, font size, bold/italic, color) | **Done Aug 19** — live edit + undo in `SelectionInspectorPane` | `LabelController`, `SelectionInspectorPane` |
 | **P2b** | **Dimension docked inspector** (offset, length font size, color) | **Done Aug 19** — live edit + undo in `SelectionInspectorPane` | `DimensionLineController`, `SelectionInspectorPane` |
-| **P2c** | Area **level** display (read-only) | **In progress** — dedicated layer row in area inspector | `SelectionInspectorPane`, `Room` / `Level` |
-| **P3** | **Wall docked inspector** (thickness, height, color subset) | Plan-tool parity; landscape uses walls less often | `WallController`, `SelectionInspectorPane` |
-| **P3** | **Furniture docked inspector** (name, size, angle, color subset) | Plan-selected plants/site objects without full modal | `HomeFurnitureController`, `SelectionInspectorPane` |
+| **P2c** | Area **level** display (read-only) | **Done Aug 19** — dedicated layer row in area inspector | `SelectionInspectorPane`, `Room` / `Level` |
+| **P3** | **Wall docked inspector** (thickness, height, **pattern in plan**) | **Done Aug 19** — 2D fill via `Wall.pattern`; left/right/top colors are 3D-only | `WallController`, `SelectionInspectorPane`, `PlanComponent` |
+| **P3** | **Furniture docked inspector** (name, size, angle, color subset) | **Done Aug 19** — plan-selected objects without full modal | `HomeFurnitureController`, `SelectionInspectorPane` |
 | **P4** | Inspector **divider default** (~300px right column) | Coordinate with SPIKE-22 layout defaults | `HomePane` divider proportions |
 | **P4** | **Keyboard / focus** polish (mnemonics, tab order) | Quality pass after fields stabilize | `SelectionInspectorPane` |
 
@@ -254,6 +254,8 @@ Execute in order; each item should reduce double-click modals for site-plan work
 **Label docked inspector — explicit out of scope (P2):** alignment, width wrap, font family, elevation, 3D pitch (defer to **Open full editor…** / `LabelPanel`).
 
 **Dimension / wall / furniture docked inspectors — defer advanced fields** to each type’s full modal panel; dock carries high-frequency subset only.
+
+**Wall 2D vs 3D appearance (P3):** `PlanComponent` fills walls with **`Wall.pattern`** (hatch) plus plan foreground for outline. **Left/right side color and top color affect 3D only** — same as stock `WallPanel`. Docked wall inspector exposes **Pattern in plan**; use **Open full editor…** for 3D materials.
 
 ---
 
@@ -269,5 +271,5 @@ Execute in order; each item should reduce double-click modals for site-plan work
 4. ~~Decision gate — GO, effort table, SPIKE-21 handoff~~ ✓ (Aug 19, 2026)  
 5. ~~**SPIKE-21 P0** — area fill, opacity, area-label visible~~ ✓ (Aug 19, 2026)  
 6. ~~**SPIKE-21 P1** — summary header, open full editor, design tokens, smooth corners~~ ✓ (Aug 19, 2026)  
-7. **SPIKE-21 P2+** — Label (in progress) → Dimension → area level → wall/furniture → polish  
+7. **SPIKE-21 P2+** — ~~Label~~ ✓ → ~~Dimension~~ ✓ → ~~area level~~ ✓ → ~~wall/furniture~~ ✓ (wall: pattern in plan, not 3D side color) → P4 polish  
 8. SPIKE-22 — catalog L&F + 3D collapse on New site plan (parallel OK)  
