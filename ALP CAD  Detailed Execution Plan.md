@@ -11,12 +11,12 @@
 | Metric | Status |
 |--------|--------|
 | **Blocks complete** | A, B, C, D (4 of 8) |
-| **Spikes complete** | 24 of 29 tracked items |
+| **Spikes complete** | 25 of 29 tracked items |
 | **Next block** | **Block F** — Levels & Site Plan (M3) — **IN PROGRESS** |
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
-**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b, 15c**, **16**, 16A, 16B, 17, 18, **19**, **20**, **21**, **22** (Esc exit)
-**Next up:** SPIKE-22 catalog L&F
+**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b, 15c**, **16**, 16A, 16B, 17, 18, **19**, **20**, **21**, **22**
+**Next up:** SPIKE-23 Phase 1 scope
 
 ---
 
@@ -52,7 +52,7 @@
 | SPIKE-19 | G | M4 | **COMPLETED** | Right-side inspector feasibility — **GO**; prototype in dev app |
 | SPIKE-20 | G | M4 | **COMPLETED** | MVP print / export presets (File menu actions) |
 | SPIKE-21 | H | M5 | **In progress (P0–P1.5 done)** | Minimum right inspector improvements (post–SPIKE-19 GO) |
-| SPIKE-22 | H | M5 | **IN PROGRESS** | Focused workflow UI pass (Esc exit **done**; catalog L&F pending) |
+| SPIKE-22 | H | M5 | **COMPLETED** | Focused workflow UI pass (Esc exit, site plan 3D collapse, catalog L&F) |
 | SPIKE-23 | H | M5 | Pending | Phase 1 stock vs. branded scope definition |
 
 ---
@@ -630,7 +630,7 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 
 ---
 
-### 2. [SPIKE-22] Focused Workflow UI Pass — **IN PROGRESS**
+### 2. [SPIKE-22] Focused Workflow UI Pass — **COMPLETED**
 
 - **Description:** One small, workflow-oriented UI improvement batch — not a whole-shell rewrite.
 - **Locked decisions (Aug 19, 2026):**
@@ -644,14 +644,19 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
   - Pan mode unchanged. Toolbar toggles sync via existing `MODE` listener.
   - Creation toolbar tooltips note “Press Esc to return to Select”.
   - **Manual QA:** passed all five tools.
-- **Remaining (deferred within SPIKE-22):**
-  - **Auto-collapse 3D on New site plan** (see locked decisions above).
-  - **Catalog / library L&F (left column):** Restyle toward mockup — soft colors, rounded category rows, counts, expandable sections, icon chips; keep `FurnitureCatalogController` and drag-drop behavior.
-  - **Furniture / Areas tab styling** to match catalog cards (avoid “modern catalog + stock tables”).
-  - Catalog category / menu cleanup (ALP-named groups: Plants, Hardscape, Reference, …).
+- **Delivered (Aug 19, 2026) — site plan plan-first layout + catalog L&F:**
+  - **New site plan:** 3D pane collapsed by default via `AlpLevelDefaults.applySitePlanUiDefaults()`; user can expand anytime; regular **New** unchanged.
+  - **`AlpCatalogStyles`:** soft palette shared by catalog, inventory tabs/tables, and docked inspector background.
+  - **Catalog tree/list:** category rows show counts; rounded chip icons; warm panel background; **full-width category chips** span tree row width.
+  - **Furniture / Areas tables:** lighter grid + header styling to match catalog; selected tab text readable on light background.
+  - **Manual QA:** passed (3D collapse, counts, inspector/library color match, tab styling, category chips).
+- **Deferred polish (post–SPIKE-22):**
+  - Catalog category / menu cleanup (ALP-named groups: Plants, Hardscape, Reference, …) — library content (`.sh3f` packs), not UI chrome.
+  - Split-pane divider softening; inspector input field flat styling; table alternating row tints.
   - Default panel layout and divider defaults (coordinate with SPIKE-19 right column).
+  - **FlatLaf / global L&F** — explicitly out of scope for Phase 1.
 - **Removed from scope:** Plan setup checklist / workflow rail (skip Phase 1).
-- **Touchpoints:** View (`FurnitureCatalogListPanel`, `FurnitureCatalogTree`, `HomePane`), Controller, `package.properties`.
+- **Touchpoints:** View (`FurnitureCatalogListPanel`, `FurnitureCatalogTree`, `HomePane`, `SelectionInspectorPane`), Model (`AlpLevelDefaults`), `package.properties`.
 
 ---
 
