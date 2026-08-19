@@ -16,8 +16,8 @@
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
 **Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b**, **16**, 16A, 16B, 17, 18, **20**, **22** (Esc exit)  
-**In progress:** Block G — wrap-up / next spike selection  
-**Next up:** SPIKE-19 (right-side inspector feasibility; layout direction documented Aug 19)
+**In progress:** SPIKE-19 (right-side inspector feasibility)  
+**Next up:** SPIKE-19 decision gate → prototype or defer; then SPIKE-22 catalog L&F
 
 ---
 
@@ -49,7 +49,7 @@
 | SPIKE-16B | A | M3 | **COMPLETED** | Areas (room) inventory panel |
 | SPIKE-17 | C | M4 | **COMPLETED** | Width-based wrapped text |
 | SPIKE-18 | C | M4 | **COMPLETED** | One-click draft / monochrome mode |
-| SPIKE-19 | G | M4 | Pending | Right-side inspector feasibility (modal escape hatch) |
+| SPIKE-19 | G | M4 | **IN PROGRESS** | Right-side inspector feasibility (entry-point inventory) |
 | SPIKE-20 | G | M4 | **COMPLETED** | MVP print / export presets (File menu actions) |
 | SPIKE-21 | H | M5 | Pending | Minimum right inspector improvements (post–SPIKE-19) |
 | SPIKE-22 | H | M5 | **IN PROGRESS** | Focused workflow UI pass (Esc exit **done**; catalog L&F pending) |
@@ -558,19 +558,26 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 
 ---
 
-### 3. [SPIKE-19] Right-Side Inspector Feasibility — Pending (investigation first)
+### 3. [SPIKE-19] Right-Side Inspector Feasibility — **IN PROGRESS**
 
 - **Description:** Validate whether a **new right-side work column** for inspector/properties is worth adding in Phase 1 — replacing modal-heavy edit flows, not relocating the library.
 - **Context:** Overlaps SPIKE-21 (inspector polish). Run after SPIKE-20. **Library stays on the left**; mockup library styling is SPIKE-22 (see **UI layout direction** above).
+- **Deliverable:** [sweethome3d-spike-19-inspector-feasibility.md](sweethome3d-spike-19-inspector-feasibility.md) — locked decisions, entry-point inventory, layout/embed notes, recommendation (in progress).
 - **Problem:** Property editing today relies on double-click modals (`LabelPanel`, `RoomPanel`, `FurniturePanel`, etc.) and table inline edit — poor UX for iterative site-plan work.
 - **Goal:** Selection on plan → persistent **right** panel shows editable properties without opening a dialog stack.
 - **Likely files:** `HomePane.java` (`createMainPane`, new `createInspectorPane`), property panels (`LabelPanel`, `RoomPanel`, …), controllers (`LabelController`, `RoomController`, …), [sweethome3d-ui-customization-boundary-map.md](sweethome3d-ui-customization-boundary-map.md).
+- **Locked decisions (Aug 19, 2026):**
+  - **Prototype object:** **Area/Room** preferred (highest landscape value); **Label** fallback if embed/layout is harder than expected.
+  - **Edit model:** **Live edit + undo** in the dock (no OK/Cancel for routine fields).
+  - **Inspector mode:** **Selection-mode only** in Phase 1 (click object → inspector updates). **Tool-mode** inspector (active tool shows variant picker with nothing selected, per mockup Windows example) → **Phase 2** — lower risk.
+  - **Styling:** **Targeted ALP panels + shared design tokens** (colors, radius, section headers); **not** global FlatLaf/L&F swap in SPIKE-19 (revisit later if stock chrome feels too disjoint).
+  - **Workflow rail / checklist:** **Skip** for Phase 1 (and possibly permanently if inspector + catalog L&F reduce friction enough).
 - **Steps:**
-  1. **Inventory:** List all property-edit entry points (double-click, Plan/Furniture/Areas menus, Modify actions, wizards).
+  1. ~~**Inventory:** List all property-edit entry points~~ ✓ — see spike doc.
   2. **Layout spike:** Confirm right column via nested `JSplitPane` without breaking left catalog/inventory or divider persistence.
   3. **Embed spike:** Can existing `*Panel` views run **docked** (non-modal) with live selection sync and undo?
   4. **Effort estimate:** Read-only inspector vs quick-edit vs full modal replacement per object type.
-  5. **Decision gate:** Small prototype (**Label** or **Area/Room** on right) **or** defer to Block H / Phase 2 with written rationale.
+  5. **Decision gate:** Small prototype (**Area/Room** on right, Label fallback) **or** defer to Block H / Phase 2 with written rationale.
 - **Prototype success criteria (if go):** Select object → edit at least one high-value field on right → plan updates → undo works → no modal for that field.
 - **Test plan:** Spike doc + optional prototype; if built, manual QA on select/edit/undo/empty selection state.
 - **Touchpoints:** View (`HomePane`), Controller (selection listeners), existing property panels.
@@ -596,12 +603,17 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 
 - **Description:** After SPIKE-19, implement the **smallest right-column** changes with the largest clarity gain — not left sidebar/inventory rework.
 - **Depends on:** SPIKE-19 decision (build on prototype or implement alternative from spike recommendations).
-- **Examples:** Empty-state copy (“Select an object…”), selection summary header, 2–3 pinned fields per object type, divider default width, focus/keyboard behavior.
+- **Locked decisions (Aug 19, 2026):**
+  - Build only on **SPIKE-19 right column** (selection-mode inspector); do not scope left library or workflow rail here.
+  - **Live edit + undo** remains the interaction model (consistent with SPIKE-19).
+  - **Tool-mode inspector** deferred to Phase 2 (post–SPIKE-21 unless re-prioritized).
+  - Use **shared ALP design tokens** from inspector prototype for section headers and empty states.
+- **Examples:** Empty-state copy (“Select an object…”), selection summary header, 2–3 pinned fields per object type, divider default width (~300px), focus/keyboard behavior, **“Open full editor…”** link to modal for edge-case fields only.
 - **Steps:**
   1. Review SPIKE-19 output; prioritize 1–2 improvements on the **right** inspector only.
   2. Implement highest-value item only.
   3. User test: edit area, edit text, tweak common properties with **fewer modals** and fewer clicks.
-- **Out of scope:** Moving library to right; full modal removal for all object types.
+- **Out of scope:** Moving library to right; full modal removal for all object types; catalog L&F (SPIKE-22).
 - **Touchpoints:** View (`HomePane` right column), Controller (selection sync).
 
 ---
@@ -609,16 +621,24 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 ### 2. [SPIKE-22] Focused Workflow UI Pass — **IN PROGRESS**
 
 - **Description:** One small, workflow-oriented UI improvement batch — not a whole-shell rewrite.
+- **Locked decisions (Aug 19, 2026):**
+  - **Library stays on the left** — mockup library block is **L&F reference only** (colors, category rows, counts, icon chips).
+  - **Styling approach:** **Targeted ALP panels** (catalog, Furniture/Areas tabs to match); **FlatLaf / global L&F** deferred unless targeted pass feels too disjoint from stock chrome.
+  - **3D-first UI de-emphasis:** **Auto-collapse 3D pane** on **File → New site plan…** (set `PlanPaneDividerLocation` so plan uses full center height; user can expand 3D anytime). Regular **New** home unchanged.
+  - **Workflow rail / setup checklist:** **Skip** for Phase 1.
+  - **Default panel layout:** Coordinate divider defaults when SPIKE-19 adds right inspector column.
 - **Delivered (Aug 18, 2026) — ESC exits creation tools:**
   - `AbstractModeChangeState.escape()` returns to **Select** when a creation tool is idle; mid-draw keeps stock cancel-then-exit (two-step Esc).
   - Pan mode unchanged. Toolbar toggles sync via existing `MODE` listener.
   - Creation toolbar tooltips note “Press Esc to return to Select”.
   - **Manual QA:** passed all five tools.
 - **Remaining (deferred within SPIKE-22):**
-  - **Catalog / library L&F (left column):** Restyle toward mockup — soft colors, rounded category rows, counts, expandable sections, icon chips; keep `FurnitureCatalogController` and drag-drop behavior. **Do not move library to the right.**
-  - Plan setup checklist (optional).
-  - Catalog category / menu cleanup.
-  - Default panel layout and divider defaults (may coordinate with SPIKE-19 right column).
+  - **Auto-collapse 3D on New site plan** (see locked decisions above).
+  - **Catalog / library L&F (left column):** Restyle toward mockup — soft colors, rounded category rows, counts, expandable sections, icon chips; keep `FurnitureCatalogController` and drag-drop behavior.
+  - **Furniture / Areas tab styling** to match catalog cards (avoid “modern catalog + stock tables”).
+  - Catalog category / menu cleanup (ALP-named groups: Plants, Hardscape, Reference, …).
+  - Default panel layout and divider defaults (coordinate with SPIKE-19 right column).
+- **Removed from scope:** Plan setup checklist / workflow rail (skip Phase 1).
 - **Touchpoints:** View (`FurnitureCatalogListPanel`, `FurnitureCatalogTree`, `HomePane`), Controller, `package.properties`.
 
 ---
