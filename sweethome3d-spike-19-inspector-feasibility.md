@@ -233,9 +233,10 @@ Execute in order; each item should reduce double-click modals for site-plan work
 |----------|------|-----------|-------------------|
 | **P0** | Area **fill color** + **floor opacity** | **Done Aug 19** — live edit + undo in `SelectionInspectorPane` | `SelectionInspectorPane`, `RoomController` |
 | **P0** | Area **area-label visible** toggle | **Done Aug 19** — checkbox in name/area section | `RoomController.Property.AREA_VISIBLE` |
-| **P1** | **Selection summary header** (type, count, layer) | Clarifies what inspector is editing; improves mixed-state UX | `SelectionInspectorPane` empty/active layouts |
-| **P1** | **Open full editor…** action | Escape hatch for ceiling, texture, wall sides without blocking Phase 1 | `PlanController.modifySelectedRooms()` |
-| **P1** | ALP **design tokens** on inspector (section headers, padding, empty state) | Matches SPIKE-22 left-column direction without FlatLaf | `SelectionInspectorPane`, shared constants |
+| **P1** | **Selection summary header** (type, count, layer) | **Done Aug 19** — title + layer subtitle in active inspector | `SelectionInspectorPane`, `AlpInspectorStyles` |
+| **P1** | **Open full editor…** action | **Done Aug 19** — opens `RoomPanel` modal; commits pending name first | `PlanController.modifySelectedRooms()` |
+| **P1** | ALP **design tokens** on inspector (section headers, padding, empty state) | **Done Aug 19** — shared `AlpInspectorStyles`; styled empty states | `SelectionInspectorPane`, `AlpInspectorStyles` |
+| **P1** | Area **Smooth corners** toggle | **Done Aug 19** — live edit in floor section | `RoomController.Property.SMOOTHED` |
 | **P2** | Area **level** display (read-only or change if low effort) | Useful context; level edit is less frequent than fill/name | `Room` / `Level` model |
 | **P2** | **Label inspector** (text + font size/style subset) | Second-highest modal path per inventory | `LabelController`, slim panel |
 | **P3** | Inspector **divider default** (~300px right column) | Coordinate with SPIKE-22 layout defaults | `HomePane` divider proportions |
@@ -256,5 +257,6 @@ Execute in order; each item should reduce double-click modals for site-plan work
 3. ~~Embed spike — slim room wrapper with live name field~~ ✓ (Aug 19, 2026)  
 4. ~~Decision gate — GO, effort table, SPIKE-21 handoff~~ ✓ (Aug 19, 2026)  
 5. ~~**SPIKE-21 P0** — area fill, opacity, area-label visible~~ ✓ (Aug 19, 2026)  
-6. **SPIKE-21 P1+** — handoff table remainder  
-7. SPIKE-22 — catalog L&F + 3D collapse on New site plan (parallel OK)  
+6. ~~**SPIKE-21 P1** — summary header, open full editor, design tokens, smooth corners~~ ✓ (Aug 19, 2026)  
+7. **SPIKE-21 P2+** — handoff table remainder  
+8. SPIKE-22 — catalog L&F + 3D collapse on New site plan (parallel OK)  
