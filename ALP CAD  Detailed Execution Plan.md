@@ -15,9 +15,8 @@
 | **Next block** | **Block F** — Levels & Site Plan (M3) — **IN PROGRESS** |
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
-**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b**, **16**, 16A, 16B, 17, 18, **19**, **20**, **22** (Esc exit); **SPIKE-21 P0–P2c, P3 wall/furniture** (docked inspectors through wall + furniture)
-**In progress:** SPIKE-21 P4 QA
-**Next up:** SPIKE-15c; SPIKE-22
+**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b, 15c**, **16**, 16A, 16B, 17, 18, **19**, **20**, **21**, **22** (Esc exit)
+**Next up:** SPIKE-22 catalog L&F
 
 ---
 
@@ -44,6 +43,7 @@
 | SPIKE-15 | G | M3 | **COMPLETED** | Layer reorder UX (tab menu + Manage layers dialog) |
 | SPIKE-15a | G | M3 | **COMPLETED** | Tab context menu — Move layer up / down |
 | SPIKE-15b | G | M3 | **COMPLETED** | Manage layers dialog + toolbar swap |
+| SPIKE-15c | G | M3 | **COMPLETED** | Drag-reorder level tabs on plan tab bar |
 | SPIKE-16 | F | M3 | **COMPLETED** | Starter level template (Reference / Existing / Proposed / Plants / Annotations) |
 | SPIKE-16A | A | M3 | **COMPLETED** | Furniture inventory level column |
 | SPIKE-16B | A | M3 | **COMPLETED** | Areas (room) inventory panel |
@@ -537,7 +537,7 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
   - [ ] Toolbar shows **Manage layers**, not Add layer; tab **+** still adds layers.
 - **Touchpoints:** View, Controller.
 
-#### 1c. [SPIKE-15c] Drag-reorder level tabs — **Pending (spec ready Aug 19, 2026)**
+#### 1c. [SPIKE-15c] Drag-reorder level tabs — **COMPLETED (Aug 19, 2026)**
 
 - **Description:** Drag a level tab horizontally to reorder the overlay stack (e.g. drag **Proposed** to the far left).
 - **Deliverable:** [sweethome3d-spike-15c-layer-tab-drag-reorder.md](sweethome3d-spike-15c-layer-tab-drag-reorder.md) — scope, drag UX sketch, undo behavior, test plan.
