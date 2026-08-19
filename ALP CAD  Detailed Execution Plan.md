@@ -11,13 +11,12 @@
 | Metric | Status |
 |--------|--------|
 | **Blocks complete** | A, B, C, D (4 of 8) |
-| **Spikes complete** | 23 of 29 tracked items |
+| **Spikes complete** | 24 of 29 tracked items |
 | **Next block** | **Block F** — Levels & Site Plan (M3) — **IN PROGRESS** |
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
-**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b**, **16**, 16A, 16B, 17, 18, **20**, **22** (Esc exit)  
-**In progress:** SPIKE-19 (right-side inspector feasibility)  
-**Next up:** SPIKE-19 decision gate → prototype or defer; then SPIKE-22 catalog L&F
+**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b**, **16**, 16A, 16B, 17, 18, **19**, **20**, **22** (Esc exit)  
+**Next up:** SPIKE-21 (right inspector field expansion); SPIKE-22 catalog L&F + 3D collapse
 
 ---
 
@@ -49,9 +48,9 @@
 | SPIKE-16B | A | M3 | **COMPLETED** | Areas (room) inventory panel |
 | SPIKE-17 | C | M4 | **COMPLETED** | Width-based wrapped text |
 | SPIKE-18 | C | M4 | **COMPLETED** | One-click draft / monochrome mode |
-| SPIKE-19 | G | M4 | **IN PROGRESS** | Right-side inspector feasibility (entry-point inventory) |
+| SPIKE-19 | G | M4 | **COMPLETED** | Right-side inspector feasibility — **GO**; prototype in dev app |
 | SPIKE-20 | G | M4 | **COMPLETED** | MVP print / export presets (File menu actions) |
-| SPIKE-21 | H | M5 | Pending | Minimum right inspector improvements (post–SPIKE-19) |
+| SPIKE-21 | H | M5 | **Next up** | Minimum right inspector improvements (post–SPIKE-19 GO) |
 | SPIKE-22 | H | M5 | **IN PROGRESS** | Focused workflow UI pass (Esc exit **done**; catalog L&F pending) |
 | SPIKE-23 | H | M5 | Pending | Phase 1 stock vs. branded scope definition |
 
@@ -432,13 +431,13 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 *Goal: Close remaining layer and output gaps with intentional workflows.*  
 *Depends on: Block F complete*  
 *Milestones: M3 (completion) + M4 (completion)*  
-**Status: PENDING**
+**Status: COMPLETE** (Aug 19, 2026)
 
 ### Exit criteria
 
 - Level reorder decision documented (implemented or explicitly deferred). — **Done:** stock `elevationIndex` reorder documented; **15a/15b** surface it in ALP UX.
 - Print/export presets reduce manual setup for draft and presentation output. — **Done:** SPIKE-20.
-- Persistent inspector decision documented (small prototype or defer to Block H). — **Next:** SPIKE-19.
+- Persistent inspector decision documented (small prototype or defer to Block H). — **Done:** SPIKE-19 **GO**; area name live in right column; SPIKE-21 expands fields.
 - UI layout direction for left library vs right inspector documented (see below).
 
 ---
@@ -558,51 +557,42 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 
 ---
 
-### 3. [SPIKE-19] Right-Side Inspector Feasibility — **IN PROGRESS**
+### 3. [SPIKE-19] Right-Side Inspector Feasibility — **COMPLETED**
 
 - **Description:** Validate whether a **new right-side work column** for inspector/properties is worth adding in Phase 1 — replacing modal-heavy edit flows, not relocating the library.
 - **Context:** Overlaps SPIKE-21 (inspector polish). Run after SPIKE-20. **Library stays on the left**; mockup library styling is SPIKE-22 (see **UI layout direction** above).
-- **Deliverable:** [sweethome3d-spike-19-inspector-feasibility.md](sweethome3d-spike-19-inspector-feasibility.md) — locked decisions, entry-point inventory, layout/embed notes, recommendation (in progress).
-- **Problem:** Property editing today relies on double-click modals (`LabelPanel`, `RoomPanel`, `FurniturePanel`, etc.) and table inline edit — poor UX for iterative site-plan work.
-- **Goal:** Selection on plan → persistent **right** panel shows editable properties without opening a dialog stack.
-- **Likely files:** `HomePane.java` (`createMainPane`, new `createInspectorPane`), property panels (`LabelPanel`, `RoomPanel`, …), controllers (`LabelController`, `RoomController`, …), [sweethome3d-ui-customization-boundary-map.md](sweethome3d-ui-customization-boundary-map.md).
-- **Locked decisions (Aug 19, 2026):**
-  - **Prototype object:** **Area/Room** preferred (highest landscape value); **Label** fallback if embed/layout is harder than expected.
-  - **Edit model:** **Live edit + undo** in the dock (no OK/Cancel for routine fields).
-  - **Inspector mode:** **Selection-mode only** in Phase 1 (click object → inspector updates). **Tool-mode** inspector (active tool shows variant picker with nothing selected, per mockup Windows example) → **Phase 2** — lower risk.
-  - **Styling:** **Targeted ALP panels + shared design tokens** (colors, radius, section headers); **not** global FlatLaf/L&F swap in SPIKE-19 (revisit later if stock chrome feels too disjoint).
-  - **Workflow rail / checklist:** **Skip** for Phase 1 (and possibly permanently if inspector + catalog L&F reduce friction enough).
+- **Deliverable:** [sweethome3d-spike-19-inspector-feasibility.md](sweethome3d-spike-19-inspector-feasibility.md) — locked decisions, entry-point inventory, layout/embed validation, **GO decision**, SPIKE-21 handoff.
+- **Decision (Aug 19, 2026):** **GO** on Phase 1 selection-mode right inspector. Slim wrapper + `RoomController` / `LabelController` APIs — not full `RoomPanel` embed. Tool-mode inspector → Phase 2.
+- **Shipped in dev app:** `SelectionInspectorPane` — area **name** live edit + undo; selection sync; empty states for no selection, mixed selection, locked layer.
 - **Steps:**
   1. ~~**Inventory:** List all property-edit entry points~~ ✓ — see spike doc.
-  2. ~~**Layout spike:** Right column via nested `JSplitPane`~~ ✓ — placeholder inspector in dev app (Aug 19, 2026).
-  3. ~~**Embed spike:** Can existing `*Panel` views run **docked** (non-modal) with live selection sync and undo?~~ ✓ — `SelectionInspectorPane` + live area name (Aug 19, 2026).
-  4. **Effort estimate:** Read-only inspector vs quick-edit vs full modal replacement per object type.
-  5. **Decision gate:** Small prototype (**Area/Room** on right, Label fallback) **or** defer to Block H / Phase 2 with written rationale.
-- **Prototype success criteria (if go):** Select object → edit at least one high-value field on right → plan updates → undo works → no modal for that field.
-- **Test plan:** Spike doc + optional prototype; if built, manual QA on select/edit/undo/empty selection state.
-- **Touchpoints:** View (`HomePane`), Controller (selection listeners), existing property panels.
+  2. ~~**Layout spike:** Right column via nested `JSplitPane`~~ ✓ (Aug 19, 2026).
+  3. ~~**Embed spike:** Docked panel with live selection sync and undo~~ ✓ — area name (Aug 19, 2026).
+  4. ~~**Effort estimate + decision gate~~ ✓ — refined table + SPIKE-21 handoff (Aug 19, 2026).
+- **Prototype success criteria:** Met — select area → edit name on right → plan updates → undo works → no modal for that field.
+- **Next:** SPIKE-21 — P0: fill color, floor opacity, area-label visible; then label inspector subset.
 
 ---
 
 ## Milestone Block H: MVP Packaging
 
 *Goal: Package proven behaviors into a simpler, intentionally branded product shell.*  
-*Depends on: Block G complete (especially SPIKE-19 decision)*  
+*Depends on: Block G complete*  
 *Milestone: M5*  
 **Status: PENDING**
 
 ### Exit criteria
 
-- Right-side inspector changes identified and at least one implemented (or defer documented via SPIKE-19).
+- Right-side inspector changes identified and at least one implemented. — **Partial:** SPIKE-19 GO + area name in dock; SPIKE-21 expands pinned fields.
 - One focused workflow UI pass shipped (not a full rewrite) — includes catalog look-and-feel toward mockup on **left**.
 - Written Phase 1 scope: what stays stock SH3D vs ALP-branded.
 
 ---
 
-### 1. [SPIKE-21] Minimum Right Inspector Improvements — Pending
+### 1. [SPIKE-21] Minimum Right Inspector Improvements — **Next up**
 
 - **Description:** After SPIKE-19, implement the **smallest right-column** changes with the largest clarity gain — not left sidebar/inventory rework.
-- **Depends on:** SPIKE-19 decision (build on prototype or implement alternative from spike recommendations).
+- **Depends on:** SPIKE-19 decision — **GO** (Aug 19, 2026). Build on `SelectionInspectorPane` prototype; see spike doc **SPIKE-21 handoff** table.
 - **Locked decisions (Aug 19, 2026):**
   - Build only on **SPIKE-19 right column** (selection-mode inspector); do not scope left library or workflow rail here.
   - **Live edit + undo** remains the interaction model (consistent with SPIKE-19).

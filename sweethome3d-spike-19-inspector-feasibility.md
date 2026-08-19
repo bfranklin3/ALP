@@ -1,7 +1,7 @@
 # SPIKE-19 — Right-Side Inspector Feasibility
 
 **Date:** August 19, 2026  
-**Status:** In progress (steps 1–3 complete; recommendation pending)  
+**Status:** **COMPLETE** (Aug 19, 2026) — decision: **GO** on Phase 1 right-side inspector  
 **Branch:** `cursor/areas-inventory-and-level-locking`  
 **Related:** [ALP CAD Detailed Execution Plan.md](ALP%20CAD%20%20Detailed%20Execution%20Plan.md) § SPIKE-19; [sweethome3d-ui-customization-boundary-map.md](sweethome3d-ui-customization-boundary-map.md)
 
@@ -180,28 +180,72 @@ Existing property views are **`JPanel` subclasses** with `displayView()` wrappin
 
 ---
 
-## Effort sketch (step 4 — preliminary)
+## Decision gate (step 4 — **validated Aug 19, 2026**)
 
-| Scope | Effort | Notes |
-|-------|--------|-------|
-| Empty right column + divider | Small | Layout only |
-| Selection sync + empty state | Small | Listen to `home` selection |
-| **Area inspector** — pinned fields (name, fill, opacity, level) | Medium | Refactor off modal OK |
-| **Label inspector** — pinned fields | Small–medium | Fewer fields |
-| Full `RoomPanel` parity in dock | Large | Many tabs/texture pickers |
-| Replace all modals | Very large | Phase 2+ |
+### Decision
+
+**GO** — proceed with a **Phase 1 right-side selection inspector** in ALP CAD.
+
+The spike question — *can a docked right column replace modal-heavy editing for high-value site-plan objects, with live edit + undo?* — is answered **yes**. Layout (step 2), slim embed (step 3), and manual QA (Aug 19) met all prototype success criteria. **Label fallback is not required**; the same slim-wrapper pattern can extend to labels in SPIKE-21.
+
+### Refined effort table (actual vs estimated)
+
+Estimates from pre-spike analysis compared with what steps 2–3 proved. **Actual** reflects work already shipped on `cursor/areas-inventory-and-level-locking`.
+
+| Scope | Pre-spike | Actual (Aug 19) | Remaining (SPIKE-21+) | Notes |
+|-------|-----------|-----------------|-------------------------|-------|
+| Empty right column + divider | Small | **Small ✓** | — | `createPlanInspectorPane`, persisted divider, existing-home width fix |
+| Selection sync + empty states | Small | **Small ✓** | Polish copy/styling | Mixed / locked / no-selection messages validated in QA |
+| Area inspector — **name** (live + undo) | Medium | **Small ✓** | — | `SelectionInspectorPane` + `RoomController.modifyRooms()` on commit |
+| Area inspector — fill, opacity, level, area-visible | Medium | — | **Medium** | Reuse slim wrapper; no `RoomPanel` OK/Cancel refactor |
+| Area inspector — texture / ceiling / wall sides | Large | — | **Defer** | Keep modal via double-click or **Open full editor…** |
+| Label inspector — text, font, style (pinned subset) | Small–medium | — | **Small–medium** | Same pattern as area name; fewer fields than `LabelPanel` |
+| Wall / polyline / dimension pinned fields | Medium each | — | **Phase 2+** | Lower site-plan frequency |
+| Furniture inspector subset | Large | — | **Phase 2+** | Table inline edit already covers much |
+| Full `RoomPanel` / all modals in dock | Very large | — | **Out of scope Phase 1** | Edge fields stay modal |
+| Tool-mode inspector (active tool, no selection) | — | — | **Phase 2** | Locked decision |
+| ALP section headers + design tokens on inspector | Small | — | **Small** | SPIKE-21 styling pass |
+
+**Risk retired:** Full `RoomPanel` embed is **not** required. Slim wrapper + existing controller APIs is the approved extension path.
+
+### Phase 1 scope boundary
+
+**In scope (build in SPIKE-21, on prototype already in dev app):**
+
+- Selection-mode inspector on the **right** only; library stays **left**
+- **Area/Room:** name ✓, then fill color, floor opacity, area-label visible, level (read-only or picker TBD)
+- **Label:** pinned text + style fields (after area batch)
+- Live edit + undo per field (commit on Enter / focus lost for text; immediate for toggles/spinners)
+- **Open full editor…** link → existing `RoomPanel` / `LabelPanel` modal for edge fields
+- Shared ALP empty-state copy and section headers
+
+**Out of scope Phase 1:**
+
+- Tool-mode inspector, workflow rail, FlatLaf / global L&F swap
+- Full modal replacement for walls, furniture, wizards, page setup
+- Moving catalog or inventory to the right column
+
+### SPIKE-21 handoff (prioritized)
+
+Execute in order; each item should reduce double-click modals for site-plan work without expanding scope to left column or full panel parity.
+
+| Priority | Item | Rationale | Likely touchpoints |
+|----------|------|-----------|-------------------|
+| **P0** | Area **fill color** + **floor opacity** | Highest friction after name (iterative color/opacity today = OK/Cancel modal) | `SelectionInspectorPane`, `RoomController`, color button pattern from `RoomPanel` |
+| **P0** | Area **area-label visible** toggle | Already inline in Areas table; inspector parity reduces tab switching | `RoomController.Property.AREA_VISIBLE` |
+| **P1** | **Selection summary header** (type, count, layer) | Clarifies what inspector is editing; improves mixed-state UX | `SelectionInspectorPane` empty/active layouts |
+| **P1** | **Open full editor…** action | Escape hatch for ceiling, texture, wall sides without blocking Phase 1 | `PlanController.modifySelectedRooms()` |
+| **P1** | ALP **design tokens** on inspector (section headers, padding, empty state) | Matches SPIKE-22 left-column direction without FlatLaf | `SelectionInspectorPane`, shared constants |
+| **P2** | Area **level** display (read-only or change if low effort) | Useful context; level edit is less frequent than fill/name | `Room` / `Level` model |
+| **P2** | **Label inspector** (text + font size/style subset) | Second-highest modal path per inventory | `LabelController`, slim panel |
+| **P3** | Inspector **divider default** (~300px right column) | Coordinate with SPIKE-22 layout defaults | `HomePane` divider proportions |
+| **P3** | **Keyboard / focus** polish (mnemonics, tab order) | Quality pass after fields stabilize | `SelectionInspectorPane` |
+
+**SPIKE-21 success metric:** Edit a typical Proposed-layer area (name, fill, opacity, label visibility) **without opening a modal**; undo each change; double-click still available for advanced fields.
 
 ---
 
-## Recommendation (step 5 — pending)
-
-**Preliminary (post step 3):** **GO** on Phase 1 prototype — expand **Area/Room** inspector with 3–5 more pinned fields (fill, opacity, level, area-visible), live edit + undo, shared ALP section header styling. Keep **“Open full editor…”** → existing `RoomPanel` modal for edge fields. **Label** inspector can follow the same slim-wrapper pattern.
-
-**Tool-mode inspector:** defer Phase 2.
-
-**Defer entirely if:** N/A — embed validated at step 3.
-
-*Final recommendation updated after step 4 effort review.*
+## Effort sketch (pre-spike analysis — superseded by step 4 table above)
 
 ---
 
@@ -210,5 +254,6 @@ Existing property views are **`JPanel` subclasses** with `displayView()` wrappin
 1. ~~Entry-point inventory~~ ✓  
 2. ~~Layout spike — empty right pane in dev app~~ ✓ (Aug 19, 2026)  
 3. ~~Embed spike — slim room wrapper with live name field~~ ✓ (Aug 19, 2026)  
-4. Final recommendation + optional prototype PR  
-5. SPIKE-21 polish list from prototype learnings  
+4. ~~Decision gate — GO, effort table, SPIKE-21 handoff~~ ✓ (Aug 19, 2026)  
+5. **SPIKE-21** — implement handoff list (start with P0 area fill + opacity)  
+6. SPIKE-22 — catalog L&F + 3D collapse on New site plan (parallel OK)  
