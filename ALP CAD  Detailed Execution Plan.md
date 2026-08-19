@@ -11,13 +11,13 @@
 | Metric | Status |
 |--------|--------|
 | **Blocks complete** | A, B, C, D (4 of 8) |
-| **Spikes complete** | 22 of 29 tracked items |
+| **Spikes complete** | 23 of 29 tracked items |
 | **Next block** | **Block F** — Levels & Site Plan (M3) — **IN PROGRESS** |
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
-**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b**, **16**, 16A, 16B, 17, 18  
+**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b**, **16**, 16A, 16B, 17, 18, **20**, **22** (Esc exit)  
 **In progress:** Block G — wrap-up / next spike selection  
-**Next up:** SPIKE-20 (print/export presets)
+**Next up:** SPIKE-19 (persistent inspector feasibility)
 
 ---
 
@@ -50,7 +50,7 @@
 | SPIKE-17 | C | M4 | **COMPLETED** | Width-based wrapped text |
 | SPIKE-18 | C | M4 | **COMPLETED** | One-click draft / monochrome mode |
 | SPIKE-19 | G | M4 | Pending | Persistent inspector (spike → prototype or defer) |
-| SPIKE-20 | G | M4 | Pending | MVP print / export presets |
+| SPIKE-20 | G | M4 | **COMPLETED** | MVP print / export presets (File menu actions) |
 | SPIKE-21 | H | M5 | Pending | Minimum sidebar / inspector improvements |
 | SPIKE-22 | H | M5 | **IN PROGRESS** | Focused workflow UI pass (ESC exit tools **done**) |
 | SPIKE-23 | H | M5 | Pending | Phase 1 stock vs. branded scope definition |
@@ -497,15 +497,20 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 
 ---
 
-### 2. [SPIKE-20] MVP Print / Export Presets — Pending
+### 2. [SPIKE-20] MVP Print / Export Presets — **COMPLETED**
 
 - **Description:** Define and implement preset print/PDF/SVG export settings for draft vs presentation output.
-- **Likely files:** Print / PDF / SVG export dialogs, `Home.print` metadata, page setup, draft mode integration.
+- **Likely files:** `AlpOutputPresets.java`, `HomeController`, `HomePane`, `PlanComponent`, `HomePrint`, draft mode.
+- **Delivered (Aug 18, 2026):**
+  - **File → Apply draft output preset** — plan-only, B&amp;W (draft mode), no furniture/3D, clears header/footer.
+  - **File → Apply presentation output preset** — plan-only, color (draft mode off), no furniture/3D, keeps header/footer.
+  - Preserves page size/orientation/margins from current print settings; landscape defaults when none saved.
+  - Combined undo for print settings + draft mode. SVG export respects draft mode via `PlanComponent.isDraftMode(EXPORT)`.
 - **Steps:**
-  1. Document current print and PDF flows; list properties users tweak repeatedly (scale, margins, fill, draft mode).
-  2. Define two presets: **Draft** (B&W-friendly, minimal fills) and **Presentation** (color, area fills visible).
-  3. Implement as menu actions or remembered last-used preset pair — avoid large dialog redesign.
-  4. Validate PDF and print preview from dev app.
+  1. ~~Document current print and PDF flows~~ ✓
+  2. ~~Define two presets~~ ✓
+  3. ~~Implement as menu actions~~ ✓
+  4. ~~Manual QA: print preview, PDF, SVG with both presets; verify undo~~ ✓ (Aug 18, 2026)
 - **Test plan:** Export same plan with both presets; compare output to manual baseline.
 - **Touchpoints:** View, Controller, export pipeline.
 
