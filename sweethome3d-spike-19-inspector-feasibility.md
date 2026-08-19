@@ -240,8 +240,8 @@ Execute in order; each item should reduce double-click modals for site-plan work
 | **P1.5** | Area **outline** thickness + dash + color | **Done Aug 19** — property lines/setbacks on Base Reference layer | `Room`, `SelectionInspectorPane`, `PlanComponent` |
 | **P2** | **Polyline docked inspector** (thickness, dash, color, closed path) | **Done Aug 19** — live edit + undo in `SelectionInspectorPane` | `SelectionInspectorPane`, `PolylineController` |
 | **P2** | **Label docked inspector** (text, font size, bold/italic, color) | **Done Aug 19** — live edit + undo in `SelectionInspectorPane` | `LabelController`, `SelectionInspectorPane` |
-| **P2b** | **Dimension docked inspector** (offset, length font size, color) | **In progress** — completes annotation set | `DimensionLineController`, `SelectionInspectorPane` |
-| **P2c** | Area **level** display (read-only) | Context in area inspector without level-edit modal | `SelectionInspectorPane`, `Room` / `Level` |
+| **P2b** | **Dimension docked inspector** (offset, length font size, color) | **Done Aug 19** — live edit + undo in `SelectionInspectorPane` | `DimensionLineController`, `SelectionInspectorPane` |
+| **P2c** | Area **level** display (read-only) | **In progress** — dedicated layer row in area inspector | `SelectionInspectorPane`, `Room` / `Level` |
 | **P3** | **Wall docked inspector** (thickness, height, color subset) | Plan-tool parity; landscape uses walls less often | `WallController`, `SelectionInspectorPane` |
 | **P3** | **Furniture docked inspector** (name, size, angle, color subset) | Plan-selected plants/site objects without full modal | `HomeFurnitureController`, `SelectionInspectorPane` |
 | **P4** | Inspector **divider default** (~300px right column) | Coordinate with SPIKE-22 layout defaults | `HomePane` divider proportions |
