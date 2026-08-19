@@ -15,8 +15,9 @@
 | **Next block** | **Block F** — Levels & Site Plan (M3) — **IN PROGRESS** |
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
-**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b**, **16**, 16A, 16B, 17, 18, **19**, **20**, **22** (Esc exit)  
-**Next up:** SPIKE-21 (right inspector field expansion); SPIKE-22 catalog L&F + 3D collapse
+**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b**, **16**, 16A, 16B, 17, 18, **19**, **20**, **22** (Esc exit); **SPIKE-21 P0** (area inspector fields)  
+**In progress:** SPIKE-21 P1 (inspector polish)  
+**Next up:** SPIKE-21 P1; SPIKE-15c (tab drag-reorder — spec ready); SPIKE-22 catalog L&F + 3D collapse
 
 ---
 
@@ -50,7 +51,7 @@
 | SPIKE-18 | C | M4 | **COMPLETED** | One-click draft / monochrome mode |
 | SPIKE-19 | G | M4 | **COMPLETED** | Right-side inspector feasibility — **GO**; prototype in dev app |
 | SPIKE-20 | G | M4 | **COMPLETED** | MVP print / export presets (File menu actions) |
-| SPIKE-21 | H | M5 | **Next up** | Minimum right inspector improvements (post–SPIKE-19 GO) |
+| SPIKE-21 | H | M5 | **In progress (P0 done)** | Minimum right inspector improvements (post–SPIKE-19 GO) |
 | SPIKE-22 | H | M5 | **IN PROGRESS** | Focused workflow UI pass (Esc exit **done**; catalog L&F pending) |
 | SPIKE-23 | H | M5 | Pending | Phase 1 stock vs. branded scope definition |
 
@@ -494,7 +495,7 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
   - Level tabs and plan view refresh on `ELEVATION_INDEX` change.
   - **Manual QA (Aug 18):** Reorder works; friction is discoverability and workflow, not missing engine support.
 - **Default stack order (Option D — no separate spike):** Delivered in **SPIKE-16**. `AlpLevelDefaults.addStarterSitePlanLevels()` adds levels in order Reference → … → Annotations; each `home.addLevel()` at elevation 0 receives `elevationIndex` 0…4 automatically → Reference underlay, Annotations on top in a new site plan.
-- **Out of scope for SPIKE-15:** New reorder model, drag-reorder inside Modify level (optional later), cross-elevation reorder (multi-story; not ALP Phase 1).
+- **Out of scope for SPIKE-15 (original):** New reorder model, cross-elevation reorder (multi-story; not ALP Phase 1). Tab **drag-reorder** deferred to **SPIKE-15c** (spec Aug 19, 2026).
 - **Decision:** Do **not** defer reorder. Reframe SPIKE-15 as **UX to surface existing behavior**, via sub-spikes **15a** and **15b** below.
 - **Block G exit (partial):** Level reorder decision documented — **implemented in stock; ALP improves exposure.**
 
@@ -526,7 +527,7 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
   - **Toolbar:** **Add layer** button (SPIKE-14b) replaced with **Manage layers**; Add layer remains on tab **+**, Plan → Levels menu, and shortcuts.
   - **`MANAGE_LAYERS`** action: `PlanController.manageLayers()`, `ViewFactory.createManageLayersView()`, menu + toolbar wiring.
 - **Likely files:** `ManageLayersPanel.java`, `PlanController.java`, `LevelController.java`, `HomePane.java`, `HomeView.java`, `HomeController.java`, `ViewFactory.java`, `SwingViewFactory.java`, `package.properties`.
-  - **Out of scope (v1):** Left-column docked layer manager; double-click row; drag-reorder. Right-side inspector/layer summary is SPIKE-19/21 (see **UI layout direction**).
+  - **Out of scope (v1):** Left-column docked layer manager; double-click row; drag-reorder in dialog. Tab **drag-reorder** → **SPIKE-15c**. Right-side inspector/layer summary is SPIKE-19/21 (see **UI layout direction**).
 - **Test plan:**
   - [ ] **File → New site plan…** → **Plan → Levels → Manage layers…** (or toolbar button after zoom).
   - [ ] Table shows all five layers; top row = Annotations (top of stack).
@@ -535,6 +536,17 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
   - [ ] **Modify layer…** opens Modify level for selected row; Close returns to Manage layers.
   - [ ] Toolbar shows **Manage layers**, not Add layer; tab **+** still adds layers.
 - **Touchpoints:** View, Controller.
+
+#### 1c. [SPIKE-15c] Drag-reorder level tabs — **Pending (spec ready Aug 19, 2026)**
+
+- **Description:** Drag a level tab horizontally to reorder the overlay stack (e.g. drag **Proposed** to the far left).
+- **Deliverable:** [sweethome3d-spike-15c-layer-tab-drag-reorder.md](sweethome3d-spike-15c-layer-tab-drag-reorder.md) — scope, drag UX sketch, undo behavior, test plan.
+- **Depends on:** SPIKE-15a/15b (existing `elevationIndex` + `LevelController.updateLevelElevationIndex()`).
+- **In scope:** Same-elevation tab drag; drag threshold; insert indicator; single undo per drop; preserve click / double-click / **+** tab / context menu.
+- **Out of scope:** Multi-story cross-elevation drag; Manage layers row drag; left docked layer manager.
+- **Likely files:** `MultipleLevelsPlanPanel.java`, `LevelController.java`, `PlanController.java`, `package.properties`.
+- **Effort:** ~1–2 days. Independent of SPIKE-21.
+- **Sequencing:** After SPIKE-21 P0 or parallel polish before SPIKE-22 catalog L&F.
 
 ---
 
@@ -589,10 +601,12 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 
 ---
 
-### 1. [SPIKE-21] Minimum Right Inspector Improvements — **Next up**
+### 1. [SPIKE-21] Minimum Right Inspector Improvements — **In progress (P0 done Aug 19, 2026)**
 
 - **Description:** After SPIKE-19, implement the **smallest right-column** changes with the largest clarity gain — not left sidebar/inventory rework.
 - **Depends on:** SPIKE-19 decision — **GO** (Aug 19, 2026). Build on `SelectionInspectorPane` prototype; see spike doc **SPIKE-21 handoff** table.
+- **P0 delivered (Aug 19, 2026):** Live area **name**, **fill color**, **floor opacity**, **display area size** in docked inspector; undo via `RoomController.modifyRooms()`; name commits on Enter or selection change when edited; color/opacity/area-visible do not overwrite name.
+- **Remaining (P1+):** Selection summary header, “Open full editor…”, ALP design tokens, level display, label inspector, divider defaults, keyboard polish, Smooth Corners.
 - **Locked decisions (Aug 19, 2026):**
   - Build only on **SPIKE-19 right column** (selection-mode inspector); do not scope left library or workflow rail here.
   - **Live edit + undo** remains the interaction model (consistent with SPIKE-19).

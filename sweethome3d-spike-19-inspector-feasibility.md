@@ -231,8 +231,8 @@ Execute in order; each item should reduce double-click modals for site-plan work
 
 | Priority | Item | Rationale | Likely touchpoints |
 |----------|------|-----------|-------------------|
-| **P0** | Area **fill color** + **floor opacity** | Highest friction after name (iterative color/opacity today = OK/Cancel modal) | `SelectionInspectorPane`, `RoomController`, color button pattern from `RoomPanel` |
-| **P0** | Area **area-label visible** toggle | Already inline in Areas table; inspector parity reduces tab switching | `RoomController.Property.AREA_VISIBLE` |
+| **P0** | Area **fill color** + **floor opacity** | **Done Aug 19** — live edit + undo in `SelectionInspectorPane` | `SelectionInspectorPane`, `RoomController` |
+| **P0** | Area **area-label visible** toggle | **Done Aug 19** — checkbox in name/area section | `RoomController.Property.AREA_VISIBLE` |
 | **P1** | **Selection summary header** (type, count, layer) | Clarifies what inspector is editing; improves mixed-state UX | `SelectionInspectorPane` empty/active layouts |
 | **P1** | **Open full editor…** action | Escape hatch for ceiling, texture, wall sides without blocking Phase 1 | `PlanController.modifySelectedRooms()` |
 | **P1** | ALP **design tokens** on inspector (section headers, padding, empty state) | Matches SPIKE-22 left-column direction without FlatLaf | `SelectionInspectorPane`, shared constants |
@@ -255,5 +255,6 @@ Execute in order; each item should reduce double-click modals for site-plan work
 2. ~~Layout spike — empty right pane in dev app~~ ✓ (Aug 19, 2026)  
 3. ~~Embed spike — slim room wrapper with live name field~~ ✓ (Aug 19, 2026)  
 4. ~~Decision gate — GO, effort table, SPIKE-21 handoff~~ ✓ (Aug 19, 2026)  
-5. **SPIKE-21** — implement handoff list (start with P0 area fill + opacity)  
-6. SPIKE-22 — catalog L&F + 3D collapse on New site plan (parallel OK)  
+5. ~~**SPIKE-21 P0** — area fill, opacity, area-label visible~~ ✓ (Aug 19, 2026)  
+6. **SPIKE-21 P1+** — handoff table remainder  
+7. SPIKE-22 — catalog L&F + 3D collapse on New site plan (parallel OK)  
