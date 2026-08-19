@@ -15,7 +15,7 @@
 | **Next block** | **Block F** — Levels & Site Plan (M3) — **IN PROGRESS** |
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
-**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b**, **16**, 16A, 16B, 17, 18, **19**, **20**, **22** (Esc exit); **SPIKE-21 P0–P1** (area inspector fields + polish)  
+**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b**, **16**, 16A, 16B, 17, 18, **19**, **20**, **22** (Esc exit); **SPIKE-21 P0–P1.5** (area inspector + outline styling)  
 **In progress:** SPIKE-21 P2 (level display, label inspector)  
 **Next up:** SPIKE-21 P2; SPIKE-15c (tab drag-reorder — spec ready); SPIKE-22 catalog L&F + 3D collapse
 
@@ -51,7 +51,7 @@
 | SPIKE-18 | C | M4 | **COMPLETED** | One-click draft / monochrome mode |
 | SPIKE-19 | G | M4 | **COMPLETED** | Right-side inspector feasibility — **GO**; prototype in dev app |
 | SPIKE-20 | G | M4 | **COMPLETED** | MVP print / export presets (File menu actions) |
-| SPIKE-21 | H | M5 | **In progress (P0–P1 done)** | Minimum right inspector improvements (post–SPIKE-19 GO) |
+| SPIKE-21 | H | M5 | **In progress (P0–P1.5 done)** | Minimum right inspector improvements (post–SPIKE-19 GO) |
 | SPIKE-22 | H | M5 | **IN PROGRESS** | Focused workflow UI pass (Esc exit **done**; catalog L&F pending) |
 | SPIKE-23 | H | M5 | Pending | Phase 1 stock vs. branded scope definition |
 
@@ -607,7 +607,8 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 - **Depends on:** SPIKE-19 decision — **GO** (Aug 19, 2026). Build on `SelectionInspectorPane` prototype; see spike doc **SPIKE-21 handoff** table.
 - **P0 delivered (Aug 19, 2026):** Live area **name**, **fill color**, **floor opacity**, **display area size** in docked inspector; undo via `RoomController.modifyRooms()`; name commits on Enter or selection change when edited; color/opacity/area-visible do not overwrite name.
 - **P1 delivered (Aug 19, 2026):** **Selection summary header** (type, count, layer); **Open full editor…** (modal escape hatch); **AlpInspectorStyles** design tokens (padding, empty state, summary typography); **Smooth corners** toggle in floor section.
-- **Remaining (P2+):** Level display, label inspector, divider defaults, keyboard polish.
+- **P1.5 delivered (Aug 19, 2026):** Per-area **outline thickness**, **dash style**, and **outline color** in docked inspector; XML persistence; plan rendering via `ShapeTools.getStroke()`.
+- **Remaining (P2+):** Level display, label inspector, divider defaults, keyboard polish; polyline inspector (see spike discussion).
 - **Locked decisions (Aug 19, 2026):**
   - Build only on **SPIKE-19 right column** (selection-mode inspector); do not scope left library or workflow rail here.
   - **Live edit + undo** remains the interaction model (consistent with SPIKE-19).

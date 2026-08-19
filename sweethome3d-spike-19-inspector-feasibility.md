@@ -237,6 +237,7 @@ Execute in order; each item should reduce double-click modals for site-plan work
 | **P1** | **Open full editor…** action | **Done Aug 19** — opens `RoomPanel` modal; commits pending name first | `PlanController.modifySelectedRooms()` |
 | **P1** | ALP **design tokens** on inspector (section headers, padding, empty state) | **Done Aug 19** — shared `AlpInspectorStyles`; styled empty states | `SelectionInspectorPane`, `AlpInspectorStyles` |
 | **P1** | Area **Smooth corners** toggle | **Done Aug 19** — live edit in floor section | `RoomController.Property.SMOOTHED` |
+| **P1.5** | Area **outline** thickness + dash + color | **Done Aug 19** — property lines/setbacks on Base Reference layer | `Room`, `SelectionInspectorPane`, `PlanComponent` |
 | **P2** | Area **level** display (read-only or change if low effort) | Useful context; level edit is less frequent than fill/name | `Room` / `Level` model |
 | **P2** | **Label inspector** (text + font size/style subset) | Second-highest modal path per inventory | `LabelController`, slim panel |
 | **P3** | Inspector **divider default** (~300px right column) | Coordinate with SPIKE-22 layout defaults | `HomePane` divider proportions |
