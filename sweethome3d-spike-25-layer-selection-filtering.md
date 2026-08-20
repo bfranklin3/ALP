@@ -1,7 +1,7 @@
 # SPIKE-25 — Layer Selection Filtering (Current Layer Only + Lock)
 
 **Date:** August 19, 2026  
-**Status:** Spec locked — pending implementation  
+**Status:** Implemented  
 **Branch:** `cursor/areas-inventory-and-level-locking`  
 **Parent:** ALP flat overlay layer workflow (SPIKE-14, SPIKE-16); complements [SPIKE-24](sweethome3d-spike-24-layer-docked-inspector.md)  
 **Related:** `PlanController.java`, `Home.java`, `Level.java`, `AlpLevelDefaults.java`, `UserPreferences.java`
