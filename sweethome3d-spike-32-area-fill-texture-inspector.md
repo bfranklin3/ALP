@@ -1,7 +1,7 @@
 # SPIKE-32 — Area Fill Texture in Inspector + Landscape Texture Libraries
 
 **Date:** August 20, 2026  
-**Status:** Spec locked — ready for implementation  
+**Status:** Phase 1 shipped — Phase 2 (library/category filters) pending  
 **Branch:** follow-on from `cursor/areas-inventory-and-level-locking` (or dedicated UI branch)  
 **Parent:** SPIKE-19 / SPIKE-21 (right inspector); SPIKE-30 (layer category); site-plan fill workflow (Day 2 findings)  
 **Related:** `SelectionInspectorPane.java`, `RoomController.java`, `TextureChoiceComponent.java`, `TexturesCatalog.java`, `UserPreferencesPanel.java`, `DefaultTexturesCatalog.java`
