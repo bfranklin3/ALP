@@ -1,7 +1,7 @@
 # SPIKE-29 — Right Column Context Deck (Dual Pane + Selector)
 
 **Date:** August 20, 2026  
-**Status:** Phase 1a implemented — Phase 1b (Layer items + Plants) pending  
+**Status:** Phase 2 implemented — Layer items + Plants panels shipped  
 **Branch:** `cursor/areas-inventory-and-level-locking` (or follow-on UI branch)  
 **Parent:** ALP docked inspector workflow (SPIKE-19, SPIKE-21, SPIKE-24); complements left-column **Library / Inventory** labels  
 **Related:** `HomePane.java`, `SelectionInspectorPane.java`, `AlpCatalogStyles.java`, `ManageLevelsPanel.java`, `FurnitureTable.java`, `RoomTable.java`
@@ -146,7 +146,7 @@ Persist in home visual properties:
 - Persist divider + last panel in home visual properties
 - Strings in `package.properties`; styling via `AlpInspectorStyles` / `AlpCatalogStyles`
 
-#### Phase 2 — Inventory + plants (~2–3 days)
+#### Phase 2 — Inventory + plants (~2–3 days) ✅
 
 - **Layer items** panel — filtered `FurnitureTable` / `RoomTable` (or lightweight table)
 - **Plants** panel — aggregated schedule table + live update listeners
@@ -269,8 +269,8 @@ New class (or inner panel in `HomePane` initially):
 
 ## Next steps
 
-1. Implement Library / Inventory titled sections on left column (**done** or same PR).
-2. Add `ContextDeckPane` shell + vertical split in `createPlanInspectorPane()`.
-3. Ship Phase 1: **Layers** + **Selection** decks + selector + auto-switch.
-4. Ship Phase 2: **Layer items** + **Plants** decks.
+1. Implement Library / Inventory titled sections on left column (**done**).
+2. Add `ContextDeckPane` shell + vertical split in `createPlanInspectorPane()` (**done**).
+3. Ship Phase 1: **Layers** + **Selection** decks + selector + auto-switch (**done**).
+4. Ship Phase 2: **Layer items** + **Plants** decks (**done**).
 5. Rebuild dev app; run QA checklist.
