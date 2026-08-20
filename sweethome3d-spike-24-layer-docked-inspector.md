@@ -158,6 +158,12 @@ Use shared **`AlpInspectorStyles`** tokens (section header, padding, summary typ
 
 ---
 
+## Relationship to other spikes
+
+- **[SPIKE-25](sweethome3d-spike-25-layer-selection-filtering.md)** — plan pick/marquee rules; **Locked** in this inspector also blocks selection (Phase 1 lock semantics).
+
+---
+
 ## Next steps
 
 1. Implement `LevelInspectorPanel` + routing in `SelectionInspectorPane`.
