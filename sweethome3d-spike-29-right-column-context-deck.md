@@ -1,7 +1,7 @@
 # SPIKE-29 — Right Column Context Deck (Dual Pane + Selector)
 
 **Date:** August 20, 2026  
-**Status:** Spec locked — pending implementation  
+**Status:** Phase 1a implemented — Phase 1b (Layer items + Plants) pending  
 **Branch:** `cursor/areas-inventory-and-level-locking` (or follow-on UI branch)  
 **Parent:** ALP docked inspector workflow (SPIKE-19, SPIKE-21, SPIKE-24); complements left-column **Library / Inventory** labels  
 **Related:** `HomePane.java`, `SelectionInspectorPane.java`, `AlpCatalogStyles.java`, `ManageLevelsPanel.java`, `FurnitureTable.java`, `RoomTable.java`
@@ -46,7 +46,7 @@ There is **no technical blocker** to a vertical split on the right — the left 
 | **Auto-switch** | **Hybrid:** smart defaults on context change + **remember last manual choice** until context strongly overrides |
 | **Pin (optional v1)** | Defer explicit “pin panel” — manual selection persists via `lastContextDeckPanel` home visual property |
 | **Left Inventory** | **Unchanged** — global home inventory; context deck is **“what matters now”** |
-| **SPIKE-24 overlap** | Inspector keeps **layer properties** when selection empty; **Layers** deck = compact **list + stack order** (click → switch tab), not duplicate property editors |
+| **SPIKE-24 overlap** | Inspector keeps **layer properties** (name, visible, locked, select-current-layer-only); **Layers** context deck = compact list for tab switching — layer list **removed from inspector** in 29a |
 | **Wide screens** | Phase 1: single bottom panel only; Phase 2 optional dual bottom split if width &gt; threshold (~400 px) |
 | **Collapse** | Bottom deck **collapsible** via split divider (one-touch expandable), same as other splits |
 
