@@ -692,6 +692,7 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 | SPIKE-24 | **COMPLETED** | **Docked layer inspector** — empty selection → slim layer panel; row click switches tab; Open full editor… |
 | SPIKE-25 | COMPLETED | **Layer selection filtering** — current layer only (default new homes); lock blocks pick; Shift+marquee cross-layer |
 | SPIKE-29 | **Phase 2 shipped** | **Right column context deck** — Inspector + selector (Layers, Selection, Layer items, Plants) — [spike doc](sweethome3d-spike-29-right-column-context-deck.md) |
+| SPIKE-30 | **Spec approved** | **Layer role metadata** — Category + Plant takeoff; multi-layer schedule — [spike doc](sweethome3d-spike-30-layer-role-metadata.md) |
 | SPIKE-26 | Idea | Ephemeral two-point **Measure** tool (+ optional Alt-drag overlay) |
 | SPIKE-27 | Idea | **Plan assembly** grouping — walls + doors/windows + furniture (phased) |
 | SPIKE-28 | Idea | **Layered plant plan symbols** — line + watercolor fill + user fill color (Option C) |
