@@ -1,7 +1,7 @@
 # SPIKE-30 — Layer Role Metadata (Category + Plant Takeoff)
 
 **Date:** August 20, 2026  
-**Status:** Phase 1 implemented — model, XML, inspector, starter defaults shipped; Phase 2 pending  
+**Status:** Phase 2 implemented — flag-based plant schedule, collapsible existing section, Context label  
 **Branch:** follow-on from `cursor/areas-inventory-and-level-locking` (or dedicated UI branch)  
 **Parent:** ALP site-plan layer model (SPIKE-14, SPIKE-16, SPIKE-24); plant schedule (SPIKE-29 Phase 2)  
 **Related:** `Level.java`, `AlpLevelDefaults.java`, `AlpPlantUtils.java`, `SelectionInspectorPane.java`, `PlantScheduleDeckPanel.java`, `ContextDeckPane.java`, `ManageLevelsPanel.java`, `HomeXMLExporter.java`, `HomeXMLHandler.java`
@@ -212,7 +212,7 @@ One-time migration acceptable at load; no separate migration file.
 - `LevelController` defaults for `+` new level: General / Exclude
 - Strings in `package.properties`
 
-#### Phase 2 — Plants deck + cleanup (~1–2 days)
+#### Phase 2 — Plants deck + cleanup (~1–2 days) ✅ shipped
 
 - Replace `AlpLevelDefaults.findPlantsLevel()` takeoff path with **flag-based** aggregation in `AlpPlantUtils`
 - `PlantScheduleDeckPanel`: proposed table + collapsible existing section
