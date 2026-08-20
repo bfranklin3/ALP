@@ -1,7 +1,7 @@
 # SPIKE-31 — Toolbar & Layer Tab Bar UX (Labeled Tools + Layer Tab Chrome)
 
 **Date:** August 20, 2026  
-**Status:** Phase 1c shipped — layer tab chrome complete; Phase 2 polish pending  
+**Status:** Phase 2 in progress — density + tab scalability  
 **Branch:** follow-on from `cursor/areas-inventory-and-level-locking` (or dedicated UI branch)  
 **Parent:** ALP workflow polish (SPIKE-22, SPIKE-24, SPIKE-29, SPIKE-30); complements left **Library / Inventory** and right **Context** section labels  
 **Reference UX:** SmartDraw-style toolbar (icon + short label, grouped with dividers)  
@@ -71,7 +71,29 @@ There is **no technical blocker** — toolbar and tab components are ALP-owned t
 | **Add layer control** | **Yes** — labeled **“+ Layer”** button adjacent to tab strip (not a fake icon tab) |
 | **Tab overflow** | Phase 2 — scroll arrows or overflow menu |
 | **Double-click rename** | Phase 2 — inline rename on tab |
-| **User preference** | Defer `showToolbarLabels` — labels on by default for ALP |
+| **User preference** | Defer `showToolbarLabels` — wait until after draw strip ships |
+
+### Phase 2 locked decisions (Aug 20, 2026)
+
+| Topic | Decision |
+|-------|----------|
+| **Top toolbar** | File \| Edit \| View \| Mode only (Zoom, Draft, Snap, Layers, Help) |
+| **Draw strip** | Plan-adjacent labeled strip **below layer tabs, above plan** — Select, Pan, Walls, Area, Polyline, Dimension, Text (**moved** from top row, not duplicated) |
+| **Text formatting** | Size+/−, Bold, Italic **hidden by default**; visible when Text tool active **or** label selected |
+| **Tab overflow** | Keep Swing **scroll arrows** (◀ ▶); polish integration with custom tabs + **+ Layer**; max tab width + truncation |
+| **Double-click tab** | **Modify Level** dialog (fix Phase 1c regression) |
+| **Tab rename** | **F2** inline rename on selected layer (plan focus); **double-click stays Modify Level** |
+| **Rename discoverability** | “Rename layer…” on tab context menu |
+| **Category text badge** | **Skip** |
+| **`showToolbarLabels` preference** | **Defer** |
+| **Wrap to second row** | **Defer** (draw strip is the structural fix) |
+
+### Phase 2 implementation order
+
+1. Fix double-click → Modify Level (custom tab mouse forwarding)
+2. Tab scroll layout + max tab width
+3. Draw strip + top toolbar trim + contextual text formatting
+4. F2 inline tab rename + context menu item
 
 ---
 
@@ -105,11 +127,20 @@ All toolbar groups get **vertical icon + short label**. If the row is too tight 
 | CREATE_PHOTO, CREATE_VIDEO | 3D output; not plan-first workflow |
 | INCREASE/DECREASE_TEXT_SIZE, BOLD, ITALIC | Phase 2 contextual cluster |
 
-### Phase 2 — optional enhancements
+### Phase 2 — layout (locked)
 
-- **Wrapping toolbar** when width &lt; ~1200 px
-- **Plan-adjacent draw strip** — duplicate Draw group below layer tabs, file/edit stays top
-- **Dropdown draw group** — “Draw ▾” if horizontal space critical (not recommended initially)
+```text
+[ Top toolbar: File | Edit | View | Mode ]
+[ Layer tabs ◀ ▶ …                                    + Layer ]
+[ Draw strip: Select Pan Walls Area Polyline Dimension Text ]
+[ Text formatting: Size+ Size- Bold Italic ]  ← visible when Text tool or label selected
+[ Plan ]
+```
+
+### Phase 2 — optional enhancements (deferred)
+
+- **Wrapping toolbar** when width &lt; ~1200 px — defer
+- **Dropdown draw group** — not recommended
 
 ---
 
@@ -146,11 +177,12 @@ All toolbar groups get **vertical icon + short label**. If the row is too tight 
 | Annotation | `#2563EB` (blue) | |
 | General | `#D1D5DB` (light gray) | User-added layers |
 
-### Phase 2 — overflow & rename
+### Phase 2 — overflow & rename (locked)
 
-- **Scrollable tabs** or **`▸ 2 more`** overflow menu
-- **Double-click tab** → inline rename (`LevelController.modifyLevels`)
-- Optional **3-letter category badge** beside name (`Plt`, `Ann`)
+- **Scroll arrows** — refine Swing `SCROLL_TAB_LAYOUT` with custom tab components
+- **Double-click tab** → Modify Level (restore; broken after Phase 1c)
+- **F2** → inline rename on selected layer tab
+- **Rename layer…** context menu item
 
 ---
 
@@ -180,13 +212,19 @@ All toolbar groups get **vertical icon + short label**. If the row is too tight 
 - **`+ Layer`** button adjacent to tabbed pane (replace disabled icon tab pattern)
 - Truncation + tooltip for long names
 
-#### Phase 2 — Polish (~1–2 days)
+#### Phase 2 — Density & tab scalability (~2–3 days) **IN PROGRESS**
 
-- Tab overflow / scroll
-- Inline tab rename
-- Contextual text-formatting toolbar cluster
-- Optional `showToolbarLabels` preference
-- Optional category text badge on tabs
+| Step | Scope |
+|------|--------|
+| 2.1 | Fix double-click tab → Modify Level (Phase 1c regression) |
+| 2.2 | Tab scroll layout (`SCROLL_TAB_LAYOUT`), max tab width, ALP scroll integration |
+| 2.3 | Plan-adjacent **draw strip**; top toolbar → File \| Edit \| View \| Mode |
+| 2.4 | Contextual text-formatting cluster (Text mode or label selected) |
+| 2.5 | **F2** inline tab rename; “Rename layer…” context menu |
+
+**Deferred:** `showToolbarLabels` preference, wrap-to-second-row, category text badge.
+
+#### Phase 2 — Polish (superseded by table above)
 
 ### Out of scope (SPIKE-31)
 
