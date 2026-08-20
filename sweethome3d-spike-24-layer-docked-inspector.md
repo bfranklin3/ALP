@@ -1,7 +1,7 @@
 # SPIKE-24 — Docked Layer Inspector (Right Panel)
 
 **Date:** August 19, 2026  
-**Status:** Spec locked — pending implementation  
+**Status:** **COMPLETED** (Aug 19, 2026) — implemented in dev app; manual QA checklist below  
 **Branch:** `cursor/areas-inventory-and-level-locking`  
 **Parent:** Extends [SPIKE-19 GO](sweethome3d-spike-19-inspector-feasibility.md) / [SPIKE-21](ALP%20CAD%20%20Detailed%20Execution%20Plan.md) right-column inspector  
 **Related:** `SelectionInspectorPane.java`, `LevelPanel.java`, `LevelController.java`, `MultipleLevelsPlanPanel.java`, `PlanController.java`
@@ -164,8 +164,15 @@ Use shared **`AlpInspectorStyles`** tokens (section header, padding, summary typ
 
 ---
 
+## Implementation notes (Aug 19, 2026)
+
+- **`LevelInspectorPanel`** inner class in `SelectionInspectorPane.java` — summary header, name (commit on focus loss / Enter), viewable + locked checkboxes (immediate apply), scrollable layer list with row click → `PlanController.setSelectedLevel()`, **Open full editor…** → `modifySelectedLevel()`.
+- **Routing:** empty plan selection + active level → `LEVEL_CARD`; object selection unchanged.
+- **Listeners:** `Home.Property.SELECTED_LEVEL`, `home.addLevelsListener()` for list refresh.
+- **`LevelController.refreshProperties()`** + **`HomeController.createLevelController()`** for docked live edit + undo via `modifyLevels()`.
+- **SPIKE-21 P4:** level card included in `updateInspectorPanelsEnabled()`.
+
 ## Next steps
 
-1. Implement `LevelInspectorPanel` + routing in `SelectionInspectorPane`.
-2. Rebuild dev app; run QA checklist above.
-3. Decide whether to retire double-click tab → modal in a follow-up polish pass.
+1. Run manual QA checklist above in **Sweet Home 3D Dev.app**.
+2. Decide whether to retire double-click tab → modal in a follow-up polish pass.

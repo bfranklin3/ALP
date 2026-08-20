@@ -54,7 +54,7 @@
 | SPIKE-21 | H | M5 | **COMPLETED** | Minimum right inspector improvements (post–SPIKE-19 GO) |
 | SPIKE-22 | H | M5 | **COMPLETED** | Focused workflow UI pass (Esc exit, site plan 3D collapse, catalog L&F) |
 | SPIKE-23 | H | M5 | Pending | Phase 1 stock vs. branded scope definition |
-| SPIKE-24 | H | M5 | **Spec locked** | Docked layer inspector when plan selection empty — [spike doc](sweethome3d-spike-24-layer-docked-inspector.md) |
+| SPIKE-24 | H | M5 | **COMPLETED** | Docked layer inspector when plan selection empty — [spike doc](sweethome3d-spike-24-layer-docked-inspector.md) |
 | SPIKE-25 | H | M5 | **Spec locked** | Current-layer-only selection + lock blocks pick — [spike doc](sweethome3d-spike-25-layer-selection-filtering.md) |
 
 ---
@@ -689,7 +689,7 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 
 | Spike | Status | Summary |
 |-------|--------|---------|
-| SPIKE-24 | Spec locked | **Docked layer inspector** — empty selection → slim layer panel; row click switches tab; Open full editor… |
+| SPIKE-24 | **COMPLETED** | **Docked layer inspector** — empty selection → slim layer panel; row click switches tab; Open full editor… |
 | SPIKE-25 | Spec locked | **Layer selection filtering** — current layer only (default new homes); lock blocks pick; Shift+marquee cross-layer |
 | SPIKE-26 | Idea | Ephemeral two-point **Measure** tool (+ optional Alt-drag overlay) |
 | SPIKE-27 | Idea | **Plan assembly** grouping — walls + doors/windows + furniture (phased) |
