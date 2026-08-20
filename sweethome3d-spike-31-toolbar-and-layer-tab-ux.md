@@ -1,7 +1,7 @@
 # SPIKE-31 — Toolbar & Layer Tab Bar UX (Labeled Tools + Layer Tab Chrome)
 
 **Date:** August 20, 2026  
-**Status:** Phase 1b shipped — toolbar trim; Phase 1c pending  
+**Status:** Phase 1c shipped — layer tab chrome complete; Phase 2 polish pending  
 **Branch:** follow-on from `cursor/areas-inventory-and-level-locking` (or dedicated UI branch)  
 **Parent:** ALP workflow polish (SPIKE-22, SPIKE-24, SPIKE-29, SPIKE-30); complements left **Library / Inventory** and right **Context** section labels  
 **Reference UX:** SmartDraw-style toolbar (icon + short label, grouped with dividers)  
