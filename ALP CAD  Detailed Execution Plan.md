@@ -1,6 +1,6 @@
 # ALP CAD — Detailed Execution Plan
 
-**Last updated:** August 19, 2026  
+**Last updated:** August 20, 2026  
 **Strategy reference:** [sweethome3d-phase-1-implementation-roadmap.md](sweethome3d-phase-1-implementation-roadmap.md)  
 **Source submodule:** `source/SweetHome3D-7.5-src` (ALP-Core)
 
@@ -11,11 +11,11 @@
 | Metric | Status |
 |--------|--------|
 | **Blocks complete** | A, B, C, D (4 of 8) |
-| **Spikes complete** | 25 of 29 tracked items |
+| **Spikes complete** | 26 of 29 tracked items |
 | **Next block** | **Block F** — Levels & Site Plan (M3) — **IN PROGRESS** |
 | **Branch** | `cursor/areas-inventory-and-level-locking` |
 
-**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b, 15c**, **16**, 16A, 16B, 17, 18, **19**, **20**, **21**, **22**
+**Completed spikes:** SPIKE-01–10, 10b, 12b, 13, 14, 14b, **15, 15a, 15b, 15c**, **16**, 16A, 16B, 17, 18, **19**, **20**, **21**, **22**, **24**, **25**, **29**, **30**
 **Next up:** SPIKE-23 Phase 1 scope
 
 ---
@@ -56,6 +56,8 @@
 | SPIKE-23 | H | M5 | Pending | Phase 1 stock vs. branded scope definition |
 | SPIKE-24 | H | M5 | **COMPLETED** | Docked layer inspector when plan selection empty — [spike doc](sweethome3d-spike-24-layer-docked-inspector.md) |
 | SPIKE-25 | H | M5 | **COMPLETED** | Current-layer-only selection + lock blocks pick — [spike doc](sweethome3d-spike-25-layer-selection-filtering.md) |
+| SPIKE-29 | H | M5 | **COMPLETED** | Right column context deck (Layers, Selection, Layer items, Plants) — [spike doc](sweethome3d-spike-29-right-column-context-deck.md) |
+| SPIKE-30 | H | M5 | **COMPLETED** | Layer role metadata (Category + Plant takeoff); flag-based multi-layer schedule — [spike doc](sweethome3d-spike-30-layer-role-metadata.md) |
 
 ---
 
@@ -692,7 +694,7 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 | SPIKE-24 | **COMPLETED** | **Docked layer inspector** — empty selection → slim layer panel; row click switches tab; Open full editor… |
 | SPIKE-25 | COMPLETED | **Layer selection filtering** — current layer only (default new homes); lock blocks pick; Shift+marquee cross-layer |
 | SPIKE-29 | **Phase 2 shipped** | **Right column context deck** — Inspector + selector (Layers, Selection, Layer items, Plants) — [spike doc](sweethome3d-spike-29-right-column-context-deck.md) |
-| SPIKE-30 | **Spec approved** | **Layer role metadata** — Category + Plant takeoff; multi-layer schedule — [spike doc](sweethome3d-spike-30-layer-role-metadata.md) |
+| SPIKE-30 | **COMPLETED** | **Layer role metadata** — Category + Plant takeoff on levels; flag-based Proposed/Existing plant schedule; Context deck label — [spike doc](sweethome3d-spike-30-layer-role-metadata.md) |
 | SPIKE-26 | Idea | Ephemeral two-point **Measure** tool (+ optional Alt-drag overlay) |
 | SPIKE-27 | Idea | **Plan assembly** grouping — walls + doors/windows + furniture (phased) |
 | SPIKE-28 | Idea | **Layered plant plan symbols** — line + watercolor fill + user fill color (Option C) |
