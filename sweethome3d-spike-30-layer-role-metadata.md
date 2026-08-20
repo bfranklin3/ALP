@@ -1,7 +1,7 @@
 # SPIKE-30 — Layer Role Metadata (Category + Plant Takeoff)
 
 **Date:** August 20, 2026  
-**Status:** Spec approved — implementation pending  
+**Status:** Phase 1 implemented — model, XML, inspector, starter defaults shipped; Phase 2 pending  
 **Branch:** follow-on from `cursor/areas-inventory-and-level-locking` (or dedicated UI branch)  
 **Parent:** ALP site-plan layer model (SPIKE-14, SPIKE-16, SPIKE-24); plant schedule (SPIKE-29 Phase 2)  
 **Related:** `Level.java`, `AlpLevelDefaults.java`, `AlpPlantUtils.java`, `SelectionInspectorPane.java`, `PlantScheduleDeckPanel.java`, `ContextDeckPane.java`, `ManageLevelsPanel.java`, `HomeXMLExporter.java`, `HomeXMLHandler.java`
@@ -202,7 +202,7 @@ One-time migration acceptable at load; no separate migration file.
 
 ### In scope
 
-#### Phase 1 — Model + inspector (~1–2 days)
+#### Phase 1 — Model + inspector (~1–2 days) ✅ shipped
 
 - `LevelCategory`, `LevelPlantTakeoff` enums
 - Fields + property change events on `Level`
@@ -312,13 +312,13 @@ One-time migration acceptable at load; no separate migration file.
 - [ ] New site plan: inspect each tab — Category/Takeoff match starter table.
 - [ ] `+` new layer → General; Takeoff control hidden.
 - [ ] Set Category = Planting → Takeoff appears, defaults Proposed.
-- [ ] Set Takeoff = Existing; place plants → appear in collapsible section only.
 - [ ] Set Category = Site → Takeoff hidden; previous Takeoff reset to Exclude.
-- [ ] Two layers: Proposed – Trees + Proposed – Shrubs (both Planting/Proposed) → main schedule sums both.
-- [ ] Existing – Trees (Planting/Existing) → existing section only.
 - [ ] Save, reopen home → category/takeoff restored.
-- [ ] Open pre-SPIKE-30 home with **Plants** layer → migrates to Planting/Proposed; schedule works.
-- [ ] Plants pill enables when proposed **or** existing plants exist.
+- [ ] Open pre-SPIKE-30 home with **Plants** layer → migrates to Planting/Proposed.
+- [ ] Set Takeoff = Existing; place plants → appear in collapsible section only. *(Phase 2)*
+- [ ] Two layers: Proposed – Trees + Proposed – Shrubs (both Planting/Proposed) → main schedule sums both. *(Phase 2)*
+- [ ] Existing – Trees (Planting/Existing) → existing section only. *(Phase 2)*
+- [ ] Plants pill enables when proposed **or** existing plants exist. *(Phase 2)*
 - [ ] Layer items deck unchanged (still active-layer filter).
 
 ---
@@ -333,7 +333,7 @@ One-time migration acceptable at load; no separate migration file.
 
 ## Next steps
 
-1. Implement Phase 1: model, XML, inspector, starter defaults.
+1. ~~Implement Phase 1: model, XML, inspector, starter defaults.~~ **Done**
 2. Implement Phase 2: schedule aggregation + collapsible existing UI.
 3. Rebuild dev app; run QA checklist.
 4. Update SPIKE-29 doc cross-reference (Plants deck data source).
