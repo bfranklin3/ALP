@@ -1,7 +1,7 @@
 # SPIKE-31 — Toolbar & Layer Tab Bar UX (Labeled Tools + Layer Tab Chrome)
 
 **Date:** August 20, 2026  
-**Status:** Phase 2 shipped — SPIKE-31 complete  
+**Status:** Phase 2 shipped — SPIKE-31 complete (tab click/double-click QA fix Aug 20, 2026)  
 **Branch:** follow-on from `cursor/areas-inventory-and-level-locking` (or dedicated UI branch)  
 **Parent:** ALP workflow polish (SPIKE-22, SPIKE-24, SPIKE-29, SPIKE-30); complements left **Library / Inventory** and right **Context** section labels  
 **Reference UX:** SmartDraw-style toolbar (icon + short label, grouped with dividers)  
@@ -212,7 +212,7 @@ All toolbar groups get **vertical icon + short label**. If the row is too tight 
 - **`+ Layer`** button adjacent to tabbed pane (replace disabled icon tab pattern)
 - Truncation + tooltip for long names
 
-#### Phase 2 — Density & tab scalability (~2–3 days) **IN PROGRESS**
+#### Phase 2 — Density & tab scalability (~2–3 days) ✅ shipped
 
 | Step | Scope |
 |------|--------|
