@@ -218,7 +218,33 @@ Net effect of a naive implementation: clicking **None** commits **opaque black**
 
 **Do not** try to detect None by reading the chooser's selected color — it will always be opaque.
 
+### Gotcha — do not force `COLORED` paint from the color value
+
+A first pass made `modifyRooms()` force `floorPaint = COLORED` whenever the controller's `floorColor` was the transparent sentinel. Because the controller **keeps the last color** after the user switches to the Texture radio, this silently overrode `TEXTURED` and made **transparent → texture impossible**: the area stayed transparent and the chosen texture was discarded. The only workaround was transparent → solid color → texture.
+
+**Rule:** paint mode is the single source of truth. Keep the stock derivation:
+
+```java
+Integer floorColor = floorPaint == RoomPaint.COLORED ? getFloorColor() : null;
+```
+
+The sentinel needs no special case here — `0` is a **non-null** `Integer`, so it flows through the normal `COLORED` path. Special-casing is only required where code tests the color *value* (plan rendering, opacity enablement).
+
+For the same reason, opacity enablement must be gated on paint mode: `isTransparentFloorFill()` returns `false` when paint is `TEXTURED`, otherwise a stale sentinel keeps Opacity disabled in Texture mode.
+
 Phase 3 reuses the same `ColorButton` / sticky-flag machinery for **Outline color** — no separate chooser work. Outline persistence uses the same `outlineColor != null` path (sentinel `0` is not `null`). Plan rendering skips `g2D.draw(roomShape)` when `AlpColorSupport.isTransparentColor(room.getOutlineColor())`; `null` outline still falls back to default black (backward compat).
+
+### Gotcha — the inspector must not apply `TEXTURED` before a texture exists
+
+The docked inspector applies every control change immediately, unlike the modal `RoomPanel`, which only applies on **OK**. Clicking the **Texture** radio therefore ran `modifyRooms()` while `getFloorTextureController().getTexture()` was still `null`, and `doModifyRooms()` cleared both fill properties (`setFloorColor(null)` + `setFloorTexture(null)`). The area dropped to **DEFAULT** gray, the follow-up `refresh()` recomputed paint as `DEFAULT`, and both radios deselected — so selecting Texture took **two clicks**.
+
+**Rule:** in `SelectionInspectorPane`, the Texture radio only calls `applyRoomChanges()` when a texture is already chosen. Otherwise it sets `pendingFloorTextureMode`, which:
+
+- keeps the Texture radio selected and the texture controls visible across refreshes,
+- keeps Opacity (%) enabled (`isTransparentFloorFill()` returns `false` while pending),
+- leaves the existing fill untouched until the user actually picks a texture.
+
+The flag is cleared when a texture is chosen (which then forces `TEXTURED` and applies), when the Color radio or a fill color is picked, and whenever the selection changes.
 
 ### Rendering rules (plan view)
 
@@ -262,7 +288,8 @@ Outline color:
 - [x] Select None → OK → area interior empty on plan; layer below visible.
 - [x] Fill swatch button shows None icon when transparent.
 - [ ] Save/reopen `.sh3d` → transparent fill preserved (`floorColor="00000000"`).
-- [ ] Switch Fill → Texture still works; transparent fill cleared when texture applied.
+- [ ] Switch Fill → Texture **directly from transparent** works; texture applies and fill is no longer transparent (regression fixed Aug 21, 2026).
+- [ ] Opacity (%) **re-enables** in Texture mode even when the previous fill was None.
 - [x] When Fill color is **None**, Opacity (%) spinner is **disabled** (not editable).
 - [x] Picking a real fill color again **re-enables** Opacity; prior value unchanged.
 
@@ -276,6 +303,10 @@ Outline color:
 ### Regression
 
 - [ ] Normal fill color + 100% opacity → solid fill (SPIKE-33 opacity fix retained).
+- [ ] Transparent fill → click **Texture** once → radio stays selected, area keeps its transparent fill, texture controls and Opacity (%) enabled; picking a texture applies it immediately.
+- [ ] Solid fill → click **Texture** once → same, area keeps its color until a texture is picked.
+- [ ] Click **Texture**, then click **Color** back without picking a texture → previous fill (color or None) intact.
+- [ ] Click **Texture**, then change selection and reselect the area → inspector reflects the stored fill, not the abandoned texture mode.
 - [ ] Layer stacking paint order unchanged for overlapping areas.
 - [ ] 3D view: document any limitation (plan-first spike; 3D floor may still show default — out of scope unless trivial).
 
