@@ -1,7 +1,7 @@
 # SPIKE-33 — Area Fill Terminology + Transparent Fill/Outline Color
 
 **Date:** August 21, 2026  
-**Status:** Phase 2 shipped — Phase 3 (transparent outline) pending  
+**Status:** Phase 3 shipped — SPIKE-33 complete  
 **Branch:** follow-on from `cursor/areas-inventory-and-level-locking` (or dedicated UI branch)  
 **Parent:** SPIKE-19 / SPIKE-21 (right inspector); SPIKE-32 (area fill texture inspector)  
 **Feeds into:** **SPIKE-23** (Phase 1 stock vs. branded naming audit — record ALP terminology deltas)  
@@ -170,7 +170,7 @@ Same **None** swatch; title remains **Outline color** (`SelectionInspectorPane.o
 
 **Deliverable:** User can pick Fill → Color → None; area interior transparent on plan; persists in `.sh3d`.
 
-### Phase 3 — Transparent Outline color (~0.5 day)
+### Phase 3 — Transparent Outline color (~0.5 day) — **SHIPPED Aug 21, 2026**
 
 | Step | Scope |
 |------|--------|
@@ -217,6 +217,8 @@ Net effect of a naive implementation: clicking **None** commits **opaque black**
 | **OK** pressed | If `nullColorAllowed && noneColorSelected` → commit `TRANSPARENT_COLOR` |
 
 **Do not** try to detect None by reading the chooser's selected color — it will always be opaque.
+
+Phase 3 reuses the same `ColorButton` / sticky-flag machinery for **Outline color** — no separate chooser work. Outline persistence uses the same `outlineColor != null` path (sentinel `0` is not `null`). Plan rendering skips `g2D.draw(roomShape)` when `AlpColorSupport.isTransparentColor(room.getOutlineColor())`; `null` outline still falls back to default black (backward compat).
 
 ### Rendering rules (plan view)
 
@@ -266,10 +268,10 @@ Outline color:
 
 ### Phase 3 — Transparent outline (Option B)
 
-- [ ] Outline color picker shows **None** swatch.
-- [ ] Select None → OK → **no outline stroke** on area (fill/labels unchanged).
-- [ ] Save/reopen → no outline preserved.
-- [ ] Existing files without outlineColor → still show default black outline.
+- [x] Outline color picker shows **None** swatch (same sticky-flag behavior as fill).
+- [x] Select None → OK → **no outline stroke** on area (fill/labels unchanged).
+- [ ] Save/reopen → no outline preserved (`outlineColor="00000000"`).
+- [x] Existing files without `outlineColor` → still show default black outline.
 
 ### Regression
 

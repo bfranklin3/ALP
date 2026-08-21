@@ -698,7 +698,7 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 | SPIKE-30 | **COMPLETED** | **Layer role metadata** — Category + Plant takeoff on levels; flag-based Proposed/Existing plant schedule; Context deck label — [spike doc](sweethome3d-spike-30-layer-role-metadata.md) |
 | SPIKE-31 | **COMPLETED** | **Toolbar & layer tab UX** — labeled toolbar, draw strip, tab chrome, F2 rename — [spike doc](sweethome3d-spike-31-toolbar-and-layer-tab-ux.md) |
 | SPIKE-32 | Phase 2 shipped | **Area fill texture inspector** — Color/Texture + Fill texture popup; library/category filters — [spike doc](sweethome3d-spike-32-area-fill-texture-inspector.md) |
-| SPIKE-33 | **Phase 2 shipped** | **Fill terminology + transparent fill/outline color** — labels + Fill None swatch shipped; outline None pending — [spike doc](sweethome3d-spike-33-area-fill-terminology-and-transparent-color.md); **feeds SPIKE-23** |
+| SPIKE-33 | **COMPLETED** | **Fill terminology + transparent fill/outline color** — [spike doc](sweethome3d-spike-33-area-fill-terminology-and-transparent-color.md); **feeds SPIKE-23** |
 | SPIKE-26 | Idea | Ephemeral two-point **Measure** tool (+ optional Alt-drag overlay) |
 | SPIKE-27 | Idea | **Plan assembly** grouping — walls + doors/windows + furniture (phased) |
 | SPIKE-28 | Idea | **Layered plant plan symbols** — line + watercolor fill + user fill color (Option C) |
