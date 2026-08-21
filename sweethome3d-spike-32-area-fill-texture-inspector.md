@@ -16,6 +16,8 @@
 
 Rename the floor texture picker dialog title from **“Floor texture”** to **“Fill texture”** — areas are used for lawn, gravel, and paving as well as interior flooring.
 
+**Follow-on:** Inspector section title **“Floor”** → **“Fill”**, color dialog **“Floor color”** → **“Fill color”**, and transparent **None** swatches for fill/outline — see **[SPIKE-33](sweethome3d-spike-33-area-fill-terminology-and-transparent-color.md)** (feeds SPIKE-23 naming audit).
+
 ---
 
 ## Problem
@@ -380,6 +382,8 @@ floorTextureController.setCategoryFilter(selectedCategory); // null = All
 
 ## Out of scope (SPIKE-32)
 
+- Inspector **“Floor”** → **“Fill”** section title and **Fill color** dialog rename — **SPIKE-33**
+- Transparent / None fill and outline color pickers — **SPIKE-33**
 - Ceiling / wall-side texture in docked inspector  
 - Embedded full preview grid in inspector (popup retains preview)  
 - Per-layer library/category persistence in project file  

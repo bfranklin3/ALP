@@ -679,6 +679,7 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
   1. Audit current ALP delta vs stock SH3D 7.5.
   2. Mark each surface: **keep stock**, **ALP customized**, **hidden**, **Phase 2**.
   3. Align with branding assets and install bundle naming (`Sweet Home 3D Dev.app` → future ALP CAD.app).
+  4. Import area-fill terminology table from **[SPIKE-33](sweethome3d-spike-33-area-fill-terminology-and-transparent-color.md)** (Floor→Fill, Fill color, Fill texture; internal `floor*` keys unchanged).
 - **Touchpoints:** Documentation; optional minor branding code.
 
 **Block H exit criteria met → Phase 1 MVP packaging ready for demo/release candidate.**
@@ -696,7 +697,8 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 | SPIKE-29 | **Phase 2 shipped** | **Right column context deck** — Inspector + selector (Layers, Selection, Layer items, Plants) — [spike doc](sweethome3d-spike-29-right-column-context-deck.md) |
 | SPIKE-30 | **COMPLETED** | **Layer role metadata** — Category + Plant takeoff on levels; flag-based Proposed/Existing plant schedule; Context deck label — [spike doc](sweethome3d-spike-30-layer-role-metadata.md) |
 | SPIKE-31 | **COMPLETED** | **Toolbar & layer tab UX** — labeled toolbar, draw strip, tab chrome, F2 rename — [spike doc](sweethome3d-spike-31-toolbar-and-layer-tab-ux.md) |
-| SPIKE-32 | Phase 1 shipped | **Area fill texture inspector** — Color/Texture + Fill texture popup; Phase 2 library/category filters pending — [spike doc](sweethome3d-spike-32-area-fill-texture-inspector.md) |
+| SPIKE-32 | Phase 2 shipped | **Area fill texture inspector** — Color/Texture + Fill texture popup; library/category filters — [spike doc](sweethome3d-spike-32-area-fill-texture-inspector.md) |
+| SPIKE-33 | **Phase 2 shipped** | **Fill terminology + transparent fill/outline color** — labels + Fill None swatch shipped; outline None pending — [spike doc](sweethome3d-spike-33-area-fill-terminology-and-transparent-color.md); **feeds SPIKE-23** |
 | SPIKE-26 | Idea | Ephemeral two-point **Measure** tool (+ optional Alt-drag overlay) |
 | SPIKE-27 | Idea | **Plan assembly** grouping — walls + doors/windows + furniture (phased) |
 | SPIKE-28 | Idea | **Layered plant plan symbols** — line + watercolor fill + user fill color (Option C) |
