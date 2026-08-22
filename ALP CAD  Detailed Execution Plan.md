@@ -701,8 +701,10 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 | SPIKE-33 | **COMPLETED** | **Fill terminology + transparent fill/outline color** — [spike doc](sweethome3d-spike-33-area-fill-terminology-and-transparent-color.md); **feeds SPIKE-23** |
 | SPIKE-34 | **COMPLETED** | **Landscape line type presets** — [spike doc](sweethome3d-spike-34-landscape-line-type-presets.md) |
 | SPIKE-35 | **COMPLETED** | **Area name visibility** — Display name toggle; hide plan label, keep model name — [spike doc](sweethome3d-spike-35-area-name-visibility.md) |
+| SPIKE-36 | **Locked** | **Plan Z-order** — Arrange menu; split area fill; per-level wall blocks; dimensions in stack — [spike doc](sweethome3d-spike-36-plan-z-order.md) |
+| SPIKE-37 | Spec sketch | **Plan graphics grouping** — polyline/plant/label/area Group/Ungroup (after SPIKE-36) — [spike doc](sweethome3d-spike-37-plan-graphics-grouping.md) |
 | SPIKE-26 | Idea | Ephemeral two-point **Measure** tool (+ optional Alt-drag overlay) |
-| SPIKE-27 | Idea | **Plan assembly** grouping — walls + doors/windows + furniture (phased) |
+| SPIKE-27 | Idea | **Plan assembly** grouping — walls + doors/windows + furniture (phased) — *not* SPIKE-37 |
 | SPIKE-28 | Idea | **Layered plant plan symbols** — line + watercolor fill + user fill color (Option C) |
 | SPIKE-12b | Idea | **Draft mode uses line-art `planIcon`** — **COMPLETED** (planIconLine CONTENT) |
 
@@ -735,6 +737,8 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 - **Promotion:** Pull into a numbered block or post-MVP tranche when prioritized.
 
 ### [SPIKE-27] Plan assembly grouping (walls + openings + furniture)
+
+**Not the same as:** [SPIKE-36](sweethome3d-spike-36-plan-z-order.md) (plan **Z-order** / Arrange) or [SPIKE-37](sweethome3d-spike-37-plan-graphics-grouping.md) (site-plan **graphics** Group/Ungroup for polylines, plants, labels, areas). SPIKE-27 targets **architectural assemblies** (walls + bound openings + furniture).
 
 - **Problem:** **Group / Ungroup** exists for furniture only (`HomeFurnitureGroup`). Walls live in `home.getWalls()`; doors and windows are `HomeDoorOrWindow` in `home.getFurniture()` and attach to walls **geometrically** (`isBoundToWall()`), not by a stored wall ID. There is no way to group a building shell (walls + doors + windows + other objects) for one-click re-selection and move-as-unit workflows. Shift-click multi-select and marquee select walls work, but doors/windows often **fail to marquee-select** with walls because wall polygons are thick while opening footprints are thin along the wall axis.
 - **Goal:** Select and move a coherent assembly (e.g. a facade or outbuilding) as one unit; ungroup when no longer needed.
@@ -781,7 +785,9 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 4. **Copy/paste:** Must duplicate as a unit in v1?
 5. **3D view:** Plan-only grouping acceptable for spike, or must 3D treat assembly as one object?
 
-**Out of scope for initial spikes:** Rotating a mixed assembly as a unit; nested assemblies; grouping rooms/polylines/dimension lines (unless explicitly expanded later).
+**Out of scope for initial spikes:** Rotating a mixed assembly as a unit; nested assemblies; grouping rooms/polylines/dimension lines (see **SPIKE-37** for plan graphics grouping instead).
+
+**Suggested implementation order:** [SPIKE-36](sweethome3d-spike-36-plan-z-order.md) (Z-order) → [SPIKE-37](sweethome3d-spike-37-plan-graphics-grouping.md) (graphics group) → SPIKE-27 Phase 1–2 (assemblies, when prioritized).
 
 - **Likely files (Phase 1):**
   - `PlanController.java` — marquee selection expansion; `getSelectableItemsIntersectingRectangle` / wall–opening association
