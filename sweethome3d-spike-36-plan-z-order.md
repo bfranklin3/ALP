@@ -1,7 +1,7 @@
 # SPIKE-36 — Plan Z-Order (Bring to Front / Send to Back)
 
 **Date:** August 22, 2026  
-**Status:** **Locked** — implementation pending (Aug 22, 2026)  
+**Status:** **Shipped** — Aug 23, 2026 (Phases 1–4 complete)  
 **Branch:** follow-on from `cursor/areas-inventory-and-level-locking` (or dedicated UI branch)  
 **Parent:** ALP site-plan editing (SPIKE-14 levels, SPIKE-25 layer selection, SPIKE-29 Context deck)  
 **Related:** `Home.java`, `PlanComponent.java`, `PlanController.java`, `HomePrintableComponent.java`, `HomeXMLHandler.java`, `HomeXMLExporter.java`, `HomePane.java`
@@ -293,5 +293,12 @@ Pass 2 (area chrome) matches current “text after geometry” behavior.
 ## Next steps
 
 1. ~~Lock open questions~~ ✓ Aug 22, 2026
-2. Implement Phase 1 → 4.
-3. Mark **SHIPPED** in execution plan when complete.
+2. ~~Implement Phase 1 → 4~~ ✓ Aug 23, 2026
+3. ~~Mark **SHIPPED** in execution plan when complete~~ ✓ Aug 23, 2026
+
+### Phase 4 QA notes (Aug 23, 2026)
+
+- **Print parity:** `HomePrintableComponent` delegates to `PlanComponent.print()` → `paintContent()` → same `paintHomeItems()` two-pass pipeline as on-screen plan.
+- **Paste to top:** `HomeController.addPastedItems()` reorders pasted stackable refs to the front of `planDrawOrder`, preserving clipboard list order.
+- **Automated tests:** `HomeFileRecorderTest.testPlanDrawOrderRoundTrip()`, `testPlanDrawOrderLegacyMigration()`, `testPlanDrawOrderArrangeCommands()`, `testPlanDrawOrderPasteOrder()`.
+- **Manual QA:** cross-layer Arrange, multi-select relative order, undo/redo, save/reopen — verify in dev app before release.

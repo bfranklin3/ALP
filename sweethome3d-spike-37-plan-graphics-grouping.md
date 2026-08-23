@@ -1,7 +1,7 @@
 # SPIKE-37 — Plan Graphics Grouping (Sketch)
 
 **Date:** August 22, 2026  
-**Status:** Spec sketch — pending review after SPIKE-36  
+**Status:** Spec sketch — pending review after SPIKE-36 (shipped Aug 23, 2026)  
 **Branch:** follow-on from `cursor/areas-inventory-and-level-locking` (or dedicated UI branch)  
 **Parent:** ALP site-plan editing; builds on **[SPIKE-36](sweethome3d-spike-36-plan-z-order.md)** plan stack  
 **Related:** `Home.java`, `PlanController.java`, `PlanComponent.java`, `HomePane.java`, `HomeXMLHandler.java`
