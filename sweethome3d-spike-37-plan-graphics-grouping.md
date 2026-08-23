@@ -1,7 +1,7 @@
 # SPIKE-37 — Plan Graphics Grouping
 
 **Date:** August 22, 2026  
-**Status:** **In progress** — Phase 1–3 implemented Aug 23, 2026  
+**Status:** **Shipped** — Aug 23, 2026 (Phases 1–4 complete)  
 **Branch:** `cursor/areas-inventory-and-level-locking`  
 **Parent:** ALP site-plan editing; builds on **[SPIKE-36](sweethome3d-spike-36-plan-z-order.md)** (shipped)  
 **Related:** `PlanGraphicsGroup.java`, `Home.java`, `PlanController.java`, `HomePane.java`, `HomeXMLHandler.java`
@@ -41,20 +41,35 @@ Group mixed plan graphics — **polylines, plants, labels, areas** — so users 
 
 | Phase | Scope | Status |
 |-------|-------|--------|
-| 1 | `PlanGraphicsGroup` model + `Home` + XML + test | Done |
-| 2 | Group/ungroup + selection expansion + undo | Done |
-| 3 | Plan context menu + enable logic | Done |
-| 4 | QA + mark **SHIPPED** | Pending |
+| 1 | `PlanGraphicsGroup` model + `Home` + XML + test | ✓ Shipped |
+| 2 | Group/ungroup + selection expansion + undo | ✓ Shipped |
+| 3 | Plan context menu + enable logic | ✓ Shipped |
+| 4 | QA + mark **SHIPPED** | ✓ Shipped |
+
+---
+
+## Phase 4 QA notes (Aug 23, 2026)
+
+- **Automated tests:** `HomeFileRecorderTest.testPlanGraphicsGroupRoundTrip()`, `testPlanGraphicsGroupDrawOrderBlock()`, `testPlanGraphicsGroupMemberRemovalDissolvesGroup()`, `testPlanGraphicsGroupMemberLookup()`.
+- **Build:** Dev app compiles via `./scripts/update-dev-app.sh`.
+- **Manual QA:** group/ungroup, click-to-select-whole-group, move-as-unit, Arrange on grouped selection, save/reopen, undo/redo — verify in dev app before release.
 
 ---
 
 ## Test plan
 
+### Automated (JUnit)
+
+- [x] Save/reopen preserves `<planGraphicsGroup>` — `testPlanGraphicsGroupRoundTrip()`
+- [x] Draw-order block consolidation — `testPlanGraphicsGroupDrawOrderBlock()`
+- [x] Member removal dissolves small groups — `testPlanGraphicsGroupMemberRemovalDissolvesGroup()`
+- [x] Member lookup — `testPlanGraphicsGroupMemberLookup()`
+
+### Manual (dev app)
+
 - [ ] Group polyline + label + area → move together; click one member selects all
 - [ ] Ungroup restores independent selection
 - [ ] Arrange on grouped selection moves contiguous block
-- [ ] Save/reopen preserves `<planGraphicsGroup>`
-- [ ] `HomeFileRecorderTest.testPlanGraphicsGroupRoundTrip()`
 - [ ] Undo/redo group and ungroup
 - [ ] Pure furniture multi-select still uses furniture Group, not Group graphics
 
@@ -65,3 +80,11 @@ Group mixed plan graphics — **polylines, plants, labels, areas** — so users 
 - Nested groups, rotate/scale as unit, wall/dimension members
 - Copy/paste group as unit (v1.1)
 - Context deck group listing
+
+---
+
+## Next steps
+
+1. ~~Complete SPIKE-36~~ ✓
+2. ~~Lock spec and implement Phases 1–4~~ ✓ Aug 23, 2026
+3. Mark **SHIPPED** in execution plan ✓ Aug 23, 2026

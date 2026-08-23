@@ -702,7 +702,7 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 | SPIKE-34 | **COMPLETED** | **Landscape line type presets** — [spike doc](sweethome3d-spike-34-landscape-line-type-presets.md) |
 | SPIKE-35 | **COMPLETED** | **Area name visibility** — Display name toggle; hide plan label, keep model name — [spike doc](sweethome3d-spike-35-area-name-visibility.md) |
 | SPIKE-36 | **Shipped** | **Plan Z-order** — Arrange menu; split area fill; per-level wall blocks; dimensions in stack — [spike doc](sweethome3d-spike-36-plan-z-order.md) |
-| SPIKE-37 | **In progress** | **Plan graphics grouping** — Group/Ungroup for polylines/plants/labels/areas — [spike doc](sweethome3d-spike-37-plan-graphics-grouping.md) |
+| SPIKE-37 | **Shipped** | **Plan graphics grouping** — Group/Ungroup for polylines/plants/labels/areas — [spike doc](sweethome3d-spike-37-plan-graphics-grouping.md) |
 | SPIKE-26 | **Shipped** | Ephemeral two-point **Measure** tool (+ Alt-drag overlay) — [spike doc](sweethome3d-spike-26-measure-tool.md) |
 | SPIKE-27 | Idea | **Plan assembly** grouping — walls + doors/windows + furniture (phased) — *not* SPIKE-37 |
 | SPIKE-28 | Idea | **Layered plant plan symbols** — line + watercolor fill + user fill color (Option C) |
