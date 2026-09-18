@@ -18,7 +18,7 @@
 3. Make changes in small, reviewable steps. After each logical group of changes, summarize what was done and wait for approval before continuing.
 4. When build, Ant, or runtime changes are needed, provide the exact terminal commands for macOS.
 5. Whenever manual testing is required, update the development application bundle so I can test the features by running:
-   `/Users/billfranklin/Documents/ChatGPT/Architecture Landscape CAD App/source/SweetHome3D-7.5-src/install/Sweet Home 3D Dev.app`
+   `/Users/billfranklin/Documents/ChatGPT/Architecture Landscape CAD App/source/SweetHome3D-7.5-src/install/ALP CAD Dev.app`
 
 ## Model Selection Strategy (Cost-Conscious)
 - Default / everyday work → **Composer 2.5** (uses the generous Cursor Models pool).
