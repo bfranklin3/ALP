@@ -703,9 +703,23 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 | SPIKE-35 | **COMPLETED** | **Area name visibility** — Display name toggle; hide plan label, keep model name — [spike doc](sweethome3d-spike-35-area-name-visibility.md) |
 | SPIKE-36 | **Shipped** | **Plan Z-order** — Arrange menu; split area fill; per-level wall blocks; dimensions in stack — [spike doc](sweethome3d-spike-36-plan-z-order.md) |
 | SPIKE-37 | **Shipped** | **Plan graphics grouping** — Group/Ungroup for polylines/plants/labels/areas — [spike doc](sweethome3d-spike-37-plan-graphics-grouping.md) |
+| SPIKE-44A | **COMPLETED** | **Plant style preset proof** — inspector Draft Gray / Soft Green; QA passed Aug 27, 2026 — [spike doc](sweethome3d-spike-43-structured-plant-preset-proof.md#spike-44a--implementation--qa-completed) |
+| SPIKE-46 | **COMPLETED** | **Plant inspector appearance polish** — 46A + 46B; QA passed Aug 27, 2026 — [spike doc](sweethome3d-spike-46-plant-inspector-appearance-polish.md) |
+| SPIKE-47 | **47A + 47B shipped** | **Plant plan fill opacity** — Hybrid preset model; wash-only fade; Understory preset — [spike doc](sweethome3d-spike-47-plant-plan-fill-opacity.md) |
+| SPIKE-48 | **SHIPPED** | **Plan display bounds & display name** — per-piece toggles in docked + full editor — [spike doc](sweethome3d-spike-48-plan-display-bounds-and-name.md) |
+| SPIKE-49 | **Proposed** | **Precision Move & Linear Replicate** — exact move, repeat in line, fit copies between points — [spike doc](sweethome3d-spike-49-transform-replicate.md) |
+| SPIKE-38 | **38A shipped** | **Plant area scatter fill** — single-species area → editable instances — [38A doc](sweethome3d-spike-38a-plant-area-scatter-mvp.md) |
+| SPIKE-39 | **Accepted spec** | **Plant symbol asset format** — PNG layered path shipped (SPIKE-28); SVG path deferred — [spike doc](sweethome3d-spike-39-plant-symbol-asset-format-and-tinting.md) |
+| SPIKE-40 | **40A shipped** | **Plant symbol metadata** — `AlpPlantMetadata` + catalog `alp.plant.*` keys — [40A doc](sweethome3d-spike-40a-plant-metadata-implementation.md) |
+| SPIKE-41 | **Mostly done** | **Plant style presets** — MVP via 44A/46; extended preset families deferred — [spike doc](sweethome3d-spike-41-plant-style-preset-spec.md) |
+| SPIKE-42 | **42A–C shipped** | **Plant inspector polish** — area fill panel, plant identity header, details — [polish doc](sweethome3d-spike-42-plant-inspector-polish.md) · [spec](sweethome3d-spike-42-plant-inspector-ux-spec.md) |
+| SPIKE-43 | **COMPLETED** | **Structured preset proof design** — led to 44A — [spike doc](sweethome3d-spike-43-structured-plant-preset-proof.md) |
+| SPIKE-45 | **45A shipped** | **Plant library authoring / duplicate plant type** — template duplicate → ALP User Plants — [45A doc](sweethome3d-spike-45a-plant-type-duplication-mvp.md) · [spec](sweethome3d-spike-45-plant-library-authoring-new-plant-type-spec.md) |
+
+**Path A roadmap (locked Aug 27, 2026):** 40A → 38A → 45A → **42 polish (complete)**. Appearance stack (41/43/44A/46) complete.
 | SPIKE-26 | **Shipped** | Ephemeral two-point **Measure** tool (+ Alt-drag overlay) — [spike doc](sweethome3d-spike-26-measure-tool.md) |
 | SPIKE-27 | **In progress** | **Plan assembly** grouping — walls + doors/windows + furniture (phased) — [spike doc](sweethome3d-spike-27-plan-assembly-grouping.md) |
-| SPIKE-28 | Idea | **Layered plant plan symbols** — line + watercolor fill + user fill color (Option C) |
+| SPIKE-28 | **In progress** | **Layered plant plan symbols** — line + watercolor fill + user fill color (Option C); engine + ALP Plants Line v1.0.1 |
 | SPIKE-12b | Idea | **Draft mode uses line-art `planIcon`** — **COMPLETED** (planIconLine CONTENT) |
 
 ### [SPIKE-26] Measure tool (ephemeral two-point ruler)
