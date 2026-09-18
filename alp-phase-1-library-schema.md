@@ -280,6 +280,26 @@ SH3D reads numbered keys (`name#1`, `width#1`, …) in `PluginFurnitureCatalog.p
 | License | `license#N` | Per-asset if different from library |
 | Deformable / texturable | `deformable#N`, `texturable#N` | Usually `false` for plan-first symbols |
 
+### ALP plant metadata (SPIKE-40A)
+
+Custom catalog keys (not SH3D defaults) — copied to placed furniture as `HomeObject` properties:
+
+| Property | Key | Values | Notes |
+|----------|-----|--------|--------|
+| Asset type | `alp.plant.assetType#N` | `png`, `svg` | Default `png` |
+| Supports tint | `alp.plant.supportsTint#N` | `true` / `false` | `true` when `planIconFill` present |
+| Symmetrical | `alp.plant.isSymmetrical#N` | `true` / `false` | Round vs directional symbol |
+| Random rotation | `alp.plant.supportsRandomRotation#N` | `true` / `false` | Area-fill rule |
+| Random scale | `alp.plant.supportsRandomScale#N` | `true` / `false` | Area-fill rule |
+| Default spacing | `alp.plant.defaultSpacing#N` | cm float | Center-to-center hint for fills |
+| Schedule name | `alp.plant.scheduleName#N` | string | Shorter takeoff label |
+| Common name | `alp.plant.commonName#N` | string | Optional |
+| Botanical name | `alp.plant.botanicalName#N` | string | Optional |
+
+Read at runtime via `AlpPlantMetadata.fromPiece(HomePieceOfFurniture)`.
+
+Reference: `scripts/build-alp-plants-library.sh` (v1.0.6+).
+
 ### Phase 1 defaults (typical)
 
 ```
