@@ -1,0 +1,510 @@
+{
+  "libraryVersion": "2.1.0",
+  "description": "ALP Plants Gemini Collection \u2014 catalog variants (one artwork stem, many names/sizes).",
+  "entries": [
+    {
+      "id": "alp-plt-magnolia",
+      "name": "Magnolia",
+      "stem": "plant-01",
+      "heightCm": 914.4,
+      "widthCm": 457.2,
+      "depthCm": 457.2
+    },
+    {
+      "id": "alp-plt-awabuki-viburnum",
+      "name": "Awabuki Viburnum",
+      "stem": "plant-01",
+      "heightCm": 365.8,
+      "widthCm": 243.8,
+      "depthCm": 243.8
+    },
+    {
+      "id": "alp-plt-indian-hawthorn",
+      "name": "Indian Hawthorn",
+      "stem": "plant-02",
+      "heightCm": 91.4,
+      "widthCm": 152.4,
+      "depthCm": 152.4
+    },
+    {
+      "id": "alp-plt-japanese-blueberry-tree",
+      "name": "Japanese Blueberry Tree",
+      "stem": "plant-02",
+      "heightCm": 914.4,
+      "widthCm": 457.2,
+      "depthCm": 457.2
+    },
+    {
+      "id": "alp-plt-sweet-viburnum",
+      "name": "Sweet Viburnum",
+      "stem": "plant-02",
+      "heightCm": 609.6,
+      "widthCm": 365.8,
+      "depthCm": 365.8
+    },
+    {
+      "id": "alp-plt-saw-palmetto-2",
+      "name": "Saw Palmetto 2",
+      "stem": "plant-03",
+      "heightCm": 243.8,
+      "widthCm": 243.8,
+      "depthCm": 243.8
+    },
+    {
+      "id": "alp-plt-live-oak",
+      "name": "Live Oak",
+      "stem": "plant-04",
+      "heightCm": 1219.2,
+      "widthCm": 1828.8,
+      "depthCm": 1828.8
+    },
+    {
+      "id": "alp-plt-crape-myrtle",
+      "name": "Crape Myrtle",
+      "stem": "plant-04",
+      "heightCm": 457.2,
+      "widthCm": 457.2,
+      "depthCm": 457.2
+    },
+    {
+      "id": "alp-plt-holly",
+      "name": "Holly",
+      "stem": "plant-04",
+      "heightCm": 609.6,
+      "widthCm": 304.8,
+      "depthCm": 304.8
+    },
+    {
+      "id": "alp-plt-fiddle-leaf-fig",
+      "name": "Fiddle-Leaf Fig",
+      "stem": "plant-05",
+      "heightCm": 365.8,
+      "widthCm": 243.8,
+      "depthCm": 243.8
+    },
+    {
+      "id": "alp-plt-clusia",
+      "name": "Clusia",
+      "stem": "plant-05",
+      "heightCm": 609.6,
+      "widthCm": 457.2,
+      "depthCm": 457.2
+    },
+    {
+      "id": "alp-plt-royal-poinciana",
+      "name": "Royal Poinciana",
+      "stem": "plant-06",
+      "heightCm": 914.4,
+      "widthCm": 1219.2,
+      "depthCm": 1219.2
+    },
+    {
+      "id": "alp-plt-walters-viburnum",
+      "name": "Walter's Viburnum",
+      "stem": "plant-06",
+      "heightCm": 457.2,
+      "widthCm": 304.8,
+      "depthCm": 304.8
+    },
+    {
+      "id": "alp-plt-podocarpus",
+      "name": "Podocarpus",
+      "stem": "plant-07",
+      "heightCm": 457.2,
+      "widthCm": 304.8,
+      "depthCm": 304.8
+    },
+    {
+      "id": "alp-plt-dwarf-banana",
+      "name": "Dwarf Banana",
+      "stem": "plant-08",
+      "heightCm": 304.8,
+      "widthCm": 152.4,
+      "depthCm": 152.4
+    },
+    {
+      "id": "alp-plt-cardboard-palm",
+      "name": "Cardboard Palm",
+      "stem": "plant-08",
+      "heightCm": 121.9,
+      "widthCm": 152.4,
+      "depthCm": 152.4
+    },
+    {
+      "id": "alp-plt-monkey-grass",
+      "name": "Monkey Grass",
+      "stem": "plant-09",
+      "heightCm": 45.7,
+      "widthCm": 61.0,
+      "depthCm": 61.0
+    },
+    {
+      "id": "alp-plt-african-iris",
+      "name": "African Iris",
+      "stem": "plant-09",
+      "heightCm": 91.4,
+      "widthCm": 91.4,
+      "depthCm": 91.4
+    },
+    {
+      "id": "alp-plt-coontie-p09",
+      "name": "Coontie",
+      "stem": "plant-09",
+      "heightCm": 91.4,
+      "widthCm": 152.4,
+      "depthCm": 152.4
+    },
+    {
+      "id": "alp-plt-white-bird-of-paradise",
+      "name": "White Bird of Paradise",
+      "stem": "plant-10",
+      "heightCm": 609.6,
+      "widthCm": 304.8,
+      "depthCm": 304.8
+    },
+    {
+      "id": "alp-plt-orange-bird-of-paradise",
+      "name": "Orange Bird of Paradise",
+      "stem": "plant-10",
+      "heightCm": 121.9,
+      "widthCm": 91.4,
+      "depthCm": 91.4
+    },
+    {
+      "id": "alp-plt-areca-palm",
+      "name": "Areca Palm",
+      "stem": "plant-11",
+      "heightCm": 365.8,
+      "widthCm": 243.8,
+      "depthCm": 243.8
+    },
+    {
+      "id": "alp-plt-european-fan-palm-2",
+      "name": "European Fan Palm 2",
+      "stem": "plant-11",
+      "heightCm": 243.8,
+      "widthCm": 182.9,
+      "depthCm": 182.9
+    },
+    {
+      "id": "alp-plt-yucca-p11",
+      "name": "Yucca",
+      "stem": "plant-11",
+      "heightCm": 457.2,
+      "widthCm": 182.9,
+      "depthCm": 182.9
+    },
+    {
+      "id": "alp-plt-allamanda",
+      "name": "Allamanda",
+      "stem": "plant-12",
+      "heightCm": 152.4,
+      "widthCm": 182.9,
+      "depthCm": 182.9
+    },
+    {
+      "id": "alp-plt-lantana",
+      "name": "Lantana",
+      "stem": "plant-12",
+      "heightCm": 30.5,
+      "widthCm": 91.4,
+      "depthCm": 91.4
+    },
+    {
+      "id": "alp-plt-gardenia",
+      "name": "Gardenia",
+      "stem": "plant-13",
+      "heightCm": 152.4,
+      "widthCm": 182.9,
+      "depthCm": 182.9
+    },
+    {
+      "id": "alp-plt-white-plumbago",
+      "name": "White Plumbago",
+      "stem": "plant-13",
+      "heightCm": 91.4,
+      "widthCm": 121.9,
+      "depthCm": 121.9
+    },
+    {
+      "id": "alp-plt-hibiscus-p14",
+      "name": "Hibiscus",
+      "stem": "plant-14",
+      "heightCm": 152.4,
+      "widthCm": 182.9,
+      "depthCm": 182.9
+    },
+    {
+      "id": "alp-plt-blue-plumbago",
+      "name": "Blue Plumbago",
+      "stem": "plant-15",
+      "heightCm": 91.4,
+      "widthCm": 121.9,
+      "depthCm": 121.9
+    },
+    {
+      "id": "alp-plt-begonia",
+      "name": "Begonia",
+      "stem": "plant-16",
+      "heightCm": 30.5,
+      "widthCm": 61.0,
+      "depthCm": 61.0
+    },
+    {
+      "id": "alp-plt-hibiscus-p16",
+      "name": "Hibiscus",
+      "stem": "plant-16",
+      "heightCm": 152.4,
+      "widthCm": 182.9,
+      "depthCm": 182.9
+    },
+    {
+      "id": "alp-plt-red-ixora",
+      "name": "Red Ixora",
+      "stem": "plant-16",
+      "heightCm": 152.4,
+      "widthCm": 121.9,
+      "depthCm": 121.9
+    },
+    {
+      "id": "alp-plt-viburnum-p17",
+      "name": "Viburnum",
+      "stem": "plant-17",
+      "heightCm": 304.8,
+      "widthCm": 182.9,
+      "depthCm": 182.9
+    },
+    {
+      "id": "alp-plt-podocarpus-p17",
+      "name": "Podocarpus",
+      "stem": "plant-17",
+      "heightCm": 243.8,
+      "widthCm": 121.9,
+      "depthCm": 121.9
+    },
+    {
+      "id": "alp-plt-agave-p18",
+      "name": "Agave",
+      "stem": "plant-18",
+      "heightCm": 121.9,
+      "widthCm": 121.9,
+      "depthCm": 121.9
+    },
+    {
+      "id": "alp-plt-bromeliad",
+      "name": "Bromeliad",
+      "stem": "plant-18",
+      "heightCm": 45.7,
+      "widthCm": 30.5,
+      "depthCm": 30.5
+    },
+    {
+      "id": "alp-plt-crinum-lily",
+      "name": "Crinum Lily",
+      "stem": "plant-18",
+      "heightCm": 152.4,
+      "widthCm": 182.9,
+      "depthCm": 182.9
+    },
+    {
+      "id": "alp-plt-xanadu-philodendron",
+      "name": "Xanadu Philodendron",
+      "stem": "plant-19",
+      "heightCm": 121.9,
+      "widthCm": 152.4,
+      "depthCm": 152.4
+    },
+    {
+      "id": "alp-plt-saw-palmetto",
+      "name": "Saw Palmetto",
+      "stem": "plant-20",
+      "heightCm": 152.4,
+      "widthCm": 182.9,
+      "depthCm": 182.9
+    },
+    {
+      "id": "alp-plt-european-fan-palm",
+      "name": "European Fan Palm",
+      "stem": "plant-20",
+      "heightCm": 243.8,
+      "widthCm": 182.9,
+      "depthCm": 182.9
+    },
+    {
+      "id": "alp-plt-queen-palm",
+      "name": "Queen Palm",
+      "stem": "plant-21",
+      "heightCm": 914.4,
+      "widthCm": 609.6,
+      "depthCm": 609.6
+    },
+    {
+      "id": "alp-plt-roebelenii-palm",
+      "name": "Roebelenii Palm",
+      "stem": "plant-21",
+      "heightCm": 182.9,
+      "widthCm": 182.9,
+      "depthCm": 182.9
+    },
+    {
+      "id": "alp-plt-muhly-grass",
+      "name": "Muhly Grass",
+      "stem": "plant-22",
+      "heightCm": 61.0,
+      "widthCm": 91.4,
+      "depthCm": 91.4
+    },
+    {
+      "id": "alp-plt-moundlily-yucca-p22",
+      "name": "Moundlily Yucca",
+      "stem": "plant-22",
+      "heightCm": 243.8,
+      "widthCm": 182.9,
+      "depthCm": 182.9
+    },
+    {
+      "id": "alp-plt-sabal-palm",
+      "name": "Sabal Palm",
+      "stem": "plant-23",
+      "heightCm": 914.4,
+      "widthCm": 304.8,
+      "depthCm": 304.8
+    },
+    {
+      "id": "alp-plt-washingtonia-palm",
+      "name": "Washingtonia Palm",
+      "stem": "plant-23",
+      "heightCm": 2133.6,
+      "widthCm": 457.2,
+      "depthCm": 457.2
+    },
+    {
+      "id": "alp-plt-chinese-fan-palm",
+      "name": "Chinese Fan Palm",
+      "stem": "plant-24",
+      "heightCm": 762.0,
+      "widthCm": 365.8,
+      "depthCm": 365.8
+    },
+    {
+      "id": "alp-plt-split-leaf-philodendron",
+      "name": "Split-Leaf Philodendron",
+      "stem": "plant-25",
+      "heightCm": 304.8,
+      "widthCm": 243.8,
+      "depthCm": 243.8
+    },
+    {
+      "id": "alp-plt-smooth-agave",
+      "name": "Smooth Agave",
+      "stem": "plant-26",
+      "heightCm": 91.4,
+      "widthCm": 91.4,
+      "depthCm": 91.4
+    },
+    {
+      "id": "alp-plt-arboricola",
+      "name": "Arboricola",
+      "stem": "plant-26",
+      "heightCm": 121.9,
+      "widthCm": 152.4,
+      "depthCm": 152.4
+    },
+    {
+      "id": "alp-plt-bougainvillea",
+      "name": "Bougainvillea",
+      "stem": "plant-27",
+      "heightCm": 152.4,
+      "widthCm": 152.4,
+      "depthCm": 152.4
+    },
+    {
+      "id": "alp-plt-tree-philodendron",
+      "name": "Tree Philodendron",
+      "stem": "plant-28",
+      "heightCm": 243.8,
+      "widthCm": 304.8,
+      "depthCm": 304.8
+    },
+    {
+      "id": "alp-plt-papaya-tree",
+      "name": "Papaya Tree",
+      "stem": "plant-28",
+      "heightCm": 304.8,
+      "widthCm": 152.4,
+      "depthCm": 152.4
+    },
+    {
+      "id": "alp-plt-moundlily-yucca-p29",
+      "name": "Moundlily Yucca",
+      "stem": "plant-29",
+      "heightCm": 243.8,
+      "widthCm": 182.9,
+      "depthCm": 182.9
+    },
+    {
+      "id": "alp-plt-caribbean-agave",
+      "name": "Caribbean Agave",
+      "stem": "plant-29",
+      "heightCm": 91.4,
+      "widthCm": 91.4,
+      "depthCm": 91.4
+    },
+    {
+      "id": "alp-plt-macho-fern",
+      "name": "Macho Fern",
+      "stem": "plant-30",
+      "heightCm": 91.4,
+      "widthCm": 121.9,
+      "depthCm": 121.9
+    },
+    {
+      "id": "alp-plt-generic-tree-1",
+      "name": "Generic Tree 1",
+      "stem": "plant-31",
+      "heightCm": 365.8,
+      "widthCm": 243.8,
+      "depthCm": 243.8
+    },
+    {
+      "id": "alp-plt-generic-bush-1",
+      "name": "Generic Bush 1",
+      "stem": "plant-31",
+      "heightCm": 182.9,
+      "widthCm": 121.9,
+      "depthCm": 121.9
+    },
+    {
+      "id": "alp-plt-generic-tree-2",
+      "name": "Generic Tree 2",
+      "stem": "plant-32",
+      "heightCm": 365.8,
+      "widthCm": 548.6,
+      "depthCm": 548.6
+    },
+    {
+      "id": "alp-plt-generic-bush-2",
+      "name": "Generic Bush 2",
+      "stem": "plant-32",
+      "heightCm": 182.9,
+      "widthCm": 274.3,
+      "depthCm": 274.3
+    },
+    {
+      "id": "alp-plt-generic-tree-3",
+      "name": "Generic Tree 3",
+      "stem": "plant-33",
+      "heightCm": 365.8,
+      "widthCm": 243.8,
+      "depthCm": 243.8
+    },
+    {
+      "id": "alp-plt-generic-bush-3",
+      "name": "Generic Bush 3",
+      "stem": "plant-33",
+      "heightCm": 182.9,
+      "widthCm": 121.9,
+      "depthCm": 121.9
+    }
+  ]
+}

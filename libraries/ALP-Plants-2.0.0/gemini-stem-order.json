@@ -1,0 +1,30 @@
+{
+  "description": "Fixed plant-NN stem to side-by-side source filename mapping (01-25).",
+  "sideBySide": [
+    {"stem": "plant-01", "source": "Gemini  Plant 9.png"},
+    {"stem": "plant-02", "source": "Gemini Plant 10.png"},
+    {"stem": "plant-03", "source": "Gemini Plant 11.png"},
+    {"stem": "plant-04", "source": "Gemini Plant 12.png"},
+    {"stem": "plant-05", "source": "Gemini Plant 13.png"},
+    {"stem": "plant-06", "source": "Gemini Plant 16.png"},
+    {"stem": "plant-07", "source": "Gemini Plant 17.png"},
+    {"stem": "plant-08", "source": "Gemini Plant 18 Banana.png"},
+    {"stem": "plant-09", "source": "Gemini Plant 19 Grass.png"},
+    {"stem": "plant-10", "source": "Gemini Plant 20 White Bird of Paradise.png"},
+    {"stem": "plant-11", "source": "Gemini Plant 21 Conntie.png"},
+    {"stem": "plant-12", "source": "Gemini Plant 22 Allamanda 2.png"},
+    {"stem": "plant-13", "source": "Gemini Plant 23 Gardenia 1.png"},
+    {"stem": "plant-14", "source": "Gemini Plant 23 Gardenia 2.png"},
+    {"stem": "plant-15", "source": "Gemini Plant 23 Plumbago 2.png"},
+    {"stem": "plant-16", "source": "Gemini Plant 23 Red Begonia.png"},
+    {"stem": "plant-17", "source": "Gemini Plant 8.png"},
+    {"stem": "plant-18", "source": "Gemini Plant Leaf  1.png"},
+    {"stem": "plant-19", "source": "Gemini_Lirope Grass.png"},
+    {"stem": "plant-20", "source": "Gemini_PLant 3.png"},
+    {"stem": "plant-21", "source": "Gemini_Palm Plant 5.png"},
+    {"stem": "plant-22", "source": "Gemini_Plant 4.png"},
+    {"stem": "plant-23", "source": "Gemini_Plant 6-a.png"},
+    {"stem": "plant-24", "source": "Gemini_Plant 6.png"},
+    {"stem": "plant-25", "source": "Gemini_Plant 7.png"}
+  ]
+}

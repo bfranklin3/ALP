@@ -1,7 +1,7 @@
-# Project: Custom CAD (which will be called ALP CAD) based on Sweet Home 3D
+# Project: Custom CAD (ALP CAD) based on Sweet Home 3D
 
 ## Context
-- This is a large Java codebase (Sweet Home 3D) that I am refactoring and extending into my own custom CAD application.
+- This is a large Java codebase (Sweet Home 3D) that I am refactoring and extending into my own custom CAD application (ALP CAD).
 - I already have a complete implementation roadmap and approximately 18 markdown documents that contain feasibility studies, architecture findings, required features, and design decisions.
 - These documents live in the project (usually under /docs, /planning, or similar folders). Always locate and consult them before making significant decisions.
 
@@ -17,7 +17,15 @@
 2. For multi-file changes, first list the exact files you plan to modify and why.
 3. Make changes in small, reviewable steps. After each logical group of changes, summarize what was done and wait for approval before continuing.
 4. When build, Ant, or runtime changes are needed, provide the exact terminal commands for macOS.
-5. Prefer Gemini 2.5 Flash-Lite for most work. Only escalate to a stronger model when the task is architecturally complex.
+5. Whenever manual testing is required, update the development application bundle so I can test the features by running:
+   `/Users/billfranklin/Documents/ChatGPT/Architecture Landscape CAD App/source/SweetHome3D-7.5-src/install/Sweet Home 3D Dev.app`
+
+## Model Selection Strategy (Cost-Conscious)
+- Default / everyday work → **Composer 2.5** (uses the generous Cursor Models pool).
+- Complex multi-file, architectural, or tricky tasks → **Grok 4.6** (still uses the Cursor Models pool).
+- Only use third-party models (Gemini, Claude, GPT, etc.) when Composer or Grok are not sufficient.
+- Use Auto (Cost or Balance) freely for light questions and exploration.
+- Goal: Burn the generous Cursor Models pool first and protect the $20 Other Models credit.
 
 ## Important Constraints
 - Cost-conscious: Keep context efficient. Do not re-read the entire codebase unnecessarily.
