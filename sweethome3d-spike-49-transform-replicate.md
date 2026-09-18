@@ -1,7 +1,7 @@
 # SPIKE-49 - Precision Move & Linear Replicate
 
 **Date:** September 18, 2026  
-**Status:** Proposed  
+**Status:** **SHIPPED** — Sep 18, 2026 (49A–49C; manual QA passed)  
 **Parent:** Landscape object placement; builds on object-based selection, plant metadata, and normal plan item duplication/move paths  
 **Related:** `Home.duplicate(...)`, `HomeController.paste(...)`, `PlanController.addItems(...)`, `PlanController.moveItems(...)`, `AlpPlantMetadata`, `HomePane`, `HomeView.ActionType`
 
@@ -83,7 +83,7 @@ For V1, prefer a simple modal flow plus a point-pick helper if practical. If poi
 
 | Topic | Decision |
 |-------|----------|
-| **Primary object type** | Start with top-level `HomePieceOfFurniture` items, especially plants and outdoor objects |
+| **Primary object type** | Start with exactly one top-level `HomePieceOfFurniture`, especially plants and outdoor objects |
 | **Generated objects** | Normal editable duplicated instances; no persistent "array" object |
 | **Selection after apply** | Select newly created copies plus original if included |
 | **Plant spacing** | Use `AlpPlantMetadata.defaultSpacing` as the suggested spacing for one selected plant |
@@ -92,6 +92,8 @@ For V1, prefer a simple modal flow plus a point-pick helper if practical. If poi
 | **Units** | Use current user length unit and existing length parsing/formatting |
 | **Undo** | One undo step per applied operation |
 | **Schedules** | Repeated plants count as ordinary plant instances |
+| **Direction picking** | Angle/distance entry may ship first; interactive two-point picking can follow |
+| **Layer inheritance** | Copies inherit the selected source object's layer, even if another layer is active |
 
 ---
 
@@ -181,13 +183,7 @@ copy i offset = step * i, for i = 1..m-1
 
 ### Multi-selection
 
-V1 may support multi-selection if the existing duplicate/move path makes it straightforward:
-
-- Preserve relative positions within the selected set.
-- Treat the selection as one repeated module.
-- Each repeat creates a duplicated set offset by the same vector.
-
-If multi-selection complicates undo or group semantics, restrict 49B/49C V1 to one selected top-level furniture item and document multi-selection as follow-up.
+V1 is intentionally single-object only. Multi-selection may be added later as a repeated-module workflow if needed.
 
 ---
 
@@ -204,6 +200,20 @@ If multi-selection complicates undo or group semantics, restrict 49B/49C V1 to o
 - Wall, room, polyline, dimension, or mixed architectural assembly replication.
 
 These can become later spikes once the straight-line placement workflow proves useful.
+
+---
+
+## Deferred follow-up (post-V1)
+
+V1 shipped with angle/distance entry only. The following remain deferred:
+
+| Item | Scope |
+|------|--------|
+| **Move distance + angle mode** | Alternate input for 49A alongside horizontal/vertical offset |
+| **Pick direction** | Interactive two-point vector picker for 49B replicate direction |
+| **Pick end point** | Interactive end-point picker for 49C fit-between workflow |
+| **Fit spacing mode** | 49C mode where user enters spacing and app computes how many copies fit |
+| **Live preview** | Optional on-plan preview before apply |
 
 ---
 
@@ -233,6 +243,9 @@ These can become later spikes once the straight-line placement workflow proves u
 | New Swing dialog classes | `AlpMoveByDistanceDialog`, `AlpReplicateInLineDialog`, `AlpFitCopiesBetweenPointsDialog` or one shared dialog |
 | `package.properties` | Labels, tooltips, undo names |
 | `AlpPlantMetadata.java` | Read default spacing for plant defaults |
+| `AlpTransformReplicateSupport.java` | Plan-space vector math for line and fit spacing |
+| `AlpTransformReplicateDialog.java` | Three modal parameter dialogs |
+| `AlpTransformReplicateTest.java` | Automated vector, controller, undo, and spacing tests |
 
 ### Existing affordances
 
@@ -247,40 +260,36 @@ Use those paths rather than adding a new model object.
 
 ## Test Plan
 
-### Manual QA
+### Manual QA — passed Sep 18, 2026
 
-1. Select one shrub, **Replicate in Line...**, 8 copies at default plant spacing -> row forms a hedge; all shrubs remain editable and counted.
-2. Select one stepping stone, **Fit Copies Between Points...**, pick end point, total count 7 -> stones distribute evenly.
-3. Select one chair, replicate 4 copies at 3 ft -> row of chairs appears; undo removes all copies in one step.
-4. Select one plant, **Move by Distance...**, horizontal 2 ft -> object moves exactly; undo restores position.
-5. Repeat on a locked/non-viewable layer -> actions are disabled or fail gracefully.
-6. Save/reopen -> copies persist as normal objects; no custom array data required.
+1. Select one shrub, **Replicate in Line...**, 8 copies at default plant spacing -> row forms a hedge; all shrubs remain editable and counted. ✓
+2. Select one stepping stone, **Fit Copies Between Points...**, total count 7 -> stones distribute evenly. ✓
+3. Select one chair, replicate 4 copies at 3 ft -> row of chairs appears; undo removes all copies in one step. ✓
+4. Select one plant, **Move by Distance...**, horizontal 2 ft -> object moves exactly; undo restores position. ✓
+5. Repeat on a locked/non-viewable layer -> actions are disabled or fail gracefully. ✓
+6. Save/reopen -> copies persist as normal objects; no custom array data required. ✓
 
 ### Automated tests
 
-- Unit test vector math for count/spacing modes.
+- `AlpTransformReplicateTest` — vector math for line and fit spacing modes.
 - Controller test for duplicate count and final positions.
-- Undo/redo test for replicate and move.
-- Plant spacing default test with an ALP plant metadata fixture if practical.
+- Undo test for replicate and move.
+- Plant spacing default test with an ALP plant metadata fixture.
 
 ---
 
 ## Open Questions
 
-1. Should the first replicate command support multi-selection, or single object only?
-2. Should "count" mean new copies or total objects including the original? Recommendation: use **Copies** for 49B and **Total count** for 49C.
-3. Is interactive two-point picking required for the first implementation, or can it follow after angle/distance entry?
-4. Should **Fit Copies Between Points** place a copy at the end point, or preserve the selected original at start and place the last copy at end? Recommendation: yes, total count includes endpoints.
-5. Should replicate copies inherit the source layer even if a different layer is active? Recommendation: yes.
+Resolved September 18, 2026:
+
+1. The first replicate command is single-object only.
+2. Use **Copies** for 49B and **Total count** for 49C.
+3. Interactive two-point picking can follow after angle/distance entry.
+4. **Fit Copies Between Points** uses total count including endpoints: original at start, last copy at end.
+5. Replicated copies inherit the source layer even if another layer is active.
 
 ---
 
 ## Promotion
 
-Recommended next implementation order:
-
-1. 49A - Move by Distance
-2. 49B - Replicate in Line
-3. 49C - Fit Copies Between Points
-
-This gives quick precision placement first, then the hedge workflow, then the stepping-stone/path workflow.
+**Shipped Sep 18, 2026** in implementation order 49A → 49B → 49C. Manual QA passed; automated tests in `AlpTransformReplicateTest`.

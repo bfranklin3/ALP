@@ -707,7 +707,7 @@ Landscape work wants **flat overlays at one grade**, not a multi-story stack.
 | SPIKE-46 | **COMPLETED** | **Plant inspector appearance polish** — 46A + 46B; QA passed Aug 27, 2026 — [spike doc](sweethome3d-spike-46-plant-inspector-appearance-polish.md) |
 | SPIKE-47 | **47A + 47B shipped** | **Plant plan fill opacity** — Hybrid preset model; wash-only fade; Understory preset — [spike doc](sweethome3d-spike-47-plant-plan-fill-opacity.md) |
 | SPIKE-48 | **SHIPPED** | **Plan display bounds & display name** — per-piece toggles in docked + full editor — [spike doc](sweethome3d-spike-48-plan-display-bounds-and-name.md) |
-| SPIKE-49 | **Proposed** | **Precision Move & Linear Replicate** — exact move, repeat in line, fit copies between points — [spike doc](sweethome3d-spike-49-transform-replicate.md) |
+| SPIKE-49 | **SHIPPED** | **Precision Move & Linear Replicate** — exact move, repeat in line, fit copies between points; manual QA passed Sep 18, 2026 — [spike doc](sweethome3d-spike-49-transform-replicate.md) |
 | SPIKE-38 | **38A shipped** | **Plant area scatter fill** — single-species area → editable instances — [38A doc](sweethome3d-spike-38a-plant-area-scatter-mvp.md) |
 | SPIKE-39 | **Accepted spec** | **Plant symbol asset format** — PNG layered path shipped (SPIKE-28); SVG path deferred — [spike doc](sweethome3d-spike-39-plant-symbol-asset-format-and-tinting.md) |
 | SPIKE-40 | **40A shipped** | **Plant symbol metadata** — `AlpPlantMetadata` + catalog `alp.plant.*` keys — [40A doc](sweethome3d-spike-40a-plant-metadata-implementation.md) |
